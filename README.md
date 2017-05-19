@@ -1,29 +1,12 @@
-# README #
+# Instrucciones de descarga #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+Esta guía permite tener una idea del proceso que debe realizarse para descargar el proyecto y comenzar a modificarlo.
 
-### What is this repository for? ###
+### Requisitos ###
+* PHP versión 5.6 o superios
+* Apache
+* PostgreSQL
+* Composer
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
-
-### How do I get set up? ###
-
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+### ¿Cómo clonar este repositorio? ###
+    $ git clone git@bitbucket.org:cuc_proyecto_bav/sisreclamosbav.git
