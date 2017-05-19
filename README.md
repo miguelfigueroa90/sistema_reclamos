@@ -31,3 +31,9 @@ De esta forma ya tenemos el archivo de configuración de nuestro proyecto.
 Por medidas de seguridad cada proyecto de Laravel cuenta con una clave única que se crea en el archivo .env al iniciar el proyecto. En caso de que el desarrollador no te haya proporcionado están información, puedes generar una nueva API key desde la consola usando:
 
     $ php artisan key:generate
+
+### Servidor de desarrollo local ###
+
+Si tiene PHP instalado localmente y desea utilizar el servidor de desarrollo integrado de PHP para servir a su aplicación, puede utilizar el comando artisan serve. Este comando iniciará un servidor de desarrollo en http: // localhost: 8000:
+
+    $ php artisan servir
