@@ -8,6 +8,12 @@ Esta guía permite tener una idea del proceso que debe realizarse para descargar
 * PostgreSQL
 * Composer
 
+### Extesiones de PHP ###
+
+Para instalar las extensiones necesarias ejecutar el siguiente comando
+
+    $ sudo apt-get install php*-xml
+
 ### Clonar este repositorio ###
     $ git clone git@bitbucket.org:cuc_proyecto_bav/sisreclamosbav.git
 
@@ -36,4 +42,4 @@ Por medidas de seguridad cada proyecto de Laravel cuenta con una clave única qu
 
 Si tiene PHP instalado localmente y desea utilizar el servidor de desarrollo integrado de PHP para servir a su aplicación, puede utilizar el comando artisan serve. Este comando iniciará un servidor de desarrollo en http: // localhost: 8000:
 
-    $ php artisan servir
+    $ php artisan serve
