@@ -7,6 +7,9 @@
 
         <title>Laravel</title>
 
+        <!-- favicon -->
+        <link rel="icon" href="favicon.png" sizes="16x16" type="image/png">
+
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
 
