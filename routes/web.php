@@ -11,6 +11,23 @@
 |
 */
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     return view('welcome');
+});*/
+
+Route::get('/', function()
+{
+    return View::make('pages.home');
 });
+/*Route::get('', function()
+{
+    return View::make('pages.');
+});
+Route::get('', function()
+{
+    return View::make('pages.');
+});
+Route::get('', function()
+{
+    return View::make('pages.');
+});*/
