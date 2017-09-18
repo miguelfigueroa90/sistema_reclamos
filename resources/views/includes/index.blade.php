@@ -38,9 +38,8 @@
     <div class="art-content-layout-row">
     <div class="art-layout-cell layout-item-2" style="width: 100%" >
         <h3 style="border-bottom: 1px solid #D4DD83; padding-bottom: 5px">Sistema de Reclamos</h3><div class="clearfix">
-        <div class="image-caption-wrapper" style="width: 50%; float: left"><img src="images/bbf9a.jpg" style="width: 100%; max-width:600px" alt="an image" class="art-lightbox"></div>
-        <div class="image-caption-wrapper" style="width: 50%; float: left"><img src="images/41e0d.jpg" style="width: 100%; max-width:550px" alt="an image" class="art-lightbox"></div>
-        </div>
+        <div class="image-caption-wrapper" style="width: 100%; float: center"><img src="images/logo_bav.JPG.png" style="width: 100%; max-width:600px" alt="an image" class="art-lightbox"></div>
+           </div>
 		</div>
     </div>
 </div>
