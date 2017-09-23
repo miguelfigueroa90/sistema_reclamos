@@ -15,3 +15,8 @@ Route::get('/', function(){ return view('welcome');});
 Route::get('/login', 'LdapController@autenticar');
 
 Route::post('/login', 'LdapController@autenticar');
+
+Route::get('/pages', function()
+{
+    return View::make('pages.home');
+});
