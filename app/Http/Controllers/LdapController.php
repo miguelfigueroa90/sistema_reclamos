@@ -45,17 +45,14 @@ class LdapController extends Controller
      */
     public function autenticar(Request $request)
     {
-        switch ($request->method()) {
-            case 'POST':
-                if (Adldap::auth()->attempt($request->get('usuario'), $request->get('clave'))) {
+        if($request->method() == 'POST') {
+            if (Adldap::auth()->attempt($request->get('usuario'), $request->get('clave'))) {
                     dd('usuario autenticado');
                 } else {
                     dd('usuario no autenticado');
                 }
-                break;
-            
-            case 'GET':
-                return view('autenticacion/login');
+        } else {
+            return view('pages.home');
         }
     }
 }
