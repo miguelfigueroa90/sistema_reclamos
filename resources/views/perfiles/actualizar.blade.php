@@ -1,9 +1,9 @@
 @extends('layouts.default')
 @section('content')
-  {!! Form::open(['url' => 'perfil', 'class' => 'form']) !!}
+  {!! Form::open(['url' => 'perfil/'.$perfil->codigo_perfil, 'class' => 'form', 'method' => 'put']) !!}
   <div class="form-group">
       {!! Form::label('nombre') !!}
-      {!! Form::text('nombre', null, array('required', 'class'=>'form-control', )) !!}
+      {!! Form::text('nombre', $perfil->nombre, array('required', 'class'=>'form-control', )) !!}
   </div>
   <br>
   <div class="form-group">
