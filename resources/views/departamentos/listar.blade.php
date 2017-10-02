@@ -5,19 +5,19 @@
     <td>nombre</td>
     <td>acciones</td>
   </tr>
-  @foreach($perfiles as $perfil)
+  @foreach($departamentos as $departamento)
     <tr>
-      <td>{{$perfil->nombre}}</td>
+      <td>{{$departamento->nombre}}</td>
       <td>
-      <!-- Editar Perfil -->
-      {!! Form::open(['method' => 'GET', 'url' => 'perfil/'.$perfil->codigo_perfil]) !!}
+      <!-- Editar Departamento -->
+      {!! Form::open(['method' => 'GET', 'url' => 'departamento/'.$departamento->codigo_departamento]) !!}
 
         {!! Form::button('Actualizar', array('type' => 'submit')) !!}
 
       {!! Form::close() !!}
 
-      <!-- Eliminar Perfil -->
-      {!! Form::open(['method' => 'DELETE', 'url' => 'perfil/'.$perfil->codigo_perfil, 'onsubmit' => 'return ConfirmDelete()']) !!}
+      <!-- Eliminar Departamento -->
+      {!! Form::open(['method' => 'DELETE', 'url' => 'departamento/'.$departamento->codigo_departamento, 'onsubmit' => 'return ConfirmDelete()']) !!}
 
         {!! Form::button('Eliminar', array('type' => 'submit')) !!}
 

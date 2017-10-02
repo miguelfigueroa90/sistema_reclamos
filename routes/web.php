@@ -11,16 +11,22 @@
 |
 */
 
-// Route::get('/', function(){ return View::make('pages.home');});
-
-Route::get('/', 'PaginasController@listarPerfiles');
+Route::get('/', function(){ return View::make('pages.home');});
 
 Route::post('/login', 'LdapController@autenticar');
 
+// Administración de Departamentos
+Route::get('/departamentos', 'PaginasController@listarDepartamentos');
+Route::get('/departamento', 'PaginasController@agregarDepartamento');
+Route::get('/departamento/{codigo_departamento}', 'PaginasController@actualizarDepartamento');
+Route::post('/departamento', 'DepartamentosController@agregar');
+Route::put('/departamento/{codigo_departamento}', 'DepartamentosController@actualizar');
+Route::delete('/departamento/{codigo_departamento}', 'DepartamentosController@eliminar');
+
 // Administración de Perfiles
-Route::get('perfiles', 'PaginasController@listarPerfiles');
-Route::get('perfil', 'PaginasController@agregarPerfil');
-Route::get('perfil/{codigo_perfil}', 'PaginasController@actualizarPerfil');
-Route::post('perfil', 'PerfilesController@agregar');
-Route::delete('perfil/{codigo_perfil}', 'PerfilesController@eliminar');
-Route::put('perfil/{codigo_perfil}', 'PerfilesController@actualizar');
+Route::get('/perfiles', 'PaginasController@listarPerfiles');
+Route::get('/perfil', 'PaginasController@agregarPerfil');
+Route::get('/perfil/{codigo_perfil}', 'PaginasController@actualizarPerfil');
+Route::post('/perfil', 'PerfilesController@agregar');
+Route::put('/perfil/{codigo_perfil}', 'PerfilesController@actualizar');
+Route::delete('/perfil/{codigo_perfil}', 'PerfilesController@eliminar');
