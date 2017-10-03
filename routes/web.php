@@ -15,6 +15,14 @@ Route::get('/', function(){ return View::make('pages.home');});
 
 Route::post('/login', 'LdapController@autenticar');
 
+// Administración de Nacionalidades
+Route::get('/nacionalidades', 'PaginasController@listarNacionalidades');
+Route::get('/nacionalidad', 'PaginasController@agregarNacionalidad');
+Route::get('/nacionalidad/{codigo_nacionalidad}', 'PaginasController@actualizarNacionalidad');
+Route::post('/nacionalidad', 'NacionalidadesController@agregar');
+Route::put('/nacionalidad/{codigo_nacionalidad}', 'NacionalidadesController@actualizar');
+Route::delete('/nacionalidad/{codigo_nacionalidad}', 'NacionalidadesController@eliminar');
+
 // Administración de Departamentos
 Route::get('/departamentos', 'PaginasController@listarDepartamentos');
 Route::get('/departamento', 'PaginasController@agregarDepartamento');

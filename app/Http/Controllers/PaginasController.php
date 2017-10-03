@@ -5,9 +5,28 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Perfil;
 use App\Departamento;
+use App\Nacionalidad;
 
 class PaginasController extends Controller
 {
+  // Nacionalidades
+  public function actualizarNacionalidad(Request $request)
+  {
+    $nacionalidad = Nacionalidad::find($request->codigo_nacionalidad);
+    return view('nacionalidades/actualizar', ['nacionalidad' => $nacionalidad]);
+  }
+
+  public function listarNacionalidades()
+  {
+    $nacionalidades = Nacionalidad::all();
+    return view('nacionalidades/listar', ['nacionalidades' => $nacionalidades]);
+  }
+
+  public function agregarNacionalidad()
+  {
+    return view('nacionalidades/agregar');
+  }
+
   // Departamentos
   public function actualizarDepartamento(Request $request)
   {
