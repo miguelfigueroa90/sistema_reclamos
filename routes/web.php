@@ -15,6 +15,14 @@ Route::get('/', function(){ return View::make('pages.home');});
 
 Route::post('/login', 'LdapController@autenticar');
 
+// Administración de Estatus
+Route::get('/listar_estatus', 'PaginasController@listarEstatus');
+Route::get('/nuevo_estatus', 'PaginasController@agregarEstatus');
+Route::get('/actualizar_estatus/{codigo_estatus}', 'PaginasController@actualizarEstatus');
+Route::post('/nuevo_estatus', 'EstatusController@agregar');
+Route::put('/actualizar_estatus/{codigo_estatus}', 'EstatusController@actualizar');
+Route::delete('/eliminar_estatus/{codigo_estatus}', 'EstatusController@eliminar');
+
 // Administración de Nacionalidades
 Route::get('/nacionalidades', 'PaginasController@listarNacionalidades');
 Route::get('/nacionalidad', 'PaginasController@agregarNacionalidad');

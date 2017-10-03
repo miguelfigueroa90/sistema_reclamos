@@ -6,9 +6,28 @@ use Illuminate\Http\Request;
 use App\Perfil;
 use App\Departamento;
 use App\Nacionalidad;
+use App\Estatus;
 
 class PaginasController extends Controller
 {
+  // Estatus
+  public function actualizarEstatus(Request $request)
+  {
+    $estatus = Estatus::find($request->codigo_estatus);
+    return view('estatus/actualizar', ['estatus' => $estatus]);
+  }
+
+  public function listarEstatus()
+  {
+    $lista_estatus = Estatus::all();
+    return view('estatus/listar', ['lista_estatus' => $lista_estatus]);
+  }
+
+  public function agregarEstatus()
+  {
+    return view('estatus/agregar');
+  }
+
   // Nacionalidades
   public function actualizarNacionalidad(Request $request)
   {
