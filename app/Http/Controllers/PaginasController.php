@@ -81,4 +81,16 @@ class PaginasController extends Controller
   {
     return view('perfiles/agregar');
   }
+
+  // Inicio
+  public function index()
+  {
+      $datos = [
+          'encabezado' => [
+              'titulo' => 'Inicio',
+          ],
+      ];
+
+      return view('inicio', ['datos' => $datos]);
+  }
 }

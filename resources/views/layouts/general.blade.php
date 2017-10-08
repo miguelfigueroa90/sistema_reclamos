@@ -24,76 +24,77 @@
                     <a href="{!! url('/') !!}" class="sidebar-toggle" data-toggle="push-menu" role="button">
                         <span class="sr-only">Toggle navigation</span>
                     </a>
-
-                    <div class="navbar-custom-menu">
-                        <ul class="nav navbar-nav">
-                            <li class="dropdown notifications-menu">
-                                <a class="dropdown-toggle" href="#" data-toggle="dropdown">
-                                    <i class="fa fa-bell-o"></i>
-                                    <span class="label label-warning">4</span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                  <li class="header">Tiene 4 notificaciones</li>
-                                  <li>
-                                    <!-- inner menu: contains the actual data -->
-                                    <ul class="menu">
+                    @if(!Auth::guest())
+                        <div class="navbar-custom-menu">
+                            <ul class="nav navbar-nav">
+                                <li class="dropdown notifications-menu">
+                                    <a class="dropdown-toggle" href="#" data-toggle="dropdown">
+                                        <i class="fa fa-bell-o"></i>
+                                        <span class="label label-warning">4</span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                      <li class="header">Tiene 4 notificaciones</li>
                                       <li>
-                                        <a href="#">
-                                          <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                                        </a>
+                                        <!-- inner menu: contains the actual data -->
+                                        <ul class="menu">
+                                          <li>
+                                            <a href="#">
+                                              <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                                            </a>
+                                          </li>
+                                          <li>
+                                            <a href="#">
+                                              <i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the
+                                              page and may cause design problems
+                                            </a>
+                                          </li>
+                                          <li>
+                                            <a href="#">
+                                              <i class="fa fa-users text-red"></i> 5 new members joined
+                                            </a>
+                                          </li>
+                                          <li>
+                                            <a href="#">
+                                              <i class="fa fa-shopping-cart text-green"></i> 25 sales made
+                                            </a>
+                                          </li>
+                                        </ul>
                                       </li>
-                                      <li>
-                                        <a href="#">
-                                          <i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the
-                                          page and may cause design problems
-                                        </a>
-                                      </li>
-                                      <li>
-                                        <a href="#">
-                                          <i class="fa fa-users text-red"></i> 5 new members joined
-                                        </a>
-                                      </li>
-                                      <li>
-                                        <a href="#">
-                                          <i class="fa fa-shopping-cart text-green"></i> 25 sales made
-                                        </a>
-                                      </li>
+                                      <li class="footer"><a href="#">Ver todo</a></li>
                                     </ul>
-                                  </li>
-                                  <li class="footer"><a href="#">Ver todo</a></li>
-                                </ul>
-                            </li>
-                            <li class="dropdown user user-menu">
-                                <a class="dropdown-toggle" href="#" data-toggle="dropdown">
-                                    <img src="img/user4-128x128.jpg" class="user-image" alt="User Image">
-                                    <span class="hidden-xs">Geraldine Palacios</span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li class="user-header">
-                                        <img class="img-circle" src="img/user4-128x128.jpg" class="user-image" alt="User Image">
-                                        <p>
-                                            Geraldine Palacios - Desarrollador web
-                                            <small>Miembre desde Octubre. 2017</small>
-                                        </p>
-                                    </li>
-                                    <li class="user-footer">
-                                        <div class="pull-left">
-                                            <a href="#" class="btn btn-default btn-flat">Perfil</a>
-                                        </div>
-                                        <div class="pull-right">
-                                            <a href="#" class="btn btn-default btn-flat">Salir</a>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
+                                </li>
+                                <li class="dropdown user user-menu">
+                                    <a class="dropdown-toggle" href="#" data-toggle="dropdown">
+                                        <img src="img/user4-128x128.jpg" class="user-image" alt="User Image">
+                                        <span class="hidden-xs">Geraldine Palacios</span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="user-header">
+                                            <img class="img-circle" src="img/user4-128x128.jpg" class="user-image" alt="User Image">
+                                            <p>
+                                                Geraldine Palacios - Desarrollador web
+                                                <small>Miembre desde Octubre. 2017</small>
+                                            </p>
+                                        </li>
+                                        <li class="user-footer">
+                                            <div class="pull-left">
+                                                <a href="#" class="btn btn-default btn-flat">Perfil</a>
+                                            </div>
+                                            <div class="pull-right">
+                                                <a href="#" class="btn btn-default btn-flat">Salir</a>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    @endif
+                </nav><!-- End .navbar .navbar-static-top -->
             </header>
             <aside class="main-sidebar">
                 <section class="sidebar">
+                    @if(Auth::guest())
                     <!-- Login -->
-                    <div class="col-md-12">
                         <div class="user-panel">
                             <div class="pull-left image">
                                 <img src="img/avatar.png" class="img-circle" alt="User Image">
@@ -102,7 +103,7 @@
                                 <p>Login</p>
                             </div>
                         </div>
-                        {!! Form::open(['url' => 'login', 'method' => 'get']) !!}
+                        {!! Form::open(['url' => 'login', 'method' => 'get', 'class' => 'sidebar-form', 'style' => 'border: 0px']) !!}
                             <div class="form-group has-feedback">
                                 {!! Form::email('usuario', null, ['class' => 'form-control', 'placeholder' => 'usuario']) !!}
                             </div>
@@ -111,8 +112,7 @@
                             </div>
                             {!! Form::button('Entrar', ['class' => 'btn btn-success', 'name' => 'search', 'type' => 'submit']) !!}
                         {!! Form::close() !!}
-                    </div><!-- End Login -->
-
+                    @else
                     <!-- Menu -->
                     <div class="col-md-12">
                         <ul class="sidebar-menu" data-widget="tree">
@@ -159,15 +159,66 @@
                                 </ul>
                             </li>
                         </ul>
-                    </div>
-                    <!-- End Menu -->
+                    </div><!-- End Menu -->
+                    @endif
                 </section>
             </aside>
             <div class="content-wrapper">
+                @component('componentes/encabezado')
+                    @if(isset($datos['numeracion']))
+                        @slot('numeracion')
+                            {!! $datos['encabezado']['numeracion'] !!}
+                        @endslot
+                    @endif
+
+                    {!! $datos['encabezado']['titulo'] !!}
+                @endcomponent
+
+                @if(isset($datos['alerta']))
+                    @component('componentes/alerta')
+                        @slot('nivel')
+                        {!! $datos['alerta']['nivel'] !!}
+                        @endslot
+
+                        @slot('titulo')
+                        {!! $datos['alerta']['titulo'] !!}
+                        @endslot
+
+                        @slot('simbolo')
+                        {!! $datos['alerta']['simbolo'] !!}
+                        @endslot
+
+                        {!! $datos['alerta']['mensaje'] !!}
+                    @endcomponent
+                @endif
+
+                @if(isset($datos['anuncio']))
+                    @component('componentes/anuncio')
+                        @slot('nivel')
+                        {!! $datos['anuncio']['nivel'] !!}
+                        @endslot
+
+                        @slot('titulo')
+                        {!! $datos['anuncio']['titulo'] !!}
+                        @endslot
+
+                        @slot('simbolo')
+                        {!! $datos['anuncio']['simbolo'] !!}
+                        @endslot
+
+                        {!! $datos['anuncio']['mensaje'] !!}
+                    @endcomponent
+                @endif
+
                 @yield('contenido')
             </div>
             <footer class="main-footer">
-
+                <div class="pull-right hidden-xs">
+                    &copy; Copyleft © 2017. All Rights Reserved.
+                </div>
+                <p>
+                    <a href="http://172.18.52.110/IB/Login.aspx" target="_blank">Banco Agrícola de Venezuela RIF:20005795-5</a>
+                </p>
             </footer>
         </div>
         <script src="js/jquery.min.js"></script>

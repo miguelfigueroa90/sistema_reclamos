@@ -11,8 +11,10 @@
 |
 */
 
-Route::get('/', function(){ return View::make('inicio');});
+// Inicio
+Route::get('/', 'PaginasController@index');
 
+// Autenticación
 Route::post('/login', 'LdapController@autenticar');
 
 // Administración de Estatus
