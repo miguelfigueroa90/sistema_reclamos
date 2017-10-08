@@ -113,19 +113,6 @@
                         {!! Form::close() !!}
                     </div><!-- End Login -->
 
-                    <!-- Search -->
-                    <div class="col-md-12">
-                        {!! Form::open(['url' => '#', 'method' => 'get', 'class' => 'sidebar-form']) !!}
-                            <div class="input-group">
-                                {!! Form::text('q', null, ['class' => 'form-control', 'placeholder' => 'buscar...']) !!}
-                                <span class="input-group-btn">
-                                    {!! Form::button('<i class="fa fa-search"></i>', ['id' => 'search-btn', 'class' => 'btn btn-flat', 'name' => 'search', 'type' => 'submit']) !!}
-                                </span>
-                            </div>
-                        {!! Form::close() !!}
-                    </div>
-                    <!-- End Search -->
-
                     <!-- Menu -->
                     <div class="col-md-12">
                         <ul class="sidebar-menu" data-widget="tree">
