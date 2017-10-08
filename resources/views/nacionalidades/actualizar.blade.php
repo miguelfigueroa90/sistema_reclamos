@@ -1,5 +1,5 @@
-@extends('layouts.default')
-@section('content')
+@extends('layouts.general')
+@section('contenido')
   {!! Form::open(['url' => 'nacionalidad/'.$nacionalidad->codigo_nacionalidad, 'class' => 'form', 'method' => 'put']) !!}
   <div class="form-group">
       {!! Form::label('nombre') !!}

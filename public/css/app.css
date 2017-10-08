@@ -1,3 +1,11 @@
 .img-responsive-center {
     margin: 0 auto;
 }
+
+.datos-en-linea {
+    display: flex;
+}
+
+.margen-horizontal {
+    margin: 0px 5px;
+}

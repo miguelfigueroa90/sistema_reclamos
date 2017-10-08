@@ -1,5 +1,5 @@
-@extends('layouts.default')
-@section('content')
+@extends('layouts.general')
+@section('contenido')
 <table>
   <tr>
     <td>nombre</td>

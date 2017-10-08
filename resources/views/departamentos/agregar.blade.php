@@ -1,5 +1,5 @@
-@extends('layouts.default')
-@section('content')
+@extends('layouts.general')
+@section('contenido')
   {!! Form::open(['url' => 'departamento', 'class' => 'form']) !!}
   <div class="form-group">
       {!! Form::label('nombre') !!}

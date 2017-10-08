@@ -103,7 +103,7 @@
                                 <p>Login</p>
                             </div>
                         </div>
-                        {!! Form::open(['url' => 'login', 'method' => 'get', 'class' => 'sidebar-form', 'style' => 'border: 0px']) !!}
+                        {!! Form::open(['url' => 'login', 'method' => 'post', 'class' => 'sidebar-form', 'style' => 'border: 0px']) !!}
                             <div class="form-group has-feedback">
                                 {!! Form::email('usuario', null, ['class' => 'form-control', 'placeholder' => 'usuario']) !!}
                             </div>
@@ -210,7 +210,17 @@
                     @endcomponent
                 @endif
 
-                @yield('contenido')
+                <section class="content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="box box-success">
+                                <div class="box-body {!! $datos['clases_adicionales_body'] !!}">
+                                    @yield('contenido')
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
             </div>
             <footer class="main-footer">
                 <div class="pull-right hidden-xs">
