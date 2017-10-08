@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', function(){ return View::make('pages.home');});
+Route::get('/', function(){ return View::make('inicio');});
 
 Route::post('/login', 'LdapController@autenticar');
 
