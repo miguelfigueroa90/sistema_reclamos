@@ -65,12 +65,12 @@
                                 </li>
                                 <li class="dropdown user user-menu">
                                     <a class="dropdown-toggle" href="#" data-toggle="dropdown">
-                                        <img src="img/user4-128x128.jpg" class="user-image" alt="User Image">
+                                        <img src="/img/user4-128x128.jpg" class="user-image" alt="User Image">
                                         <span class="hidden-xs">Geraldine Palacios</span>
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li class="user-header">
-                                            <img class="img-circle" src="img/user4-128x128.jpg" class="user-image" alt="User Image">
+                                            <img class="img-circle" src="/img/user4-128x128.jpg" class="user-image" alt="User Image">
                                             <p>
                                                 Geraldine Palacios - Desarrollador web
                                                 <small>Miembre desde Octubre. 2017</small>
@@ -117,7 +117,7 @@
                     <div class="col-md-12">
                         <ul class="sidebar-menu" data-widget="tree">
                             <li class="header">MENU</li>
-                            <li class="active treeview">
+                            <li class="treeview">
                                 <a href="{!! url('#') !!}">
                                     <i class="fa fa-wrench"></i>
                                     <span>Configuración</span>
@@ -127,36 +127,88 @@
                                 </a>
                                 <ul class="treeview-menu">
                                     <li>
-                                        <a href="{!! url('/') !!}">
+                                        <a href="{!! url('#') !!}">
                                             <i class="fa fa-circle-o"></i>
                                             Usuarios
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{!! url('/') !!}">
+                                        <a href="{!! url('/perfiles') !!}">
                                             <i class="fa fa-circle-o"></i>
                                             Perfiles
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{!! url('/') !!}">
+                                        <a href="{!! url('/departamentos') !!}">
                                             <i class="fa fa-circle-o"></i>
                                             Departamentos
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{!! url('/') !!}">
+                                        <a href="{!! url('/listar_estatus') !!}">
                                             <i class="fa fa-circle-o"></i>
                                             Estatus
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{!! url('/') !!}">
+                                        <a href="{!! url('/nacionalidades') !!}">
                                             <i class="fa fa-circle-o"></i>
                                             Nacionalidades
                                         </a>
                                     </li>
+                                    <li>
+                                        <a href="{!! url('/productos') !!}">
+                                            <i class="fa fa-circle-o"></i>
+                                            Productos
+                                        </a>
+                                    </li>
                                 </ul>
+                            </li>
+                            <li class="treeview">
+                                <a href="{!! url('#') !!}">
+                                    <i class="fa fa-table"></i>
+                                    <span>Reportes</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                    <ul class="treeview-menu">
+                                        <li>
+                                            <a href="{!! url('/reporte_reclamos') !!}">
+                                                <i class="fa fa-circle-o"></i>
+                                                Reclamos
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{!! url('/reporte_auditoria') !!}">
+                                                <i class="fa fa-circle-o"></i>
+                                                Auditoria
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </a>
+                            </li>
+                            <li class="treeview">
+                                <a href="{!! url('#') !!}">
+                                    <i class="fa fa-phone-square"></i>
+                                    <span>Reclamos</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                    <ul class="treeview-menu">
+                                        <li>
+                                            <a href="{!! url('/agregar_reclamo') !!}">
+                                                <i class="fa fa-circle-o"></i>
+                                                Nuevo
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{!! url('/buscar_reclamo') !!}">
+                                                <i class="fa fa-circle-o"></i>
+                                                Buscar
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </a>
                             </li>
                         </ul>
                     </div><!-- End Menu -->
