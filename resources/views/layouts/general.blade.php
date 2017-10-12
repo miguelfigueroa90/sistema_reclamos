@@ -5,11 +5,11 @@
         <title>Sistema de Reclamo | BAV</title>
         <meta name="viewport" content="initial-scale = 1.0, maximum-scale = 1.0, user-scalable = no, width = device-width">
         <!--[if lt IE 9]><script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-        <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css" media="screen">
-        <link rel="stylesheet" href="css/bootstrap.min.css" media="screen">
-        <link rel="stylesheet" href="css/AdminLTE.min.css" media="screen">
-        <link rel="stylesheet" href="css/skins/skin-green-light.min.css" media="screen">
-        <link rel="stylesheet" href="css/app.css" media="screen">
+        <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css" media="screen">
+        <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen">
+        <link rel="stylesheet" href="/css/AdminLTE.min.css" media="screen">
+        <link rel="stylesheet" href="/css/skins/skin-green-light.min.css" media="screen">
+        <link rel="stylesheet" href="/css/app.css" media="screen">
     </head>
     <body class="skin-green-light sidebar-mini">
         <div class="wrapper">
@@ -97,7 +97,7 @@
                     <!-- Login -->
                         <div class="user-panel">
                             <div class="pull-left image">
-                                <img src="img/avatar.png" class="img-circle" alt="User Image">
+                                <img src="/img/avatar.png" class="img-circle" alt="User Image">
                             </div>
                             <div class="pull-left info">
                                 <p>Login</p>
@@ -231,9 +231,9 @@
                 </p>
             </footer>
         </div>
-        <script src="js/jquery.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/adminlte.min.js"></script>
-        <script src="js/app.js"></script>
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
+        <script src="/js/adminlte.min.js"></script>
+        <script src="/js/app.js"></script>
     </body>
 </html>

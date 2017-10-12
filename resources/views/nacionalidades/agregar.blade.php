@@ -7,8 +7,7 @@
   </div>
   <br>
   <div class="form-group">
-      {!! Form::submit('agregar',
-      array('class'=>'art-button')) !!}
+      {!! Form::submit('agregar', array('class'=>'art-button', 'class' => 'btn btn-primary')) !!}
   </div>
   {!! Form::close() !!}
 @endsection

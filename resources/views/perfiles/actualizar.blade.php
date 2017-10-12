@@ -1,14 +1,13 @@
 @extends('layouts.general')
 @section('contenido')
-  {!! Form::open(['url' => 'perfil/'.$perfil->codigo_perfil, 'class' => 'form', 'method' => 'put']) !!}
+  {!! Form::open(['url' => 'perfil/'.$datos['perfil']->codigo_perfil, 'class' => 'form', 'method' => 'put']) !!}
   <div class="form-group">
       {!! Form::label('nombre') !!}
-      {!! Form::text('nombre', $perfil->nombre, array('required', 'class'=>'form-control', )) !!}
+      {!! Form::text('nombre', $datos['perfil']->nombre, array('required', 'class'=>'form-control', )) !!}
   </div>
   <br>
   <div class="form-group">
-      {!! Form::submit('agregar',
-      array('class'=>'art-button')) !!}
+      {!! Form::submit('agregar', array('class'=>'art-button', 'class' => 'btn btn-primary')) !!}
   </div>
   {!! Form::close() !!}
 @endsection

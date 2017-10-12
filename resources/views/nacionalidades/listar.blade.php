@@ -1,39 +1,39 @@
 @extends('layouts.general')
 @section('contenido')
-<table>
-  <tr>
-    <td>nombre</td>
-    <td>acciones</td>
-  </tr>
-  @foreach($nacionalidades as $nacionalidad)
-    <tr>
-      <td>{{$nacionalidad->nombre}}</td>
-      <td>
-      <!-- Editar Departamento -->
-      {!! Form::open(['method' => 'GET', 'url' => 'nacionalidad/'.$nacionalidad->codigo_nacionalidad]) !!}
+@if(!empty($datos['nacionalidades']))
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>nombre</th>
+            <th>acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach($datos['nacionalidades'] as $nacionalidad)
+          <tr>
+            <td>{{$nacionalidad->nombre}}</td>
+            <td class="datos-en-linea">
+                <div class="margen-horizontal">
+                    <!-- Editar Departamento -->
+                    {!! Form::open(['method' => 'GET', 'url' => 'nacionalidad/'.$nacionalidad->codigo_nacionalidad]) !!}
 
-        {!! Form::button('Actualizar', array('type' => 'submit')) !!}
+                      {!! Form::button('Actualizar', array('type' => 'submit', 'class' => 'btn btn-primary')) !!}
 
-      {!! Form::close() !!}
+                    {!! Form::close() !!}
+                </div>
 
-      <!-- Eliminar Departamento -->
-      {!! Form::open(['method' => 'DELETE', 'url' => 'nacionalidad/'.$nacionalidad->codigo_nacionalidad, 'onsubmit' => 'return ConfirmDelete()']) !!}
+                <div class="margen-horizontal">
+                    <!-- Eliminar Departamento -->
+                    {!! Form::open(['method' => 'DELETE', 'url' => 'nacionalidad/'.$nacionalidad->codigo_nacionalidad, 'onsubmit' => 'return ConfirmDelete()']) !!}
 
-        {!! Form::button('Eliminar', array('type' => 'submit')) !!}
+                      {!! Form::button('Eliminar', array('type' => 'submit', 'class' => 'btn btn-danger')) !!}
 
-      {!! Form::close() !!}
-      </td>
-    </tr>
-  @endforeach
+                    {!! Form::close() !!}
+                </div>
+            </td>
+          </tr>
+        @endforeach
+    </tbody>
 </table>
-<script>
-  function ConfirmDelete()
-  {
-    var x = confirm("está seguro de quere eliminar el registro?");
-    if (x)
-      return true;
-    else
-      return false;
-  }
-</script>
+@endif
 @endsection

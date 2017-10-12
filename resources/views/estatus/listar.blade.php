@@ -17,7 +17,7 @@
                     <!-- Editar Departamento -->
                     {!! Form::open(['method' => 'GET', 'url' => 'actualizar_estatus/'.$estatus->codigo_estatus]) !!}
 
-                    {!! Form::button('Actualizar', array('type' => 'submit', 'class' => 'btn btn-info')) !!}
+                    {!! Form::button('Actualizar', array('type' => 'submit', 'class' => 'btn btn-primary')) !!}
 
                     {!! Form::close() !!}
                 </div>
