@@ -17,6 +17,14 @@ Route::get('/', 'PaginasController@index');
 // Autenticación
 Route::post('/login', 'LdapController@autenticar');
 
+// Administración de Bancos
+Route::get('/bancos', 'PaginasController@listarBancos');
+Route::get('/nuevo_banco', 'PaginasController@agregarBanco');
+Route::get('/actualizar_banco/{codigo_banco}', 'PaginasController@actualizarBanco');
+Route::post('/nuevo_banco', 'BancosController@agregar');
+Route::put('/actualizar_banco/{codigo_banco}', 'BancosController@actualizar');
+Route::delete('/eliminar_banco/{codigo_banco}', 'BancosController@eliminar');
+
 // Administración de Estatus
 Route::get('/listar_estatus', 'PaginasController@listarEstatus');
 Route::get('/nuevo_estatus', 'PaginasController@agregarEstatus');
