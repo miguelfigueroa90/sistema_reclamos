@@ -43,7 +43,7 @@ class PaginasController extends Controller
 
         $this->establecerDatosBasicos($datos);
 
-        $bancos = Bancos::paginate(10);
+        $bancos = Banco::paginate(10);
 
         $this->datos['registros'] = $bancos;
 

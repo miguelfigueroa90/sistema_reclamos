@@ -162,6 +162,12 @@
                                             Productos
                                         </a>
                                     </li>
+                                    <li>
+                                        <a href="{!! url('/bancos') !!}">
+                                            <i class="fa fa-circle-o"></i>
+                                            Bancos
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
                             <li class="treeview">
