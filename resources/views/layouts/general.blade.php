@@ -269,6 +269,11 @@
                                 <div class="box-body {!! $datos['clases_adicionales_body'] !!}">
                                     @yield('contenido')
                                 </div>
+                                <div class="box-footer">
+                                    @if($datos['registros'] instanceof \Illuminate\Pagination\LengthAwarePaginator)
+                                        {!! $datos['registros']->links() !!}
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     </div>

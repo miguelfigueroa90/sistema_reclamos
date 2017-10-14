@@ -1,6 +1,6 @@
 @extends('layouts.general')
 @section('contenido')
-@if(!empty($datos['lista_estatus']))
+@if(!empty($datos['registros']))
 <table class="table table-hover">
     <thead>
         <tr>
@@ -9,7 +9,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach($datos['lista_estatus'] as $estatus)
+        @foreach($datos['registros'] as $estatus)
         <tr>
             <td>{{$estatus->tipo}}</td>
             <td class="datos-en-linea">

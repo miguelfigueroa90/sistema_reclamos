@@ -26,7 +26,7 @@ class PaginasController extends Controller
 
         $estatus = Estatus::find($request->codigo_estatus);
 
-        $this->datos['estatus'] = $estatus;
+        $this->datos['registros'] = $estatus;
 
         return view('estatus/actualizar', ['datos' => $this->datos]);
     }
@@ -42,9 +42,9 @@ class PaginasController extends Controller
 
         $this->establecerDatosBasicos($datos);
 
-        $lista_estatus = Estatus::all();
+        $lista_estatus = Estatus::paginate(10);
 
-        $this->datos['lista_estatus'] = $lista_estatus;
+        $this->datos['registros'] = $lista_estatus;
 
         return view('estatus/listar', ['datos' => $this->datos]);
     }
@@ -77,7 +77,7 @@ class PaginasController extends Controller
 
         $nacionalidad = Nacionalidad::find($request->codigo_nacionalidad);
 
-        $this->datos['nacionalidad'] = $nacionalidad;
+        $this->datos['registros'] = $nacionalidad;
 
         return view('nacionalidades/actualizar', ['datos' => $this->datos]);
     }
@@ -93,9 +93,9 @@ class PaginasController extends Controller
 
         $this->establecerDatosBasicos($datos);
 
-        $nacionalidades = Nacionalidad::all();
+        $nacionalidades = Nacionalidad::paginate(10);
 
-        $this->datos['nacionalidades'] = $nacionalidades;
+        $this->datos['registros'] = $nacionalidades;
 
         return view('nacionalidades/listar', ['datos' => $this->datos]);
     }
@@ -128,7 +128,7 @@ class PaginasController extends Controller
 
         $departamento = Departamento::find($request->codigo_departamento);
 
-        $this->datos['departamento'] = $departamento;
+        $this->datos['registros'] = $departamento;
 
         return view('departamentos/actualizar', ['datos' => $this->datos]);
     }
@@ -144,9 +144,9 @@ class PaginasController extends Controller
 
         $this->establecerDatosBasicos($datos);
 
-        $departamentos = Departamento::all();
+        $departamentos = Departamento::paginate(10);
 
-        $this->datos['departamentos'] = $departamentos;
+        $this->datos['registros'] = $departamentos;
 
         return view('departamentos/listar', ['datos' => $this->datos]);
     }
@@ -179,7 +179,7 @@ class PaginasController extends Controller
 
         $perfil = Perfil::find($request->codigo_perfil);
 
-        $this->datos['perfil'] = $perfil;
+        $this->datos['registros'] = $perfil;
 
         return view('perfiles/actualizar', ['datos' => $this->datos]);
     }
@@ -195,9 +195,9 @@ class PaginasController extends Controller
 
         $this->establecerDatosBasicos($datos);
 
-        $perfiles = Perfil::all();
+        $perfiles = Perfil::paginate(10);
 
-        $this->datos['perfiles'] = $perfiles;
+        $this->datos['registros'] = $perfiles;
 
         return view('perfiles/listar', ['datos' => $this->datos]);
     }
