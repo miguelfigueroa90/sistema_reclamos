@@ -270,7 +270,7 @@
                                     @yield('contenido')
                                 </div>
                                 <div class="box-footer">
-                                    @if($datos['registros'] instanceof \Illuminate\Pagination\LengthAwarePaginator)
+                                    @if(isset($datos['registros']) && $datos['registros'] instanceof \Illuminate\Pagination\LengthAwarePaginator)
                                         {!! $datos['registros']->links() !!}
                                     @endif
                                 </div>
