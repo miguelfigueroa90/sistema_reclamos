@@ -202,7 +202,7 @@
                                     </span>
                                     <ul class="treeview-menu">
                                         <li>
-                                            <a href="{!! url('/agregar_reclamo') !!}">
+                                            <a href="{!! url('/reclamo') !!}">
                                                 <i class="fa fa-circle-o"></i>
                                                 Nuevo
                                             </a>
