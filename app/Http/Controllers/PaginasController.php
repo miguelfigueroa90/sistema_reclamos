@@ -13,17 +13,28 @@ class PaginasController extends Controller
 {
     protected $datos;
 
+    // Reclamos
+    public function agregarReclamo()
+    {
+        $this->datos = [
+          'encabezado' => [
+              'titulo' => 'Agregar Reclamo',
+          ],
+          'clases_adicionales_body' => '',
+        ];
+
+        return view('reclamo/agregar', ['datos' => $this->datos]);
+    }
+
     // Bancos
     public function actualizarBanco(Request $request)
     {
-        $datos = [
+        $this->datos = [
           'encabezado' => [
               'titulo' => 'Actualizar Banco',
           ],
           'clases_adicionales_body' => '',
         ];
-
-        $this->establecerDatosBasicos($datos);
 
         $banco = Estatus::find($request->codigo_banco);
 
@@ -34,14 +45,12 @@ class PaginasController extends Controller
 
     public function listarBancos()
     {
-        $datos = [
+        $this->datos = [
           'encabezado' => [
               'titulo' => 'Bancos',
           ],
           'clases_adicionales_body' => 'table-responsive no-padding',
         ];
-
-        $this->establecerDatosBasicos($datos);
 
         $bancos = Banco::paginate(10);
 
@@ -52,14 +61,12 @@ class PaginasController extends Controller
 
     public function agregarBanco()
     {
-        $datos = [
+        $this->datos = [
           'encabezado' => [
               'titulo' => 'Agregar Banco',
           ],
           'clases_adicionales_body' => '',
         ];
-
-        $this->establecerDatosBasicos($datos);
 
         return view('banco/agregar', ['datos' => $this->datos]);
     }
@@ -67,14 +74,12 @@ class PaginasController extends Controller
     // Estatus
     public function actualizarEstatus(Request $request)
     {
-        $datos = [
+        $this->datos = [
           'encabezado' => [
               'titulo' => 'Actualizar Estatus',
           ],
           'clases_adicionales_body' => '',
         ];
-
-        $this->establecerDatosBasicos($datos);
 
         $estatus = Estatus::find($request->codigo_estatus);
 
@@ -85,14 +90,12 @@ class PaginasController extends Controller
 
     public function listarEstatus()
     {
-        $datos = [
+        $this->datos = [
           'encabezado' => [
               'titulo' => 'Estatus',
           ],
           'clases_adicionales_body' => 'table-responsive no-padding',
         ];
-
-        $this->establecerDatosBasicos($datos);
 
         $lista_estatus = Estatus::paginate(10);
 
@@ -103,14 +106,12 @@ class PaginasController extends Controller
 
     public function agregarEstatus()
     {
-        $datos = [
+        $this->datos = [
           'encabezado' => [
               'titulo' => 'Agregar Estatus',
           ],
           'clases_adicionales_body' => '',
         ];
-
-        $this->establecerDatosBasicos($datos);
 
         return view('estatus/agregar', ['datos' => $this->datos]);
     }
@@ -118,14 +119,12 @@ class PaginasController extends Controller
     // Nacionalidades
     public function actualizarNacionalidad(Request $request)
     {
-        $datos = [
+        $this->datos = [
           'encabezado' => [
               'titulo' => 'Actualizar Nacionalidad',
           ],
           'clases_adicionales_body' => '',
         ];
-
-        $this->establecerDatosBasicos($datos);
 
         $nacionalidad = Nacionalidad::find($request->codigo_nacionalidad);
 
@@ -136,14 +135,12 @@ class PaginasController extends Controller
 
     public function listarNacionalidades()
     {
-        $datos = [
+        $this->datos = [
           'encabezado' => [
               'titulo' => 'Nacionalidades',
           ],
           'clases_adicionales_body' => 'table-responsive no-padding',
         ];
-
-        $this->establecerDatosBasicos($datos);
 
         $nacionalidades = Nacionalidad::paginate(10);
 
@@ -154,14 +151,12 @@ class PaginasController extends Controller
 
     public function agregarNacionalidad()
     {
-        $datos = [
+        $this->datos = [
           'encabezado' => [
               'titulo' => 'Agregar Nacionalidad',
           ],
           'clases_adicionales_body' => '',
         ];
-
-        $this->establecerDatosBasicos($datos);
 
         return view('nacionalidades/agregar', ['datos' => $this->datos]);
     }
@@ -169,14 +164,12 @@ class PaginasController extends Controller
     // Departamentos
     public function actualizarDepartamento(Request $request)
     {
-        $datos = [
+        $this->datos = [
           'encabezado' => [
               'titulo' => 'Actualizar Departamento',
           ],
           'clases_adicionales_body' => '',
         ];
-
-        $this->establecerDatosBasicos($datos);
 
         $departamento = Departamento::find($request->codigo_departamento);
 
@@ -187,14 +180,12 @@ class PaginasController extends Controller
 
     public function listarDepartamentos()
     {
-        $datos = [
+        $this->datos = [
           'encabezado' => [
               'titulo' => 'Departamentos',
           ],
           'clases_adicionales_body' => 'table-responsive no-padding',
         ];
-
-        $this->establecerDatosBasicos($datos);
 
         $departamentos = Departamento::paginate(10);
 
@@ -205,14 +196,12 @@ class PaginasController extends Controller
 
     public function agregarDepartamento()
     {
-        $datos = [
+        $this->datos = [
           'encabezado' => [
               'titulo' => 'Agregar Departamento',
           ],
           'clases_adicionales_body' => '',
         ];
-
-        $this->establecerDatosBasicos($datos);
 
         return view('departamentos/agregar', ['datos' => $this->datos]);
     }
@@ -220,14 +209,12 @@ class PaginasController extends Controller
     // Perfiles
     public function actualizarPerfil(Request $request)
     {
-        $datos = [
+        $this->datos = [
           'encabezado' => [
               'titulo' => 'Actualizar Perfil',
           ],
           'clases_adicionales_body' => '',
         ];
-
-        $this->establecerDatosBasicos($datos);
 
         $perfil = Perfil::find($request->codigo_perfil);
 
@@ -238,14 +225,12 @@ class PaginasController extends Controller
 
     public function listarPerfiles()
     {
-        $datos = [
+        $this->datos = [
           'encabezado' => [
               'titulo' => 'Perfiles',
           ],
           'clases_adicionales_body' => 'table-responsive no-padding',
         ];
-
-        $this->establecerDatosBasicos($datos);
 
         $perfiles = Perfil::paginate(10);
 
@@ -256,34 +241,25 @@ class PaginasController extends Controller
 
     public function agregarPerfil()
     {
-        $datos = [
+        $this->datos = [
           'encabezado' => [
               'titulo' => 'Agregar Perfil',
           ],
           'clases_adicionales_body' => '',
         ];
 
-        $this->establecerDatosBasicos($datos);
-
         return view('perfiles/agregar', ['datos' => $this->datos]);
-    }
-
-    private function establecerDatosBasicos($datos)
-    {
-        $this->datos = $datos;
     }
 
     // Inicio
     public function index()
     {
-        $datos = [
+        $this->datos = [
           'encabezado' => [
               'titulo' => 'Inicio',
           ],
           'clases_adicionales_body' => '',
         ];
-
-        $this->establecerDatosBasicos($datos);
 
         return view('inicio', ['datos' => $this->datos]);
     }

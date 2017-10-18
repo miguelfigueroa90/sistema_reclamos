@@ -17,6 +17,10 @@ Route::get('/', 'PaginasController@index');
 // Autenticación
 Route::post('/login', 'LdapController@autenticar');
 
+// Reclamo
+Route::get('/reclamo', 'PaginasController@agregarReclamo');
+Route::post('/reclamo', 'ReclamosController@agregar');
+
 // Administración de Bancos
 Route::get('/bancos', 'PaginasController@listarBancos');
 Route::get('/nuevo_banco', 'PaginasController@agregarBanco');
