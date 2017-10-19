@@ -4,8 +4,8 @@
 <table class="table table-hover">
     <thead>
         <tr>
-            <th>tipo</th>
-            <th>acciones</th>
+            <th>Tipo</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
