@@ -9,4 +9,29 @@ class Reclamo extends Model
     protected $table = 'reclamo';
     protected $primaryKey = 'numero_reclamo';
     protected $timestamps = false;
+
+    public function transaccionReclamo()
+    {
+    	return $this->hasMany('App\TransaccionReclamo', 'numero_reclamo');
+    }
+
+    public function reclamoUsuario()
+    {
+    	return $this->hasMany('App\ReclamoUsuario', 'numero_reclamo');
+    }
+
+    public function mensajeReclamo()
+    {
+    	return $this->hasMany('App\MensajeReclamo', 'numero_reclamo');
+    }
+
+    public function estatusReclamo()
+    {
+    	return $this->hasMany('App\EstatusReclamo', 'numero_reclamo');
+    }
+
+    public function productoReclamo()
+    {
+    	return $this->hasMany('App\ProductoReclamo', 'numero_reclamo');
+    }
 }

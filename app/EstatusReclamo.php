@@ -9,4 +9,9 @@ class EstatusReclamo extends Model
     protected $table = 'estatus_reclamo';
     protected $primaryKey = 'codigo';
     protected $timestamps = false;
+
+    public function reclamo()
+    {
+    	return $this->belongsTo('App\Reclamo', 'numero_reclamo');
+    }
 }
