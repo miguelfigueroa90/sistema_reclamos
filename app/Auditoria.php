@@ -8,5 +8,5 @@ class Auditoria extends Model
 {
     protected $table = 'auditoria';
     protected $primaryKey = 'codigo_auditoria';
-    public $timestamps = false;
+    protected $timestamps = false;
 }

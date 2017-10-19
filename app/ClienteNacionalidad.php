@@ -8,5 +8,5 @@ class ClienteNacionalidad extends Model
 {
     protected $table = 'cliente_nacionalidad';
     protected $primaryKey = 'codigo';
-    public $timestamps = false;
+    protected $timestamps = false;
 }

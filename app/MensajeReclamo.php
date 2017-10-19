@@ -8,5 +8,5 @@ class MensajeReclamo extends Model
 {
     protected $table = 'mensaje_reclamo';
     protected $primaryKey = 'codigo';
-    public $timestamps = false;
+    protected $timestamps = false;
 }

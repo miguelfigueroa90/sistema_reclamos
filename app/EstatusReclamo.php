@@ -8,5 +8,5 @@ class EstatusReclamo extends Model
 {
     protected $table = 'estatus_reclamo';
     protected $primaryKey = 'codigo';
-    public $timestamps = false;
+    protected $timestamps = false;
 }

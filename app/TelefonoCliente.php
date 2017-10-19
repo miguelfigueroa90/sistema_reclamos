@@ -8,5 +8,5 @@ class TelefonoCliente extends Model
 {
     protected $table = 'telefono_cliente';
     protected $primaryKey = 'codigo';
-    public $timestamps = false;
+    protected $timestamps = false;
 }

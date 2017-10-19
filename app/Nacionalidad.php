@@ -8,5 +8,5 @@ class Nacionalidad extends Model
 {
   protected $table = 'nacionalidad';
   protected $primaryKey = 'codigo_nacionalidad';
-  public $timestamps = false;
+  protected $timestamps = false;
 }
