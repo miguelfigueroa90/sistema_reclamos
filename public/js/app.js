@@ -5,3 +5,28 @@ function ConfirmDelete() {
     else
     return false;
 }
+
+function limpiar_formulario(id_formulario) {
+    var formulario = $('#'+id_formulario);
+    var campos = formulario.find('.ajax');
+
+    $.each(campos, function(clave, valor){
+        $(valor).val('');
+    });
+}
+
+$('.campo_numerico').keydown(function(e){
+    // Permite: backspace, delete, tab, escape, enter y .
+    if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+         // Permite: Ctrl+A, Command+A
+        (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) || 
+         // Permite: home, end, left, right, down, up
+        (e.keyCode >= 35 && e.keyCode <= 40)) {
+             // Deja que pase, no hace nada.
+             return;
+    }
+    // Se asegura de que la tecla presionada sea un numero. En caso contrario, detiene la ejecución del keydown.
+    if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+        e.preventDefault();
+    }
+});

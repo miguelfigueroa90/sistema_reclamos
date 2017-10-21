@@ -19,6 +19,7 @@ Route::post('/login', 'LdapController@autenticar');
 
 // Reclamo
 Route::get('/reclamo', 'PaginasController@agregarReclamo');
+Route::post('/buscar_cliente', 'ClientesController@buscarCliente');
 Route::post('/reclamo', 'ReclamosController@agregar');
 
 // Administración de Bancos
