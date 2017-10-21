@@ -67,6 +67,19 @@ return [
             'sslmode' => 'prefer',
         ],
 
+        'pgsql_espejo' => [
+            'driver' => 'pgsql',
+            'host' => env('DB_HOST_ESPEJO', '127.0.0.1'),
+            'port' => env('DB_PORT_ESPEJO', '5432'),
+            'database' => env('DB_DATABASE_ESPEJO', 'forge'),
+            'username' => env('DB_USERNAME_ESPEJO', 'forge'),
+            'password' => env('DB_PASSWORD_ESPEJO', ''),
+            'charset' => 'utf8',
+            'prefix' => '',
+            'schema' => 'public',
+            'sslmode' => 'prefer',
+        ],
+
         'sqlsrv' => [
             'driver' => 'sqlsrv',
             'host' => env('DB_HOST', 'localhost'),
