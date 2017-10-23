@@ -8,5 +8,5 @@ class Tarjeta extends Model
 {
     protected $table = 'tarjeta';
     protected $primaryKey = 'codigo_tarjeta';
-    protected $timestamps = false;
+     public $timestamps = false;
 }

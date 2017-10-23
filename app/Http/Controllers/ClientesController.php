@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\CUMST;
+use App\TipoCliente;
 
 class ClientesController extends Controller
 {
     public function buscarCliente(Request $request)
     {
-      $cedula = $request->tipo_cliente . $request->cedula_cliente;
+      $tipo_cliente = TipoCliente::find($request->codigo_tipo_cliente);
+
+      $cedula = $tipo_cliente->nombre . $request->cedula_cliente;
 
       $cliente = CUMST::where('cusidn', 'like', $cedula . '%')
         ->first([

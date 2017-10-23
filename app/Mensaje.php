@@ -8,5 +8,5 @@ class Mensaje extends Model
 {
     protected $table = 'mensaje';
     protected $primaryKey = 'codigo_mensaje';
-    protected $timestamps = false;
+     public $timestamps = false;
 }

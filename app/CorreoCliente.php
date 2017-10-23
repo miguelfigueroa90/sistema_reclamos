@@ -8,5 +8,5 @@ class CorreoCliente extends Model
 {
     protected $table = 'correo_cliente';
     protected $primaryKey = 'codigo';
-    protected $timestamps = false;
+     public $timestamps = false;
 }

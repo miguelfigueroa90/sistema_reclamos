@@ -6,7 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cliente extends Model
 {
-    protected $table = 'Cliente';
+    protected $table = 'cliente';
     protected $primaryKey = 'cedula';
-    protected $timestamps = false;
+    public $timestamps = false;
+
+    public function TipoCliente()
+    {
+    	return $this->belongsToMany('App\ClienteTipoCliente', 'cliente_nacionalidad', 'cedula', 'codigo_nacionalidad');
+    }
 }

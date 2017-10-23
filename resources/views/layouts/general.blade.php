@@ -275,6 +275,9 @@
                                 <div class="box-body {!! $datos['clases_adicionales_body'] !!}">
                                     @yield('contenido')
                                 </div>
+                                <div class="overlay" style="display: none;">
+                                    <i class="fa fa-refresh fa-spin"></i>
+                                </div>
                                 <div class="box-footer">
                                     @if(isset($datos['registros']) && $datos['registros'] instanceof \Illuminate\Pagination\LengthAwarePaginator)
                                         {!! $datos['registros']->links() !!}

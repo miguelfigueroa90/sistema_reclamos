@@ -8,5 +8,5 @@ class UsuarioDepartamentoPerfil extends Model
 {
     protected $table = 'usuario_departamento_perfil';
     protected $primaryKey = 'codigo';
-    protected $timestamps = false;
+     public $timestamps = false;
 }

@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Banco;
 use App\Perfil;
+use App\Estatus;
 use App\Departamento;
 use App\Nacionalidad;
-use App\Estatus;
-use App\Banco;
+use App\TipoCliente;
 
 class PaginasController extends Controller
 {
@@ -16,10 +17,13 @@ class PaginasController extends Controller
     // Reclamos
     public function agregarReclamo()
     {
+        $tipos_cliente = TipoCliente::all();
+
         $this->datos = [
           'encabezado' => [
               'titulo' => 'Agregar Reclamo',
           ],
+          'tipos_cliente' => $tipos_cliente,
           'clases_adicionales_body' => '',
         ];
 

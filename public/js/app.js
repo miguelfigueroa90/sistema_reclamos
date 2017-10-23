@@ -6,12 +6,30 @@ function ConfirmDelete() {
     return false;
 }
 
-function limpiar_formulario(id_formulario) {
+function limpiar_campos_ajax(id_formulario) {
     var formulario = $('#'+id_formulario);
-    var campos = formulario.find('.ajax');
+    var campos = formulario.find('.campo-ajax');
 
-    $.each(campos, function(clave, valor){
-        $(valor).val('');
+    $.each(campos, function(clave_campo,  campo){
+
+        var tipo_elemento =  campo.nodeName;
+
+        switch(tipo_elemento) {
+            case 'SELECT':
+                var opciones = $( campo).children();
+
+                $.each(opciones, function(clave_opcion,  opcion){
+                    var  valor_campo = $( opcion).val();
+
+                    if( valor_campo !== '') {
+                         $(opcion).remove();
+                    }
+                });
+                break;
+
+            default:
+                $( campo).val('');
+        }
     });
 }
 

@@ -8,5 +8,5 @@ class CuentaBancaria extends Model
 {
     protected $table = 'cuenta_bancaria';
     protected $primaryKey = 'codigo_cuenta_bancaria';
-    protected $timestamps = false;
+     public $timestamps = false;
 }

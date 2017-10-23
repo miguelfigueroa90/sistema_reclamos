@@ -8,5 +8,5 @@ class Perfil extends Model
 {
     protected $table = 'perfil';
     protected $primaryKey = 'codigo_perfil';
-    protected $timestamps = false;
+     public $timestamps = false;
 }

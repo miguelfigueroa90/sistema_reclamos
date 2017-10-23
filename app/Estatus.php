@@ -8,5 +8,5 @@ class Estatus extends Model
 {
   protected $table = 'estatus';
   protected $primaryKey = 'codigo_estatus';
-  protected $timestamps = false;
+   public $timestamps = false;
 }

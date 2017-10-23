@@ -8,5 +8,5 @@ class Dispositivo extends Model
 {
     protected $table = 'dispositivo';
     protected $primaryKey = 'codigo_dispositivo';
-    protected $timestamps = false;
+     public $timestamps = false;
 }

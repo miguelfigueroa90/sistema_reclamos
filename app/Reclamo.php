@@ -8,7 +8,7 @@ class Reclamo extends Model
 {
     protected $table = 'reclamo';
     protected $primaryKey = 'numero_reclamo';
-    protected $timestamps = false;
+     public $timestamps = false;
 
     public function transaccionReclamo()
     {
@@ -33,5 +33,10 @@ class Reclamo extends Model
     public function productoReclamo()
     {
     	return $this->hasMany('App\ProductoReclamo', 'numero_reclamo');
+    }
+
+    public function cliente()
+    {
+        return $this->belongsTo('App\ReclamoCliente');
     }
 }

@@ -8,7 +8,7 @@ class ReclamoUsuario extends Model
 {
     protected $table = 'reclamo_usuario';
     protected $primaryKey = 'codigo';
-    protected $timestamps = false;
+     public $timestamps = false;
 
     public function reclamo()
     {

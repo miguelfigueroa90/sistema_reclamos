@@ -8,5 +8,5 @@ class Producto extends Model
 {
     protected $table = 'producto';
     protected $primaryKey = 'codigo_producto';
-    protected $timestamps = false;
+     public $timestamps = false;
 }
