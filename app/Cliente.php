@@ -14,4 +14,14 @@ class Cliente extends Model
     {
     	return $this->belongsToMany('App\ClienteTipoCliente', 'cliente_nacionalidad', 'cedula', 'codigo_nacionalidad');
     }
+
+    public function Correo()
+    {
+    	return $this->belongsToMany('App\CorreoCliente', 'correo_cliente', 'cedula', 'codigo_correo_electronico');
+    }
+
+    public function Telefono()
+    {
+    	return $this->belongsToMany('App\TelefonoCliente', 'telefono_cliente', 'cedula', 'codigo_telefono');
+    }
 }

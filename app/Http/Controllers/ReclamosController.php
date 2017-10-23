@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Cliente;
+use App\CorreoElectronico;
 use App\Reclamo;
-// use App\TipoCliente;
+use App\Telefono;
 use Carbon\Carbon;
 
 class ReclamosController extends Controller
@@ -25,22 +26,37 @@ class ReclamosController extends Controller
             $cliente = new Cliente;
         }
 
-        $cliente->cedula = $request->cedula_cliente;
-        $cliente->nombre = $request->nombre_cliente;
-        $cliente->apellido = $request->apellido_cliente;
+        $cliente->cedula = trim($request->cedula_cliente);
+        $cliente->nombre = trim($request->nombre_cliente);
+        $cliente->apellido = trim($request->apellido_cliente);
         $cliente_guardado = $cliente->save();
 
-        if(!$cliente_guardado) {
-            $mensaje_crear_cliente = 'Ha ocurrido un error intentando guardar el cliente.';
-        } else {
-            $tipo_cliente = $cliente->TipoCliente();
-            dd($tipo_cliente);
+        if($cliente_guardado) {
+            $correo_electronico = CorreoElectronico::where('correo', '=', $request->correo_cliente)->first();
 
-            if(!$cliente_guardado) {
-                $mensaje_crear_cliente = 'Ha ocurrido un error intentando guardar los datos del cliente.';
-            } else {
-                $mensaje_crear_cliente = 'El cliente ha sido guardado en el sistema.';
+            if(!$correo_electronico){
+                $correo_electronico = new CorreoElectronico;
             }
+
+            $correo_electronico->correo = trim($request->correo_cliente);
+            $correo_electronico->save();
+
+            $telefono = Telefono::where('telefono', '=', $request->telefono_cliente)->first();
+
+            if(!$telefono) {
+                $telefono = new Telefono;
+            }
+
+            $telefono->telefono = $request->telefono_cliente;
+            $telefono->save();
+
+            $cliente->TipoCliente()->attach($request->codigo_tipo_cliente);
+            $cliente->Correo()->attach($correo_electronico->codigo_correo_electronico);
+            $cliente->Telefono()->attach($telefono->codigo_telefono);
+
+            $mensaje_crear_cliente = 'El cliente ha sido guardado en el sistema.';
+        } else {
+            $mensaje_crear_cliente = 'Ha ocurrido un error intentando guardar el cliente.';
         }
 
         // $reclamo = new reclamo;
@@ -48,7 +64,7 @@ class ReclamosController extends Controller
         // $reclamo->fecha_registro = Carbon::now(); // Se obtiene la fecha actual.
         // $reclamo_guardado = $reclamo->save();
 
-        if($request->ajax() && $cliente_guardado && $reclamo_guardado) {
+        if($request->ajax() && $cliente_guardado) {
             return response()->json([
               'respuesta' => '200',
               'mensaje_crear_cliente' => $mensaje_crear_cliente,
