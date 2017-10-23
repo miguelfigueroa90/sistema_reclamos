@@ -8,6 +8,6 @@ class ACMST extends Model
 {
     protected $connection = 'pgsql_espejo';
     protected $table = 'acmst';
-    protected $primaryKey = 'cuscun';
+    protected $primaryKey = 'acmacc';
     public $timestamps = FALSE;
 }

@@ -94,6 +94,13 @@
                         $('#apellido_cliente').val(resultado.apellido);
                         $('#telefono_cliente').val(resultado.telefono);
                         $('#correo_cliente').val(resultado.correo);
+
+                        $.each(resultado.cuentas, function (i, item) {
+                            $('#cuenta_cliente').append($('<option>', { 
+                                value: item,
+                                text : item
+                            }));
+                        });
                         break;
 
                     case '404':
@@ -115,10 +122,10 @@
 
             var cuenta_bancaria = $('#cuenta_cliente').val();
 
-            // if(cuenta_bancaria === '') {
-            //     alert('Debe seleccionar la cuenta bancaria asociada al reclamo');
-            //     return false;
-            // }
+            if(cuenta_bancaria === '') {
+                alert('Debe seleccionar la cuenta bancaria asociada al reclamo');
+                return false;
+            }
 
             var formulario =  $('#form-reclamo');
             var ruta = formulario.attr('action');
