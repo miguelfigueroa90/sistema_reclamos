@@ -152,6 +152,9 @@
                 }
 
                 $('.overlay').hide();
+            }).fail(function(){
+                alert('Error inesperado');
+                $('.overlay').hide();
             });
         });
     });

@@ -24,4 +24,9 @@ class Cliente extends Model
     {
     	return $this->belongsToMany('App\TelefonoCliente', 'telefono_cliente', 'cedula', 'codigo_telefono');
     }
+
+    public function CuentaBancaria()
+    {
+    	return $this->belongsToMany('App\CuentaBancariaCliente', 'cuenta_bancaria_cliente', 'cedula', 'codigo_cuenta_bancaria');
+    }
 }

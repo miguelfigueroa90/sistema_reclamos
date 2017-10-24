@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Cliente;
 use App\CorreoElectronico;
+use App\CuentaBancaria;
 use App\Reclamo;
 use App\Telefono;
 use Carbon\Carbon;
@@ -50,9 +51,19 @@ class ReclamosController extends Controller
             $telefono->telefono = $request->telefono_cliente;
             $telefono->save();
 
+            $cuenta_bancaria = CuentaBancaria::where('cuenta_bancaria', '=', $request->cuenta_cliente)->first();
+
+            if(!$cuenta_bancaria) {
+                $cuenta_bancaria = new CuentaBancaria;
+            }
+
+            $cuenta_bancaria->cuenta_bancaria = $request->cuenta_cliente;
+            $cuenta_bancaria->save();
+
             $cliente->TipoCliente()->attach($request->codigo_tipo_cliente);
             $cliente->Correo()->attach($correo_electronico->codigo_correo_electronico);
             $cliente->Telefono()->attach($telefono->codigo_telefono);
+            $cliente->CuentaBancaria()->attach($cuenta_bancaria->codigo_cuenta_bancaria);
 
             $mensaje_crear_cliente = 'El cliente ha sido guardado en el sistema.';
         } else {
