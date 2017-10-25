@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\ACMST;
+use App\CCREF;
 use App\CUMST;
 use App\TipoCliente;
 
@@ -75,6 +76,14 @@ class ClientesController extends Controller
         $cuentas_cliente[$cuenta->cuenta]['estado_cuenta'] = $estado_cuenta;
       }
 
+      $tarjetas = CCREF::where('ccrcun', '=', $cliente->codigo)->get(['ccrnum as numero_tarjeta']);
+
+      $tarjetas_cliente = [];
+
+      foreach ($tarjetas as $tarjeta) {
+        $tarjetas_cliente[trim($tarjeta->numero_tarjeta)] = trim($tarjeta->numero_tarjeta);
+      }
+
       if($request->ajax()) {
         return response()->json([
           'respuesta' => '200',
@@ -82,7 +91,8 @@ class ClientesController extends Controller
           'apellido' => trim($cliente->apellido),
           'telefono' => trim($cliente->telefono),
           'correo' => trim($cliente->correo),
-          'cuentas' => $cuentas_cliente
+          'cuentas' => $cuentas_cliente,
+          'tarjetas' => $tarjetas_cliente
         ]);
       }
     }

@@ -56,6 +56,10 @@
             {!! Form::label('Tarjeta') !!}
             {!! Form::select('tarjeta_cliente', ['' => 'Seleccione...'], null, ['class' => 'form-control campo-ajax', 'id' => 'tarjeta_cliente']) !!}
         </div>
+        <div class="form-group" id="form_group_nueva_tarjeta" style="display: none;">
+            {!! Form::label('Nueva tarjeta') !!}
+            {!! Form::text('nueva_tarjeta', null, ['class' => 'form-control', 'id' => 'correo_cliente', 'nueva_tarjeta']) !!}
+        </div>
         <div class="form-group">
             {!! Form::label('Descripción') !!}
             {!! Form::textarea('descripcion_reclamo', null, ['class' => 'form-control', 'id' => 'descripcion_reclamo', 'required' => 'required']) !!}
@@ -71,6 +75,16 @@
 @section('scripts')
 <script>
     $(document).ready(function(){
+        $('#tarjeta_cliente').change(function(){
+            var valor = $(this).val();
+
+            if(valor === 'otro') {
+                $('#form_group_nueva_tarjeta').show();
+            } else {
+                $('#form_group_nueva_tarjeta').hide();
+            }
+        });
+
         $('#btn-buscar').click(function(e){
             e.preventDefault();
 
@@ -114,6 +128,17 @@
                                 text : item.cuenta + ' - ' + item.estado_cuenta
                             }));
                         });
+
+                        $.each(resultado.tarjetas, function (i, item) {
+                            $('#tarjeta_cliente').append($('<option>', {
+                                value: item,
+                                text : item
+                            }));
+                        });
+                        $('#tarjeta_cliente').append($('<option>', {
+                            value: 'otro',
+                            text : 'Otro...'
+                        }));
                         break;
 
                     case '404':
@@ -126,6 +151,9 @@
                         alert(mensaje);
                 }
 
+                $('.overlay').hide();
+            }).fail(function(){
+                alert('Error inesperado');
                 $('.overlay').hide();
             });
         });
