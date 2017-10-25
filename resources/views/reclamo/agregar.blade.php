@@ -44,6 +44,19 @@
             {!! Form::select('cuenta_cliente', ['' => 'Seleccione...'], null, ['class' => 'form-control campo-ajax', 'id' => 'cuenta_cliente']) !!}
         </div>
         <div class="form-group">
+            {!! Form::label('Producto') !!}
+            <select name="producto_banco" id="producto_banco" class="form-control">
+                <option value="">Seleccione...</option>
+                @foreach($datos['productos_banco'] as $producto)
+                    <option value="{!! $producto->codigo_producto !!}">{!! $producto->nombre !!}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="form-group">
+            {!! Form::label('Tarjeta') !!}
+            {!! Form::select('tarjeta_cliente', ['' => 'Seleccione...'], null, ['class' => 'form-control campo-ajax', 'id' => 'tarjeta_cliente']) !!}
+        </div>
+        <div class="form-group">
             {!! Form::label('Descripción') !!}
             {!! Form::textarea('descripcion_reclamo', null, ['class' => 'form-control', 'id' => 'descripcion_reclamo', 'required' => 'required']) !!}
         </div>
@@ -97,8 +110,8 @@
 
                         $.each(resultado.cuentas, function (i, item) {
                             $('#cuenta_cliente').append($('<option>', { 
-                                value: item,
-                                text : item
+                                value: item.cuenta,
+                                text : item.cuenta + ' - ' + item.estado_cuenta
                             }));
                         });
                         break;

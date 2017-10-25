@@ -31,12 +31,48 @@ class ClientesController extends Controller
         ]);
       }
 
-      $cuentas = ACMST::where('acmcun', '=', $cliente->codigo)->get(['acmacc as cuenta']);
+      $cuentas = ACMST::where('acmcun', '=', $cliente->codigo)->get(['acmacc as cuenta', 'acmast as estado_cuenta']);
 
       $cuentas_cliente = [];
 
       foreach($cuentas as $cuenta) {
-        $cuentas_cliente[$cuenta->cuenta] = $cuenta->cuenta;
+        $cuentas_cliente[$cuenta->cuenta]['cuenta'] = $cuenta->cuenta;
+
+        switch ($cuenta->estado_cuenta) {
+          case 'A':
+            $estado_cuenta = 'Cuenta Activa';
+            break;
+
+          case 'C':
+            $estado_cuenta = 'Cuenta Cancelada';
+            break;
+
+          case 'I':
+            $estado_cuenta = 'Cuenta Inactiva 1';
+            break;
+
+          case 'D':
+            $estado_cuenta = 'Cuenta Inactiva 2';
+            break;
+
+          case 'O':
+            $estado_cuenta = 'Cuenta Controlada';
+            break;
+
+          case 'E':
+            $estado_cuenta = 'Embargada';
+            break;
+
+          case 'T':
+            $estado_cuenta = 'Acepta Sólo Depósitos';
+            break;
+
+          default:
+            $estado_cuenta = 'Estado desconocido';
+            break;
+        }
+
+        $cuentas_cliente[$cuenta->cuenta]['estado_cuenta'] = $estado_cuenta;
       }
 
       if($request->ajax()) {

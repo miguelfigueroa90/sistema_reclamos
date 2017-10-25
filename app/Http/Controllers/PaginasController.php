@@ -8,6 +8,7 @@ use App\Perfil;
 use App\Estatus;
 use App\Departamento;
 use App\Nacionalidad;
+use App\Producto;
 use App\TipoCliente;
 
 class PaginasController extends Controller
@@ -18,12 +19,14 @@ class PaginasController extends Controller
     public function agregarReclamo()
     {
         $tipos_cliente = TipoCliente::all();
+        $productos_banco = Producto::all();
 
         $this->datos = [
           'encabezado' => [
               'titulo' => 'Agregar Reclamo',
           ],
           'tipos_cliente' => $tipos_cliente,
+          'productos_banco' => $productos_banco,
           'clases_adicionales_body' => '',
         ];
 
