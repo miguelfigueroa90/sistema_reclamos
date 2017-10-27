@@ -18,7 +18,9 @@ class ReclamosController extends Controller
 
     public function agregar(Request $request)
     {
-        $cliente = Cliente::where('cedula', '=', $request->cedula_cliente)
+        $cedula = ltrim(trim($request->cedula_cliente), '0');
+
+        $cliente = Cliente::where('cedula', '=', $cedula)
         ->first();
 
         $mensaje_crear_cliente = '';
@@ -27,7 +29,7 @@ class ReclamosController extends Controller
             $cliente = new Cliente;
         }
 
-        $cliente->cedula = trim($request->cedula_cliente);
+        $cliente->cedula = $cedula;
         $cliente->nombre = trim($request->nombre_cliente);
         $cliente->apellido = trim($request->apellido_cliente);
         $cliente_guardado = $cliente->save();
@@ -70,23 +72,33 @@ class ReclamosController extends Controller
             $mensaje_crear_cliente = 'Ha ocurrido un error intentando guardar el cliente.';
         }
 
-        // $reclamo = new reclamo;
-        // $reclamo->descripcion = $request->descripcion_reclamo;
-        // $reclamo->fecha_registro = Carbon::now(); // Se obtiene la fecha actual.
-        // $reclamo_guardado = $reclamo->save();
+        $reclamo = new reclamo;
+        $reclamo->descripcion = $request->descripcion_reclamo;
+        $reclamo->fecha_registro = Carbon::now(); // Se obtiene la fecha actual.
+        $reclamo_guardado = $reclamo->save();
 
-        if($request->ajax() && $cliente_guardado) {
-            return response()->json([
-              'respuesta' => '200',
-              'mensaje_crear_cliente' => $mensaje_crear_cliente,
-              // 'mensaje_reclamo' => 'El reclamo ha sido creado.'
-            ]);
+        $reclamo->Cliente()->attach($cliente->cedula);
+
+        if($cliente_guardado && $reclamo_guardado) {
+            $respuesta = [
+                'codigo_respuesta' => '200',
+                'mensaje_respuesta' => 'Los datos fueron guardados correctamente.'
+            ];
         } else {
-            return response()->json([
-              'respuesta' => '404',
-              'mensaje_crear_cliente' => $mensaje_crear_cliente,
-              // 'mensaje_reclamo' => 'El reclamo no ha podido ser creado.'
-            ]);
+            $respuesta = [
+                'codigo_respuesta' => '500',
+                'mensaje_respuesta' => 'El reclamo no pudo ser guardado debido a un error inesperado'
+            ];
         }
+
+        if($request->ajax()) {
+            return response()->json($respuesta);
+        }
+    }
+
+    public function obtenerTransacciones(Request $request)
+    {
+        $tarjeta_cliente = $request->tarjeta_cliente;
+        dd($tarjeta_cliente);
     }
 }

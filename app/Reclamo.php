@@ -37,6 +37,6 @@ class Reclamo extends Model
 
     public function cliente()
     {
-        return $this->belongsTo('App\ReclamoCliente');
+        return $this->belongsToMany('App\ReclamoCliente', 'reclamo_cliente', 'numero_reclamo', 'cedula');
     }
 }

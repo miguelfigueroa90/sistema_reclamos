@@ -19,46 +19,47 @@
     </div>
     {!! Form::close() !!}
 
+    {!! Form::open(['url' => 'reclamo', 'method' => 'post', 'class' => 'form', 'id' => 'form-reclamo']) !!}
+    {!! Form::hidden('codigo_tipo_cliente', '', ['class' => 'campo-ajax', 'id' => 'codigo_tipo_cliente_hidden']); !!}
+    {!! Form::hidden('cedula_cliente', '', ['class' => 'campo-ajax', 'id' => 'cedula_cliente_hidden']); !!}
+    {!! Form::hidden('nombre_cliente', null, ['class' => 'form-control campo-ajax', 'id' => 'nombre_cliente']) !!}
+    {!! Form::hidden('apellido_cliente', null, ['class' => 'form-control campo-ajax', 'id' => 'apellido_cliente']) !!}
+    <div class="form-group col-md-4">
+        {!! Form::label('Apellidos y nombres') !!}
+        {!! Form::text('apellido_nombre_cliente', null, ['class' => 'form-control campo-ajax', 'id' => 'apellido_nombre_cliente', 'readonly']) !!}
+    </div>
+    <div class="form-group col-md-4">
+        {!! Form::label('Teléfono') !!}
+        {!! Form::text('telefono_cliente', null, ['class' => 'form-control campo-ajax', 'id' => 'telefono_cliente', 'readonly']) !!}
+    </div>
+    <div class="form-group col-md-4">
+        {!! Form::label('Correo electronico') !!}
+        {!! Form::text('correo_cliente', null, ['class' => 'form-control campo-ajax', 'id' => 'correo_cliente', 'readonly']) !!}
+    </div>
+    <div class="form-group col-md-4">
+        {!! Form::label('Cuenta bancaria') !!}
+        {!! Form::select('cuenta_cliente', ['' => 'Seleccione...'], null, ['class' => 'form-control campo-ajax', 'id' => 'cuenta_cliente']) !!}
+    </div>
+    <div class="form-group col-md-4">
+        {!! Form::label('Producto') !!}
+        <select name="producto_banco" id="producto_banco" class="form-control">
+            <option value="">Seleccione...</option>
+            @foreach($datos['productos_banco'] as $producto)
+                <option value="{!! $producto->codigo_producto !!}">{!! $producto->nombre !!}</option>
+            @endforeach
+        </select>
+    </div>
+    <div class="form-group col-md-4">
+        {!! Form::label('Tarjeta') !!}
+        {!! Form::select('tarjeta_cliente', ['' => 'Seleccione...'], null, ['class' => 'form-control campo-ajax', 'id' => 'tarjeta_cliente']) !!}
+    </div>
     <div class="col-md-12">
-        {!! Form::open(['url' => 'reclamo', 'method' => 'post', 'class' => 'form', 'id' => 'form-reclamo']) !!}
-        {!! Form::hidden('codigo_tipo_cliente', '', ['class' => 'ajax', 'id' => 'codigo_tipo_cliente_hidden']); !!}
-        {!! Form::hidden('cedula_cliente', '', ['class' => 'ajax', 'id' => 'cedula_cliente_hidden']); !!}
-        <div class="form-group">
-            {!! Form::label('Nombre') !!}
-            {!! Form::text('nombre_cliente', null, ['class' => 'form-control campo-ajax', 'id' => 'nombre_cliente', 'readonly']) !!}
-        </div>
-        <div class="form-group">
-            {!! Form::label('Apellido') !!}
-            {!! Form::text('apellido_cliente', null, ['class' => 'form-control campo-ajax', 'id' => 'apellido_cliente', 'readonly']) !!}
-        </div>
-        <div class="form-group">
-            {!! Form::label('Teléfono') !!}
-            {!! Form::text('telefono_cliente', null, ['class' => 'form-control campo-ajax', 'id' => 'telefono_cliente', 'readonly']) !!}
-        </div>
-        <div class="form-group">
-            {!! Form::label('Correo electronico') !!}
-            {!! Form::text('correo_cliente', null, ['class' => 'form-control campo-ajax', 'id' => 'correo_cliente', 'readonly']) !!}
-        </div>
-        <div class="form-group">
-            {!! Form::label('Cuenta bancaria') !!}
-            {!! Form::select('cuenta_cliente', ['' => 'Seleccione...'], null, ['class' => 'form-control campo-ajax', 'id' => 'cuenta_cliente']) !!}
-        </div>
-        <div class="form-group">
-            {!! Form::label('Producto') !!}
-            <select name="producto_banco" id="producto_banco" class="form-control">
-                <option value="">Seleccione...</option>
-                @foreach($datos['productos_banco'] as $producto)
-                    <option value="{!! $producto->codigo_producto !!}">{!! $producto->nombre !!}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="form-group">
-            {!! Form::label('Tarjeta') !!}
-            {!! Form::select('tarjeta_cliente', ['' => 'Seleccione...'], null, ['class' => 'form-control campo-ajax', 'id' => 'tarjeta_cliente']) !!}
-        </div>
         <div class="form-group" id="form_group_nueva_tarjeta" style="display: none;">
             {!! Form::label('Nueva tarjeta') !!}
             {!! Form::text('nueva_tarjeta', null, ['class' => 'form-control', 'id' => 'correo_cliente', 'nueva_tarjeta']) !!}
+        </div>
+        <div class="form-group" id="form_group_operaciones_tarjeta" style="display: none;">
+            {!! Form::label('Transacciones') !!}
         </div>
         <div class="form-group">
             {!! Form::label('Descripción') !!}
@@ -79,9 +80,28 @@
             var valor = $(this).val();
 
             if(valor === 'otro') {
+                $('#form_group_operaciones_tarjeta').hide();
                 $('#form_group_nueva_tarjeta').show();
             } else {
                 $('#form_group_nueva_tarjeta').hide();
+
+                // if(valor !== '') {
+                //     var formulario =  $('#form-reclamo');
+                //     var url = 'obtener_transacciones';
+                //     var datos = formulario.serialize();
+
+                //     $('.overlay').show();
+
+                //     $.post(url, datos, function(respuesta){
+                //         console.log(respuesta);
+                //         $('.overlay').hide();
+                //     }).fail(function(){
+                //         alert('Error inesperado');
+                //         $('.overlay').hide();
+                //     });
+                // } else {
+                //     $('#form_group_operaciones_tarjeta').hide();
+                // }
             }
         });
 
@@ -114,11 +134,13 @@
             $('.overlay').show();
 
             $.post(ruta, datos, function(resultado){
+                // console.log(resultado);
 
-                switch(resultado.respuesta) {
+                switch(resultado.codigo_respuesta) {
                     case '200':
                         $('#nombre_cliente').val(resultado.nombre);
                         $('#apellido_cliente').val(resultado.apellido);
+                        $('#apellido_nombre_cliente').val(resultado.apellido + ' ' + resultado.nombre);
                         $('#telefono_cliente').val(resultado.telefono);
                         $('#correo_cliente').val(resultado.correo);
 
@@ -142,7 +164,7 @@
                         break;
 
                     case '404':
-                        var mensaje = resultado.mensaje;
+                        var mensaje = resultado.mensaje_respuesta;
                         alert(mensaje);
                         break;
 
@@ -176,19 +198,17 @@
 
             $.post(ruta, datos, function(resultado){
 
-                switch(resultado.respuesta) {
+                switch(resultado.codigo_respuesta) {
                     case '200':
-                        alert(resultado.mensaje_crear_cliente);
-                        alert(resultado.mensaje_reclamo);
+                        alert(resultado.mensaje_respuesta);
                         break;
 
-                    case '404':
-                        alert(resultado.mensaje_crear_cliente);
-                        alert(resultado.mensaje_reclamo);
+                    case '500':
+                        alert(resultado.mensaje_respuesta);
                         break;
 
                     default:
-                        var mensaje = 'Ha ocurrido un error inesperado durante la búsqueda del cliente';
+                        var mensaje = 'Ha ocurrido un error inesperado mientras se intentó guardar el reclamo';
                         alert(mensaje);
                 }
 
