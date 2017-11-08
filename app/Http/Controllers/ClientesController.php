@@ -28,7 +28,7 @@ class ClientesController extends Controller
       if($request->ajax() && is_null($cliente)) {
         return response()->json([
           'codigo_respuesta' => '404',
-          'mensaje_respuesta' => 'El usuario ingresado no ha sido encontrado, por favor verifique'
+          'mensaje_respuesta' => 'El usuario ingresado no ha sido encontrado, por favor verifique.'
         ]);
       }
 

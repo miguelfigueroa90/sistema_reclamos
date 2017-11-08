@@ -58,8 +58,29 @@
             {!! Form::label('Nueva tarjeta') !!}
             {!! Form::text('nueva_tarjeta', null, ['class' => 'form-control', 'id' => 'correo_cliente', 'nueva_tarjeta']) !!}
         </div>
-        <div class="form-group" id="form_group_operaciones_tarjeta" style="display: none;">
+        <div class="form-group box-body table-responsive no-padding" id="form_group_operaciones_tarjeta" style="display: none;">
             {!! Form::label('Transacciones') !!}
+            <table id="tabla_transacciones" class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Secuencia</th>
+                        <th>Nodo</th>
+                        <th>Fecha transacción</th>
+                        <th>Código ISO</th>
+                        <th>Hora</th>
+                        <th>Código respuesta</th>
+                        <th>Monto transacción</th>
+                        <th>Selección</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            {!! Form::hidden('nodo_transaccion', '', ['class' => 'campo-ajax', 'id' => 'nodo_transaccion_hidden']); !!}
+            {!! Form::hidden('fecha_transaccion', '', ['class' => 'campo-ajax', 'id' => 'fecha_transaccion_hidden']); !!}
+            {!! Form::hidden('codigo_iso_transaccion', '', ['class' => 'campo-ajax', 'id' => 'codigo_iso_transaccion_hidden']); !!}
+            {!! Form::hidden('hora_transaccion', '', ['class' => 'campo-ajax', 'id' => 'hora_transaccion_hidden']); !!}
+            {!! Form::hidden('codigo_transaccion', '', ['class' => 'campo-ajax', 'id' => 'codigo_transaccion_hidden']); !!}
+            {!! Form::hidden('monto_transaccion', '', ['class' => 'campo-ajax', 'id' => 'monto_transaccion_hidden']); !!}
         </div>
         <div class="form-group">
             {!! Form::label('Descripción') !!}
@@ -75,8 +96,27 @@
 
 @section('scripts')
 <script>
+    function limpiarInputsHiddenTransacciones() {
+        $('#nodo_transaccion_hidden').val('');
+        $('#fecha_transaccion_hidden').val('');
+        $('#codigo_iso_transaccion_hidden').val('');
+        $('#hora_transaccion_hidden').val('');
+        $('#codigo_transaccion_hidden').val('');
+        $('#monto_transaccion_hidden').val('');
+    }
+
+    function limpiarTablaTransacciones() {
+        var tabla = $('#tabla_transacciones');
+        var tbody = tabla.find('tbody');
+        var tbody_children_rows = tbody.children();
+        tbody_children_rows.remove();
+    }
+
     $(document).ready(function(){
         $('#tarjeta_cliente').change(function(){
+            limpiarTablaTransacciones();
+            limpiarInputsHiddenTransacciones();
+
             var valor = $(this).val();
 
             if(valor === 'otro') {
@@ -85,23 +125,68 @@
             } else {
                 $('#form_group_nueva_tarjeta').hide();
 
-                // if(valor !== '') {
-                //     var formulario =  $('#form-reclamo');
-                //     var url = 'obtener_transacciones';
-                //     var datos = formulario.serialize();
+                if(valor !== '') {
+                    var formulario =  $('#form-reclamo');
+                    var url = 'obtener_transacciones';
+                    var datos = formulario.serialize();
 
-                //     $('.overlay').show();
+                    $('.overlay').show();
 
-                //     $.post(url, datos, function(respuesta){
-                //         console.log(respuesta);
-                //         $('.overlay').hide();
-                //     }).fail(function(){
-                //         alert('Error inesperado');
-                //         $('.overlay').hide();
-                //     });
-                // } else {
-                //     $('#form_group_operaciones_tarjeta').hide();
-                // }
+                    $.post(url, datos, function(respuesta){
+                        switch(respuesta.codigo_respuesta){
+                            case '200':
+                                $('#form_group_operaciones_tarjeta').show();
+
+                                var tabla = $('#tabla_transacciones');
+                                var tbody = tabla.find('tbody');
+
+                                $.each(respuesta.transacciones, function(clave, transaccion){
+                                    var row = '<tr>';
+                                    row += '<td >'+transaccion.secuencia+'</td>';
+                                    row += '<td class="nodo_transaccion" >'+transaccion.nodo+'</td>';
+                                    row += '<td class="fecha_transaccion" >'+transaccion.fecha_transaccion+'</td>';
+                                    row += '<td class="codigo_iso_transaccion" >'+transaccion.codigo_iso+'</td>';
+                                    row += '<td class="hora_transaccion" >'+transaccion.hora+'</td>';
+                                    row += '<td class="respuesta_transaccion" >'+transaccion.codigo_respuesta+'</td>';
+                                    row += '<td class="monto_transaccion" >'+transaccion.monto_transaccion+'</td>';
+                                    row += '<td><input class="radio_secuencia" type="radio" name="secuencia_transaccion" value="'+transaccion.secuencia+'"></td>';
+                                    row += '</tr>';
+                                    tbody.append(row);
+                                });
+
+                                $('.radio_secuencia').click(function(){
+                                    var fila = $(this).parents('tr');
+                                    var nodo_transaccion = fila.children('.nodo_transaccion').html();
+                                    var fecha_transaccion = fila.children('.fecha_transaccion').html();
+                                    var codigo_iso_transaccion = fila.children('.codigo_iso_transaccion').html();
+                                    var hora_transaccion = fila.children('.hora_transaccion').html();
+                                    var respuesta_transaccion = fila.children('.respuesta_transaccion').html();
+                                    var monto_transaccion = fila.children('.monto_transaccion').html();
+
+                                    $('#nodo_transaccion_hidden').val(nodo_transaccion);
+                                    $('#fecha_transaccion_hidden').val(fecha_transaccion);
+                                    $('#codigo_iso_transaccion_hidden').val(codigo_iso_transaccion);
+                                    $('#hora_transaccion_hidden').val(hora_transaccion);
+                                    $('#codigo_transaccion_hidden').val(respuesta_transaccion);
+                                    $('#monto_transaccion_hidden').val(monto_transaccion);
+                                });
+                                break;
+
+                            case '404':
+                                alert(respuesta.mensaje);
+                                break;
+
+                            default:
+                                alert('Ha ocurrido un error inesperado durante la consulta de las transacciones de la tarjeta seleccionada.');
+                        }
+                        $('.overlay').hide();
+                    }).fail(function(){
+                        alert('Ha fallado la consulta de las operaciones de la tarjeta seleccionada.');
+                        $('.overlay').hide();
+                    });
+                } else {
+                    $('#form_group_operaciones_tarjeta').hide();
+                }
             }
         });
 
@@ -110,18 +195,20 @@
 
             limpiar_campos_ajax('form-reclamo');
 
+            $('#form_group_operaciones_tarjeta').hide();
+
             var codigo_tipo_cliente = $('#codigo_tipo_cliente').val();
             var cedula_cliente = $('#cedula_cliente').val();
 
             if(codigo_tipo_cliente === '') {
-                alert('debe seleccionar un tipo de cliente');
+                alert('debe seleccionar un tipo de cliente.');
                 return false;
             } else {
                 $('#codigo_tipo_cliente_hidden').val(codigo_tipo_cliente);
             }
 
             if(cedula_cliente === '') {
-                alert('debe ingresar la cédula del cliente');
+                alert('debe ingresar la cédula del cliente.');
                 return false;
             } else {
                 $('#cedula_cliente_hidden').val(cedula_cliente);
@@ -134,7 +221,6 @@
             $('.overlay').show();
 
             $.post(ruta, datos, function(resultado){
-                // console.log(resultado);
 
                 switch(resultado.codigo_respuesta) {
                     case '200':
@@ -169,13 +255,13 @@
                         break;
 
                     default:
-                        var mensaje = 'Ha ocurrido un error inesperado durante la búsqueda del cliente';
+                        var mensaje = 'Ha ocurrido un error inesperado durante la búsqueda del cliente.';
                         alert(mensaje);
                 }
 
                 $('.overlay').hide();
             }).fail(function(){
-                alert('Error inesperado');
+                alert('Ha fallado la búsqueda del cliente.');
                 $('.overlay').hide();
             });
         });
@@ -186,7 +272,7 @@
             var cuenta_bancaria = $('#cuenta_cliente').val();
 
             if(cuenta_bancaria === '') {
-                alert('Debe seleccionar la cuenta bancaria asociada al reclamo');
+                alert('Debe seleccionar la cuenta bancaria asociada al reclamo.');
                 return false;
             }
 
@@ -208,13 +294,13 @@
                         break;
 
                     default:
-                        var mensaje = 'Ha ocurrido un error inesperado mientras se intentó guardar el reclamo';
+                        var mensaje = 'Ha ocurrido un error inesperado mientras se intentó guardar el reclamo.';
                         alert(mensaje);
                 }
 
                 $('.overlay').hide();
             }).fail(function(){
-                alert('Error inesperado');
+                alert('Ha ocurrido un fallo mientras se intentó guardar el reclamo.');
                 $('.overlay').hide();
             });
         });

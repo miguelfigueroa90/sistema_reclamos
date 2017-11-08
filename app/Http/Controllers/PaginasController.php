@@ -9,6 +9,7 @@ use App\Estatus;
 use App\Departamento;
 use App\Nacionalidad;
 use App\Producto;
+use App\Reclamo;
 use App\TipoCliente;
 
 class PaginasController extends Controller

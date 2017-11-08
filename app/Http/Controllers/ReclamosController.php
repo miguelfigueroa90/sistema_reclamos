@@ -8,6 +8,7 @@ use App\CorreoElectronico;
 use App\CuentaBancaria;
 use App\Reclamo;
 use App\Telefono;
+use App\Tmtrans;
 use Carbon\Carbon;
 
 class ReclamosController extends Controller
@@ -87,7 +88,7 @@ class ReclamosController extends Controller
         } else {
             $respuesta = [
                 'codigo_respuesta' => '500',
-                'mensaje_respuesta' => 'El reclamo no pudo ser guardado debido a un error inesperado'
+                'mensaje_respuesta' => 'El reclamo no pudo ser guardado debido a un error inesperado.'
             ];
         }
 
@@ -99,6 +100,32 @@ class ReclamosController extends Controller
     public function obtenerTransacciones(Request $request)
     {
         $tarjeta_cliente = $request->tarjeta_cliente;
-        dd($tarjeta_cliente);
+
+        $transacciones = Tmtrans::select(
+            'tran_nr as secuencia',
+            'source_node as nodo',
+            'in_req as fecha_transaccion',
+            'msg_type as codigo_iso',
+            'time_local as hora',
+            'rsp_code_req_rsp as codigo_respuesta',
+            'amount_tran_requested as monto_transaccion')
+        ->where('numero_tarjeta', '=', $tarjeta_cliente)
+        ->get();
+
+        if($transacciones->count() > 0) {
+            $respuesta = [
+                'codigo_respuesta' => '200',
+                'transacciones' => $transacciones,
+            ];
+        } else {
+            $respuesta = [
+                'codigo_respuesta' => '404',
+                'mensaje' => 'La tarjeta seleccionada no tiene transacciones asociadas.'
+            ];
+        }
+
+        if($request->ajax()) {
+            return response()->json($respuesta);
+        }
     }
 }
