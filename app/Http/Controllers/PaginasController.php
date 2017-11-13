@@ -7,6 +7,7 @@ use App\Banco;
 use App\Perfil;
 use App\Estatus;
 use App\Departamento;
+use App\Dispositivo;
 use App\Nacionalidad;
 use App\Producto;
 use App\Reclamo;
@@ -44,7 +45,7 @@ class PaginasController extends Controller
           'clases_adicionales_body' => '',
         ];
 
-        $banco = Estatus::find($request->codigo_banco);
+        $banco = Banco::find($request->codigo_banco);
 
         $this->datos['banco'] = $banco;
 
@@ -60,18 +61,18 @@ class PaginasController extends Controller
           'clases_adicionales_body' => 'table-responsive no-padding',
         ];
 
-        $bancos = Banco::paginate(10);
+        $lista_bancos = Banco::where('condicion','=', 1)->paginate(10);
 
-        $this->datos['registros'] = $bancos;
+        $this->datos['registros'] = $lista_bancos;
 
-        return view('bancos/listar', ['datos' => $this->datos]);
+        return view('banco/listar', ['datos' => $this->datos]);
     }
 
     public function agregarBanco()
     {
         $this->datos = [
           'encabezado' => [
-              'titulo' => 'Agregar Banco',
+              'titulo' => 'Agregar Bancos',
           ],
           'clases_adicionales_body' => '',
         ];
@@ -102,10 +103,16 @@ class PaginasController extends Controller
           'encabezado' => [
               'titulo' => 'Estatus',
           ],
-          'clases_adicionales_body' => 'table-responsive no-padding',
+          'clases_adicionales_body' => 'table-responsive no-padding'/*,
+          'alerta' => [
+            'nivel' => 'info',
+            'titulo' => 'Mensaje',
+            'simbolo' => 'info',
+            'mensaje' => 'mensaje de prueba'
+          ]*/
         ];
 
-        $lista_estatus = Estatus::paginate(10);
+        $lista_estatus = Estatus::where('condicion','=', 1)->paginate(10);
 
         $this->datos['registros'] = $lista_estatus;
 
@@ -125,48 +132,48 @@ class PaginasController extends Controller
     }
 
     // Nacionalidades
-    public function actualizarNacionalidad(Request $request)
+    public function actualizarTipoCliente(Request $request)
     {
         $this->datos = [
           'encabezado' => [
-              'titulo' => 'Actualizar Nacionalidad',
+              'titulo' => 'Actualizar Tipos de Clientes',
           ],
           'clases_adicionales_body' => '',
         ];
 
-        $nacionalidad = Nacionalidad::find($request->codigo_nacionalidad);
+        $TipoCliente = TipoCliente::find($request->codigo_tipo_cliente);
 
-        $this->datos['nacionalidad'] = $nacionalidad;
+        $this->datos['TipoCliente'] = $TipoCliente;
 
-        return view('nacionalidades/actualizar', ['datos' => $this->datos]);
+        return view('TipoCliente/actualizar', ['datos' => $this->datos]);
     }
 
-    public function listarNacionalidades()
+    public function listarTipoCliente()
     {
         $this->datos = [
           'encabezado' => [
-              'titulo' => 'Nacionalidades',
+              'titulo' => 'Tipos de Clientes',
           ],
           'clases_adicionales_body' => 'table-responsive no-padding',
         ];
 
-        $nacionalidades = Nacionalidad::paginate(10);
+        $TipoCliente = TipoCliente::where('condicion','=', 1)->paginate(10);
 
-        $this->datos['registros'] = $nacionalidades;
+        $this->datos['registros'] = $TipoCliente;
 
-        return view('nacionalidades/listar', ['datos' => $this->datos]);
+        return view('TipoCliente/listar', ['datos' => $this->datos]);
     }
 
-    public function agregarNacionalidad()
+    public function agregarTipoCliente()
     {
         $this->datos = [
           'encabezado' => [
-              'titulo' => 'Agregar Nacionalidad',
+              'titulo' => 'Agregar Tipos de Clientes',
           ],
           'clases_adicionales_body' => '',
         ];
 
-        return view('nacionalidades/agregar', ['datos' => $this->datos]);
+        return view('TipoCliente/agregar', ['datos' => $this->datos]);
     }
 
     // Departamentos
@@ -183,7 +190,7 @@ class PaginasController extends Controller
 
         $this->datos['departamento'] = $departamento;
 
-        return view('departamentos/actualizar', ['datos' => $this->datos]);
+        return view('departamento/actualizar', ['datos' => $this->datos]);
     }
 
     public function listarDepartamentos()
@@ -195,11 +202,11 @@ class PaginasController extends Controller
           'clases_adicionales_body' => 'table-responsive no-padding',
         ];
 
-        $departamentos = Departamento::paginate(10);
+        $departamentos = Departamento::where('condicion', '=', 1)->paginate(10);
 
         $this->datos['registros'] = $departamentos;
 
-        return view('departamentos/listar', ['datos' => $this->datos]);
+        return view('departamento/listar', ['datos' => $this->datos]);
     }
 
     public function agregarDepartamento()
@@ -211,7 +218,7 @@ class PaginasController extends Controller
           'clases_adicionales_body' => '',
         ];
 
-        return view('departamentos/agregar', ['datos' => $this->datos]);
+        return view('departamento/agregar', ['datos' => $this->datos]);
     }
 
     // Perfiles
@@ -270,5 +277,95 @@ class PaginasController extends Controller
         ];
 
         return view('inicio', ['datos' => $this->datos]);
+    }
+
+    // Producto
+    public function actualizarProducto(Request $request)
+    {
+        $this->datos = [
+          'encabezado' => [
+              'titulo' => 'Actualizar Producto',
+          ],
+          'clases_adicionales_body' => '',
+        ];
+
+        $producto = Producto::find($request->codigo_producto);
+
+        $this->datos['producto'] = $producto;
+
+        return view('productos/actualizar', ['datos' => $this->datos]);
+    }
+
+    public function listarProducto()
+    {
+        $this->datos = [
+          'encabezado' => [
+              'titulo' => 'Productos',
+          ],
+          'clases_adicionales_body' => 'table-responsive no-padding',
+        ];
+
+        $lista_producto = Producto::where('condicion','=', 1)->paginate(10);
+
+        $this->datos['registros'] = $lista_producto;
+
+        return view('productos/listar', ['datos' => $this->datos]);
+    }
+
+    public function agregarProducto()
+    {
+        $this->datos = [
+          'encabezado' => [
+              'titulo' => 'Agregar Productos',
+          ],
+          'clases_adicionales_body' => '',
+        ];
+
+        return view('productos/agregar', ['datos' => $this->datos]);
+    }
+
+        /////////////////////// Dispositivo /////////////////
+    public function actualizarDispositivo(Request $request)
+    {
+        $this->datos = [
+          'encabezado' => [
+              'titulo' => 'Actualizar Dispositivo',
+          ],
+          'clases_adicionales_body' => '',
+        ];
+
+        $dispositivo = Dispositivo::find($request->codigo_dispositivo);
+
+        $this->datos['dispositivo'] = $dispositivo;
+
+        return view('dispositivo/actualizar', ['datos' => $this->datos]);
+    }
+
+    public function listarDispositivo()
+    {
+        $this->datos = [
+          'encabezado' => [
+              'titulo' => 'Dispositivos',
+          ],
+          'clases_adicionales_body' => 'table-responsive no-padding',
+        ];
+
+        $lista_dispositivo = Dispositivo::where('condicion','=', 1)->paginate(10);
+
+        $this->datos['registros'] = $lista_dispositivo;
+
+        return view('dispositivo/listar', ['datos' => $this->datos]);
+    }
+
+    public function agregarDispositivo()
+    {
+        $this->datos = [
+          'encabezado' => [
+              'titulo' => 'Agregar Dispositivo',
+          ],
+          'clases_adicionales_body' => '',
+        ];
+
+        return view('dispositivo/agregar', ['datos' => $this->datos]);
     }
 }

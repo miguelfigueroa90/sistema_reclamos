@@ -6,10 +6,13 @@
                     {{ session('status') }}
                 </div>
                 @endif
-  {!! Form::open(['url' => 'actualizar_estatus/'.$datos['estatus']->codigo_estatus, 'class' => 'form', 'method' => 'put']) !!}
-  <div class="form-group">
+  {!! Form::open(['url' => 'actualizar_productos/'.$datos['producto']->codigo_producto, 'class' => 'form', 'method' => 'put']) !!}
+<div class="form-group">
+      {!! Form::label('nombre') !!}
+      {!! Form::text('nombre', $datos['producto']->nombre, array('required', 'class'=>'form-control', )) !!}
+
       {!! Form::label('tipo') !!}
-      {!! Form::text('tipo', $datos['estatus']->tipo, array('required', 'class'=>'form-control', )) !!}
+      {!! Form::text('tipo', $datos['producto']->tipo, array('required', 'class'=>'form-control', )) !!}
   </div>
   <br>
   <div class="form-group">

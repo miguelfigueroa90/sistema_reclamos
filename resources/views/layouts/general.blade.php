@@ -119,8 +119,8 @@
                             <li class="header">MENU</li>
                             <li class="treeview">
                                 <a href="{!! url('#') !!}">
-                                    <i class="fa fa-wrench"></i>
-                                    <span>Configuración</span>
+                                    <i class="fa fa-users"></i>
+                                    <span>Usuarios</span>
                                     <span class="pull-right-container">
                                         <i class="fa fa-angle-left pull-right"></i>
                                     </span>
@@ -132,18 +132,31 @@
                                             Usuarios
                                         </a>
                                     </li>
+                                
                                     <li>
                                         <a href="{!! url('/perfiles') !!}">
                                             <i class="fa fa-circle-o"></i>
                                             Perfiles
                                         </a>
                                     </li>
+                             
                                     <li>
-                                        <a href="{!! url('/departamentos') !!}">
+                                        <a href="{!! url('/listar_departamento') !!}">
                                             <i class="fa fa-circle-o"></i>
                                             Departamentos
                                         </a>
                                     </li>
+                                </ul>
+                            </li>
+                            <li class="treeview">
+                                <a href="{!! url('#') !!}">
+                                    <i class="fa fa-wrench"></i>
+                                    <span>Configuración</span>
+                                    <span class="pull-right-container">
+                                       <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
                                     <li>
                                         <a href="{!! url('/listar_estatus') !!}">
                                             <i class="fa fa-circle-o"></i>
@@ -151,21 +164,27 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{!! url('/nacionalidades') !!}">
+                                        <a href="{!! url('/listar_TipoCliente') !!}">
                                             <i class="fa fa-circle-o"></i>
-                                            Nacionalidades
+                                            Tipos de Clientes
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{!! url('/productos') !!}">
+                                        <a href="{!! url('/listar_productos') !!}">
                                             <i class="fa fa-circle-o"></i>
                                             Productos
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{!! url('/bancos') !!}">
+                                        <a href="{!! url('/listar_bancos') !!}">
                                             <i class="fa fa-circle-o"></i>
                                             Bancos
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{!! url('/listar_dispositivo') !!}">
+                                            <i class="fa fa-circle-o"></i>
+                                            Dispositivos
                                         </a>
                                     </li>
                                 </ul>

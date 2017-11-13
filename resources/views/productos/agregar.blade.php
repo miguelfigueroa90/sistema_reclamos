@@ -6,14 +6,17 @@
                     {{ session('status') }}
                 </div>
                 @endif
-  {!! Form::open(['url' => 'actualizar_estatus/'.$datos['estatus']->codigo_estatus, 'class' => 'form', 'method' => 'put']) !!}
+  {!! Form::open(['url' => 'nuevo_producto', 'class' => 'form']) !!}
   <div class="form-group">
+      {!! Form::label('nombre') !!}
+      {!! Form::text('nombre', null, array('required', 'class'=>'form-control', )) !!}
+
       {!! Form::label('tipo') !!}
-      {!! Form::text('tipo', $datos['estatus']->tipo, array('required', 'class'=>'form-control', )) !!}
+      {!! Form::text('tipo', null, array('required', 'class'=>'form-control', )) !!}
   </div>
   <br>
   <div class="form-group">
-      {!! Form::submit('Actualizar', array('class'=>'art-button', 'class' => 'btn btn-primary')) !!}
+      {!! Form::submit('Agregar', array('class'=>'art-button', 'class' => 'btn btn-primary')) !!}
   </div>
   {!! Form::close() !!}
 @endsection

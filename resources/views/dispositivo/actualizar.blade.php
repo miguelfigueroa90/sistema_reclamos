@@ -1,15 +1,14 @@
 @extends('layouts.general')
 @section('contenido')
-
                 @if (session('status'))
                 <div class="alert alert-success">
                     {{ session('status') }}
                 </div>
                 @endif
-  {!! Form::open(['url' => 'actualizar_estatus/'.$datos['estatus']->codigo_estatus, 'class' => 'form', 'method' => 'put']) !!}
-  <div class="form-group">
+  {!! Form::open(['url' => 'actualizar_dispositivo/'.$datos['dispositivo']->codigo_dispositivo, 'class' => 'form', 'method' => 'put']) !!}
+<div class="form-group">
       {!! Form::label('tipo') !!}
-      {!! Form::text('tipo', $datos['estatus']->tipo, array('required', 'class'=>'form-control', )) !!}
+      {!! Form::text('tipo', $datos['dispositivo']->tipo, array('required', 'class'=>'form-control', )) !!}
   </div>
   <br>
   <div class="form-group">
