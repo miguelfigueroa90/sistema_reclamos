@@ -6,9 +6,12 @@ use Illuminate\Http\Request;
 use App\Cliente;
 use App\CorreoElectronico;
 use App\CuentaBancaria;
+use App\Producto;
 use App\Reclamo;
+use App\Tarjeta;
 use App\Telefono;
 use App\Tmtrans;
+use App\Transaccion;
 use Carbon\Carbon;
 
 class ReclamosController extends Controller
@@ -19,6 +22,7 @@ class ReclamosController extends Controller
 
     public function agregar(Request $request)
     {
+        // dd($request);
         $cedula = ltrim(trim($request->cedula_cliente), '0');
 
         $cliente = Cliente::where('cedula', '=', $cedula)
@@ -78,7 +82,39 @@ class ReclamosController extends Controller
         $reclamo->fecha_registro = Carbon::now(); // Se obtiene la fecha actual.
         $reclamo_guardado = $reclamo->save();
 
-        $reclamo->Cliente()->attach($cliente->cedula);
+        if($reclamo_guardado) {
+            $reclamo->Cliente()->attach($cliente->cedula);
+
+            // @todo guardar transaccion
+            $transaccion = new Transaccion;
+            $transaccion->secuencia = $request->secuencia_transaccion;
+            $transaccion->nodo = $request->nodo_transaccion;
+            $transaccion->fecha_transaccion = $request->fecha_transaccion;
+            $transaccion->codigo_iso = $request->codigo_iso;
+            $transaccion->hora = $request->hora;
+            $transaccion->codigo_respuesta = $request->codigo_respuesta;
+            $transaccion->monto->transaccion = $request->monto_transaccion;
+            $transaccion->save();
+            // @todo asociar transaccion con el reclamo
+            $reclamo->Transaccion->attach($transaccion->secuencia);
+            // @todo asociar dispositivo con la transaccion
+            // $reclamo->Transaccion->Dispositivo->attach($request->);
+            // @todo asociar banco con la transaccion
+            // $reclamo->Transaccion->Banco->attach($request->);
+            // @todo asociar producto con el reclamo
+            $reclamo->Producto->attach($request->producto_banco);
+            // @todo guardar tarjeta
+            $tarjeta = new Tarjeta;
+            $tarjeta->numero_tarjeta = $request->tarjeta_cliente;
+            $tarjeta->save();
+            // @todo asociar tarjeta con producto
+            $producto = new Producto;
+            $producto->Tarjeta->attach($tarjeta->codigo_tarjeta);
+            // @todo asociar estatus con el reclamo
+            $reclamo->Estatus->attach(1); // 1 => Pendiente
+        }  else {
+            $mensaje_reclamo = 'Ha ocurrido un error intentando guardar el reclamo.';
+        }
 
         if($cliente_guardado && $reclamo_guardado) {
             $respuesta = [
@@ -100,6 +136,10 @@ class ReclamosController extends Controller
     public function obtenerTransacciones(Request $request)
     {
         $tarjeta_cliente = $request->tarjeta_cliente;
+
+        if($tarjeta_cliente == 'otro') {
+            $tarjeta_cliente = $request->otra_tarjeta;
+        }
 
         $transacciones = Tmtrans::select(
             'tran_nr as secuencia',

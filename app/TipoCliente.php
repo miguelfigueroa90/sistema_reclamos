@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class TipoCliente extends Model
 {
-    protected $table = 'nacionalidad';
-    protected $primaryKey = 'codigo_nacionalidad';
+    protected $table = 'tipo_cliente';
+    protected $primaryKey = 'codigo_tipo_cliente';
     public $timestamps = FALSE;
 }

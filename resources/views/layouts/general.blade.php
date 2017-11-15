@@ -24,7 +24,7 @@
                     <a href="{!! url('/') !!}" class="sidebar-toggle" data-toggle="push-menu" role="button">
                         <span class="sr-only">Toggle navigation</span>
                     </a>
-                    @if(!Auth::guest())
+                    @if(Auth::guest())
                         <div class="navbar-custom-menu">
                             <ul class="nav navbar-nav">
                                 <li class="dropdown notifications-menu">
@@ -93,7 +93,7 @@
             </header>
             <aside class="main-sidebar">
                 <section class="sidebar">
-                    @if(Auth::guest())
+                    @if(!Auth::guest())
                     <!-- Login -->
                         <div class="user-panel">
                             <div class="pull-left image">

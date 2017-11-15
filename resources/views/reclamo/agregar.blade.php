@@ -1,21 +1,23 @@
 @extends('layouts.general')
 @section('contenido')
     {!! Form::open(['action' => ['ClientesController@buscarCliente'], 'class' => 'form', 'id' => 'form-buscar']) !!}
-    <div class="col-md-2 form-group">
-        {!! Form::label('Tipo de cliente') !!}
-        <select name="codigo_tipo_cliente" id="codigo_tipo_cliente" class="form-control">
-            <option value="">Seleccione...</option>
-            @foreach($datos['tipos_cliente'] as $codigo_tipo_cliente)
-                <option value="{!! $codigo_tipo_cliente->codigo_nacionalidad !!}">{!! $codigo_tipo_cliente->nombre !!}</option>
-            @endforeach
-        </select>
-    </div>
-    <div class="col-md-8 form-group">
-        {!! Form::label('Cédula') !!}
-        {!! Form::text('cedula_cliente', null, ['class' => 'form-control campo_numerico', 'id' => 'cedula_cliente']) !!}
-    </div>
-    <div class="col-md-2 form-group">
-        {!! Form::submit('Buscar', array('class'=>'btn btn-info btn-lg', 'id' => 'btn-buscar')) !!}
+    <div class="col-md-4">
+        <div class="form-group">
+            {!! Form::label('Tipo de cliente') !!}
+            <select name="codigo_tipo_cliente" id="codigo_tipo_cliente" class="form-control">
+                <option value="">Seleccione...</option>
+                @foreach($datos['tipos_cliente'] as $codigo_tipo_cliente)
+                    <option value="{!! $codigo_tipo_cliente->codigo_tipo_cliente !!}">{!! $codigo_tipo_cliente->nombre !!}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="form-group">
+            {!! Form::label('Cédula') !!}
+            {!! Form::text('cedula_cliente', null, ['class' => 'form-control campo_numerico', 'id' => 'cedula_cliente']) !!}
+        </div>
+        <div class="form-group">
+            {!! Form::button('Buscar <i class="fa fa-fw fa-user"></i>', array('class'=>'btn btn-info', 'id' => 'btn-buscar', 'type' => 'submit')) !!}
+        </div>
     </div>
     {!! Form::close() !!}
 
@@ -54,9 +56,14 @@
         {!! Form::select('tarjeta_cliente', ['' => 'Seleccione...'], null, ['class' => 'form-control campo-ajax', 'id' => 'tarjeta_cliente']) !!}
     </div>
     <div class="col-md-12">
-        <div class="form-group" id="form_group_nueva_tarjeta" style="display: none;">
-            {!! Form::label('Nueva tarjeta') !!}
-            {!! Form::text('nueva_tarjeta', null, ['class' => 'form-control', 'id' => 'correo_cliente', 'nueva_tarjeta']) !!}
+        <div id="form_group_nueva_tarjeta" style="display: none;">
+            <div class="form-group">
+                {!! Form::label('Otra tarjeta') !!}
+                {!! Form::text('otra_tarjeta', null, ['class' => 'form-control', 'id' => 'otra_tarjeta_cliente', 'otra_tarjeta']) !!}
+            </div>
+            <div class="form-group">
+                {!! Form::button('Buscar <i class="fa fa-fw fa-credit-card"></i>', array('class'=>'btn btn-info', 'id' => 'btn-buscar-transacciones')) !!}
+            </div>
         </div>
         <div class="form-group box-body table-responsive no-padding" id="form_group_operaciones_tarjeta" style="display: none;">
             {!! Form::label('Transacciones') !!}
@@ -87,8 +94,8 @@
             {!! Form::textarea('descripcion_reclamo', null, ['class' => 'form-control', 'id' => 'descripcion_reclamo', 'required' => 'required']) !!}
         </div>
         <div class="form-group">
-            {!! Form::reset('Limpiar', array('class'=>'btn btn-warning', 'id' => 'btn-limpiar')) !!}
-            {!! Form::submit('Crear', array('class'=>'btn btn-primary', 'id' => 'btn-crear')) !!}
+            {!! Form::button('Limpiar <i class="fa fa-fw fa-trash"></i>', array('class'=>'btn btn-warning', 'id' => 'btn-limpiar', 'type' => 'reset')) !!}
+            {!! Form::button('Crear <i class="fa fa-fw fa-save"></i>', array('class'=>'btn btn-primary', 'id' => 'btn-crear', 'type' => 'submit')) !!}
         </div>
         {!! Form::close() !!}
     </div>
@@ -96,6 +103,66 @@
 
 @section('scripts')
 <script>
+    function buscarTransacciones() {
+        var formulario =  $('#form-reclamo');
+            var url = 'obtener_transacciones';
+            var datos = formulario.serialize();
+
+            $('.overlay').show();
+
+            $.post(url, datos, function(respuesta){
+                switch(respuesta.codigo_respuesta){
+                    case '200':
+                        $('#form_group_operaciones_tarjeta').show();
+
+                        var tabla = $('#tabla_transacciones');
+                        var tbody = tabla.find('tbody');
+
+                        $.each(respuesta.transacciones, function(clave, transaccion){
+                            var row = '<tr>';
+                            row += '<td >'+transaccion.secuencia+'</td>';
+                            row += '<td class="nodo_transaccion" >'+transaccion.nodo+'</td>';
+                            row += '<td class="fecha_transaccion" >'+transaccion.fecha_transaccion+'</td>';
+                            row += '<td class="codigo_iso_transaccion" >'+transaccion.codigo_iso+'</td>';
+                            row += '<td class="hora_transaccion" >'+transaccion.hora+'</td>';
+                            row += '<td class="respuesta_transaccion" >'+transaccion.codigo_respuesta+'</td>';
+                            row += '<td class="monto_transaccion" >'+transaccion.monto_transaccion+'</td>';
+                            row += '<td><input class="radio_secuencia" type="radio" name="secuencia_transaccion" value="'+transaccion.secuencia+'"></td>';
+                            row += '</tr>';
+                            tbody.append(row);
+                        });
+
+                        $('.radio_secuencia').click(function(){
+                            var fila = $(this).parents('tr');
+                            var nodo_transaccion = fila.children('.nodo_transaccion').html();
+                            var fecha_transaccion = fila.children('.fecha_transaccion').html();
+                            var codigo_iso_transaccion = fila.children('.codigo_iso_transaccion').html();
+                            var hora_transaccion = fila.children('.hora_transaccion').html();
+                            var respuesta_transaccion = fila.children('.respuesta_transaccion').html();
+                            var monto_transaccion = fila.children('.monto_transaccion').html();
+
+                            $('#nodo_transaccion_hidden').val(nodo_transaccion);
+                            $('#fecha_transaccion_hidden').val(fecha_transaccion);
+                            $('#codigo_iso_transaccion_hidden').val(codigo_iso_transaccion);
+                            $('#hora_transaccion_hidden').val(hora_transaccion);
+                            $('#codigo_transaccion_hidden').val(respuesta_transaccion);
+                            $('#monto_transaccion_hidden').val(monto_transaccion);
+                        });
+                        break;
+
+                    case '404':
+                        alert(respuesta.mensaje);
+                        break;
+
+                    default:
+                        alert('Ha ocurrido un error inesperado durante la consulta de las transacciones de la tarjeta seleccionada.');
+                }
+                $('.overlay').hide();
+            }).fail(function(){
+                alert('Ha fallado la consulta de las operaciones de la tarjeta seleccionada.');
+                $('.overlay').hide();
+            });
+    }
     function limpiarInputsHiddenTransacciones() {
         $('#nodo_transaccion_hidden').val('');
         $('#fecha_transaccion_hidden').val('');
@@ -103,6 +170,7 @@
         $('#hora_transaccion_hidden').val('');
         $('#codigo_transaccion_hidden').val('');
         $('#monto_transaccion_hidden').val('');
+        $('#otra_tarjeta_cliente').val('');
     }
 
     function limpiarTablaTransacciones() {
@@ -113,6 +181,10 @@
     }
 
     $(document).ready(function(){
+        $('#btn-buscar-transacciones').click(function(){
+            buscarTransacciones();
+        });
+
         $('#tarjeta_cliente').change(function(){
             limpiarTablaTransacciones();
             limpiarInputsHiddenTransacciones();
@@ -126,64 +198,7 @@
                 $('#form_group_nueva_tarjeta').hide();
 
                 if(valor !== '') {
-                    var formulario =  $('#form-reclamo');
-                    var url = 'obtener_transacciones';
-                    var datos = formulario.serialize();
-
-                    $('.overlay').show();
-
-                    $.post(url, datos, function(respuesta){
-                        switch(respuesta.codigo_respuesta){
-                            case '200':
-                                $('#form_group_operaciones_tarjeta').show();
-
-                                var tabla = $('#tabla_transacciones');
-                                var tbody = tabla.find('tbody');
-
-                                $.each(respuesta.transacciones, function(clave, transaccion){
-                                    var row = '<tr>';
-                                    row += '<td >'+transaccion.secuencia+'</td>';
-                                    row += '<td class="nodo_transaccion" >'+transaccion.nodo+'</td>';
-                                    row += '<td class="fecha_transaccion" >'+transaccion.fecha_transaccion+'</td>';
-                                    row += '<td class="codigo_iso_transaccion" >'+transaccion.codigo_iso+'</td>';
-                                    row += '<td class="hora_transaccion" >'+transaccion.hora+'</td>';
-                                    row += '<td class="respuesta_transaccion" >'+transaccion.codigo_respuesta+'</td>';
-                                    row += '<td class="monto_transaccion" >'+transaccion.monto_transaccion+'</td>';
-                                    row += '<td><input class="radio_secuencia" type="radio" name="secuencia_transaccion" value="'+transaccion.secuencia+'"></td>';
-                                    row += '</tr>';
-                                    tbody.append(row);
-                                });
-
-                                $('.radio_secuencia').click(function(){
-                                    var fila = $(this).parents('tr');
-                                    var nodo_transaccion = fila.children('.nodo_transaccion').html();
-                                    var fecha_transaccion = fila.children('.fecha_transaccion').html();
-                                    var codigo_iso_transaccion = fila.children('.codigo_iso_transaccion').html();
-                                    var hora_transaccion = fila.children('.hora_transaccion').html();
-                                    var respuesta_transaccion = fila.children('.respuesta_transaccion').html();
-                                    var monto_transaccion = fila.children('.monto_transaccion').html();
-
-                                    $('#nodo_transaccion_hidden').val(nodo_transaccion);
-                                    $('#fecha_transaccion_hidden').val(fecha_transaccion);
-                                    $('#codigo_iso_transaccion_hidden').val(codigo_iso_transaccion);
-                                    $('#hora_transaccion_hidden').val(hora_transaccion);
-                                    $('#codigo_transaccion_hidden').val(respuesta_transaccion);
-                                    $('#monto_transaccion_hidden').val(monto_transaccion);
-                                });
-                                break;
-
-                            case '404':
-                                alert(respuesta.mensaje);
-                                break;
-
-                            default:
-                                alert('Ha ocurrido un error inesperado durante la consulta de las transacciones de la tarjeta seleccionada.');
-                        }
-                        $('.overlay').hide();
-                    }).fail(function(){
-                        alert('Ha fallado la consulta de las operaciones de la tarjeta seleccionada.');
-                        $('.overlay').hide();
-                    });
+                    buscarTransacciones();
                 } else {
                     $('#form_group_operaciones_tarjeta').hide();
                 }
