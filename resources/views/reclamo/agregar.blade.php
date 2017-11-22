@@ -13,7 +13,7 @@
         </div>
         <div class="form-group">
             {!! Form::label('Cédula') !!}
-            {!! Form::text('cedula_cliente', null, ['class' => 'form-control campo_numerico', 'id' => 'cedula_cliente']) !!}
+            {!! Form::text('cedula_cliente', null, ['class' => 'form-control campo_numerico campo-ajax', 'id' => 'cedula_cliente']) !!}
         </div>
         <div class="form-group">
             {!! Form::button('Buscar <i class="fa fa-fw fa-user"></i>', array('class'=>'btn btn-info', 'id' => 'btn-buscar', 'type' => 'submit')) !!}
@@ -59,35 +59,8 @@
         <div id="form_group_nueva_tarjeta" style="display: none;">
             <div class="form-group">
                 {!! Form::label('Otra tarjeta') !!}
-                {!! Form::text('otra_tarjeta', null, ['class' => 'form-control', 'id' => 'otra_tarjeta_cliente', 'otra_tarjeta']) !!}
+                {!! Form::text('otra_tarjeta', null, ['class' => 'form-control campo_numerico', 'id' => 'otra_tarjeta_cliente', 'otra_tarjeta']) !!}
             </div>
-            <div class="form-group">
-                {!! Form::button('Buscar <i class="fa fa-fw fa-credit-card"></i>', array('class'=>'btn btn-info', 'id' => 'btn-buscar-transacciones')) !!}
-            </div>
-        </div>
-        <div class="form-group box-body table-responsive no-padding" id="form_group_operaciones_tarjeta" style="display: none;">
-            {!! Form::label('Transacciones') !!}
-            <table id="tabla_transacciones" class="table table-bordered table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th>Secuencia</th>
-                        <th>Nodo</th>
-                        <th>Fecha transacción</th>
-                        <th>Código ISO</th>
-                        <th>Hora</th>
-                        <th>Código respuesta</th>
-                        <th>Monto transacción</th>
-                        <th>Selección</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-            {!! Form::hidden('nodo_transaccion', '', ['class' => 'campo-ajax', 'id' => 'nodo_transaccion_hidden']); !!}
-            {!! Form::hidden('fecha_transaccion', '', ['class' => 'campo-ajax', 'id' => 'fecha_transaccion_hidden']); !!}
-            {!! Form::hidden('codigo_iso_transaccion', '', ['class' => 'campo-ajax', 'id' => 'codigo_iso_transaccion_hidden']); !!}
-            {!! Form::hidden('hora_transaccion', '', ['class' => 'campo-ajax', 'id' => 'hora_transaccion_hidden']); !!}
-            {!! Form::hidden('codigo_transaccion', '', ['class' => 'campo-ajax', 'id' => 'codigo_transaccion_hidden']); !!}
-            {!! Form::hidden('monto_transaccion', '', ['class' => 'campo-ajax', 'id' => 'monto_transaccion_hidden']); !!}
         </div>
         <div class="form-group">
             {!! Form::label('Descripción') !!}
@@ -103,66 +76,6 @@
 
 @section('scripts')
 <script>
-    function buscarTransacciones() {
-        var formulario =  $('#form-reclamo');
-            var url = 'obtener_transacciones';
-            var datos = formulario.serialize();
-
-            $('.overlay').show();
-
-            $.post(url, datos, function(respuesta){
-                switch(respuesta.codigo_respuesta){
-                    case '200':
-                        $('#form_group_operaciones_tarjeta').show();
-
-                        var tabla = $('#tabla_transacciones');
-                        var tbody = tabla.find('tbody');
-
-                        $.each(respuesta.transacciones, function(clave, transaccion){
-                            var row = '<tr>';
-                            row += '<td >'+transaccion.secuencia+'</td>';
-                            row += '<td class="nodo_transaccion" >'+transaccion.nodo+'</td>';
-                            row += '<td class="fecha_transaccion" >'+transaccion.fecha_transaccion+'</td>';
-                            row += '<td class="codigo_iso_transaccion" >'+transaccion.codigo_iso+'</td>';
-                            row += '<td class="hora_transaccion" >'+transaccion.hora+'</td>';
-                            row += '<td class="respuesta_transaccion" >'+transaccion.codigo_respuesta+'</td>';
-                            row += '<td class="monto_transaccion" >'+transaccion.monto_transaccion+'</td>';
-                            row += '<td><input class="radio_secuencia" type="radio" name="secuencia_transaccion" value="'+transaccion.secuencia+'"></td>';
-                            row += '</tr>';
-                            tbody.append(row);
-                        });
-
-                        $('.radio_secuencia').click(function(){
-                            var fila = $(this).parents('tr');
-                            var nodo_transaccion = fila.children('.nodo_transaccion').html();
-                            var fecha_transaccion = fila.children('.fecha_transaccion').html();
-                            var codigo_iso_transaccion = fila.children('.codigo_iso_transaccion').html();
-                            var hora_transaccion = fila.children('.hora_transaccion').html();
-                            var respuesta_transaccion = fila.children('.respuesta_transaccion').html();
-                            var monto_transaccion = fila.children('.monto_transaccion').html();
-
-                            $('#nodo_transaccion_hidden').val(nodo_transaccion);
-                            $('#fecha_transaccion_hidden').val(fecha_transaccion);
-                            $('#codigo_iso_transaccion_hidden').val(codigo_iso_transaccion);
-                            $('#hora_transaccion_hidden').val(hora_transaccion);
-                            $('#codigo_transaccion_hidden').val(respuesta_transaccion);
-                            $('#monto_transaccion_hidden').val(monto_transaccion);
-                        });
-                        break;
-
-                    case '404':
-                        alert(respuesta.mensaje);
-                        break;
-
-                    default:
-                        alert('Ha ocurrido un error inesperado durante la consulta de las transacciones de la tarjeta seleccionada.');
-                }
-                $('.overlay').hide();
-            }).fail(function(){
-                alert('Ha fallado la consulta de las operaciones de la tarjeta seleccionada.');
-                $('.overlay').hide();
-            });
-    }
     function limpiarInputsHiddenTransacciones() {
         $('#nodo_transaccion_hidden').val('');
         $('#fecha_transaccion_hidden').val('');
@@ -173,35 +86,22 @@
         $('#otra_tarjeta_cliente').val('');
     }
 
-    function limpiarTablaTransacciones() {
-        var tabla = $('#tabla_transacciones');
-        var tbody = tabla.find('tbody');
-        var tbody_children_rows = tbody.children();
-        tbody_children_rows.remove();
-    }
-
     $(document).ready(function(){
-        $('#btn-buscar-transacciones').click(function(){
-            buscarTransacciones();
+        $('#btn-limpiar').click(function(){
+            limpiar_campos_ajax('form-reclamo');
+            limpiar_campos_ajax('form-buscar');
+            limpiarInputsHiddenTransacciones();
         });
 
         $('#tarjeta_cliente').change(function(){
-            limpiarTablaTransacciones();
             limpiarInputsHiddenTransacciones();
 
             var valor = $(this).val();
 
             if(valor === 'otro') {
-                $('#form_group_operaciones_tarjeta').hide();
                 $('#form_group_nueva_tarjeta').show();
             } else {
                 $('#form_group_nueva_tarjeta').hide();
-
-                if(valor !== '') {
-                    buscarTransacciones();
-                } else {
-                    $('#form_group_operaciones_tarjeta').hide();
-                }
             }
         });
 
@@ -209,8 +109,6 @@
             e.preventDefault();
 
             limpiar_campos_ajax('form-reclamo');
-
-            $('#form_group_operaciones_tarjeta').hide();
 
             var codigo_tipo_cliente = $('#codigo_tipo_cliente').val();
             var cedula_cliente = $('#cedula_cliente').val();
@@ -289,6 +187,32 @@
             if(cuenta_bancaria === '') {
                 alert('Debe seleccionar la cuenta bancaria asociada al reclamo.');
                 return false;
+            }
+
+            var producto_banco = $('#producto_banco').val();
+
+            if(producto_banco === '') {
+                alert('Debe seleccionar el tipo de producto asociado al reclamo');
+                return false;
+            }
+
+            var tarjeta_cliente = $('#tarjeta_cliente').val();
+            var alerta_tarjeta_cliente = 'Debe seleccionar la tarjeta asociada al reclamo';
+
+            switch(tarjeta_cliente) {
+                case '':
+                    alert(alerta_tarjeta_cliente);
+                    return false;
+                    break;
+
+                case 'otro':
+                    var otra_tarjeta_cliente = $('#otra_tarjeta_cliente').val();
+
+                    if(otra_tarjeta_cliente === '') {
+                        alert(alerta_tarjeta_cliente);
+                        return false;
+                    }
+                    break;
             }
 
             var formulario =  $('#form-reclamo');

@@ -22,7 +22,6 @@ class ReclamosController extends Controller
 
     public function agregar(Request $request)
     {
-        // dd($request);
         $cedula = ltrim(trim($request->cedula_cliente), '0');
 
         $cliente = Cliente::where('cedula', '=', $cedula)
@@ -85,33 +84,24 @@ class ReclamosController extends Controller
         if($reclamo_guardado) {
             $reclamo->Cliente()->attach($cliente->cedula);
 
-            // @todo guardar transaccion
-            $transaccion = new Transaccion;
-            $transaccion->secuencia = $request->secuencia_transaccion;
-            $transaccion->nodo = $request->nodo_transaccion;
-            $transaccion->fecha_transaccion = $request->fecha_transaccion;
-            $transaccion->codigo_iso = $request->codigo_iso;
-            $transaccion->hora = $request->hora;
-            $transaccion->codigo_respuesta = $request->codigo_respuesta;
-            $transaccion->monto->transaccion = $request->monto_transaccion;
-            $transaccion->save();
-            // @todo asociar transaccion con el reclamo
-            $reclamo->Transaccion->attach($transaccion->secuencia);
-            // @todo asociar dispositivo con la transaccion
-            // $reclamo->Transaccion->Dispositivo->attach($request->);
-            // @todo asociar banco con la transaccion
-            // $reclamo->Transaccion->Banco->attach($request->);
-            // @todo asociar producto con el reclamo
-            $reclamo->Producto->attach($request->producto_banco);
-            // @todo guardar tarjeta
-            $tarjeta = new Tarjeta;
-            $tarjeta->numero_tarjeta = $request->tarjeta_cliente;
+            $reclamo->Producto()->attach($request->producto_banco);
+
+            if($request->tarjeta_cliente == 'otro') {
+                $tarjeta_cliente = $request->otra_tarjeta;
+            } else {
+                $tarjeta_cliente = $request->tarjeta_cliente;
+            }
+
+            $tarjeta = Tarjeta::where('numero_tarjeta', '=', $tarjeta_cliente)->first();
+
+            if(!$tarjeta){
+                $tarjeta = new Tarjeta;
+            }
+
+            $tarjeta->numero_tarjeta = $tarjeta_cliente;
             $tarjeta->save();
-            // @todo asociar tarjeta con producto
-            $producto = new Producto;
-            $producto->Tarjeta->attach($tarjeta->codigo_tarjeta);
-            // @todo asociar estatus con el reclamo
-            $reclamo->Estatus->attach(1); // 1 => Pendiente
+
+            $tarjeta->producto()->attach($request->producto_banco);
         }  else {
             $mensaje_reclamo = 'Ha ocurrido un error intentando guardar el reclamo.';
         }
