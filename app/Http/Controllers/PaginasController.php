@@ -18,6 +18,18 @@ class PaginasController extends Controller
     protected $datos;
 
     // Reclamos
+    public function listarReclamos(Request $request)
+    {
+        $this->datos = [
+          'encabezado' => [
+            'titulo' => 'Buscar Reclamo'
+          ],
+          'clases_adicionales_body' => '',
+        ];
+
+        return view('reclamo/buscar', ['datos' => $this->datos]);
+    }
+
     public function agregarReclamo()
     {
         $tipos_cliente = TipoCliente::all();

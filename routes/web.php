@@ -20,7 +20,7 @@ Route::post('/login', 'LdapController@autenticar');
 // Reclamo
 Route::get('/reclamo', 'PaginasController@agregarReclamo');
 Route::get('/bandeja', 'PaginasController@bandeja');
-Route::get('/buscar_reclamo', 'ReclamosController@listar');
+Route::get('/buscar_reclamo', 'PaginasController@listarReclamos');
 Route::post('/buscar_reclamo', 'ReclamosController@buscar');
 Route::post('/buscar_cliente', 'ClientesController@buscarCliente');
 Route::post('/reclamo', 'ReclamosController@agregar');

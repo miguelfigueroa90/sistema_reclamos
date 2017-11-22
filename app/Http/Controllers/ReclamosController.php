@@ -158,4 +158,9 @@ class ReclamosController extends Controller
             return response()->json($respuesta);
         }
     }
+
+    function buscar(Request $request)
+    {
+
+    }
 }
