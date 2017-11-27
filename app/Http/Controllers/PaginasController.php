@@ -18,6 +18,11 @@ class PaginasController extends Controller
 {
     protected $datos;
 
+    public function __construct()
+    {
+      $this->middleware('auth');
+    }
+
     // Reclamos
     public function bandeja()
     {
@@ -233,7 +238,7 @@ class PaginasController extends Controller
           ],
           'menu' => [
             'activo' => 'configuracion',
-            'menu' => 'estatus'
+            'opcion' => 'estatus'
           ],
           'clases_adicionales_body' => 'table-responsive no-padding'/*,
           'alerta' => [
@@ -562,6 +567,38 @@ class PaginasController extends Controller
           'menu' => [
             'activo' => 'configuracion',
             'opcion' => 'agregar_dispositivo'
+          ],
+          'clases_adicionales_body' => '',
+        ];
+
+        return view('dispositivo/agregar', ['datos' => $this->datos]);
+    }
+
+    public function reporteReclamos()
+    {
+        $this->datos = [
+          'encabezado' => [
+              'titulo' => 'Reporte de reclamos',
+          ],
+          'menu' => [
+            'activo' => 'reportes',
+            'opcion' => 'reporte_reclamos'
+          ],
+          'clases_adicionales_body' => '',
+        ];
+
+        return view('dispositivo/agregar', ['datos' => $this->datos]);
+    }
+
+    public function reporteAuditoria()
+    {
+        $this->datos = [
+          'encabezado' => [
+              'titulo' => 'Reporte de auditoria',
+          ],
+          'menu' => [
+            'activo' => 'reportes',
+            'opcion' => 'reporte_auditoria'
           ],
           'clases_adicionales_body' => '',
         ];

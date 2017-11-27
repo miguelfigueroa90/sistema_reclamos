@@ -1,4 +1,7 @@
 @extends('layouts.general')
+@section('title')
+Bandeja
+@endsection
 @section('contenido')
 
 <table class="table table-hover">

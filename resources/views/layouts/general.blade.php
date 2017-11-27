@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Sistema de Reclamo | BAV</title>
+        <title>@yield('title') | SIGER</title>
         <meta name="viewport" content="initial-scale = 1.0, maximum-scale = 1.0, user-scalable = no, width = device-width">
         <!--[if lt IE 9]><script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
         <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css" media="screen">
@@ -102,7 +102,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="treeview <?= ($datos['menu']['activo'] == 'dispositivos') ? 'active' : '' ?>">
+                        <li class="treeview <?= ($datos['menu']['activo'] == 'reportes') ? 'active' : '' ?>">
                             <a href="{!! url('#') !!}">
                                 <i class="fa fa-table"></i>
                                 <span>Reportes</span>

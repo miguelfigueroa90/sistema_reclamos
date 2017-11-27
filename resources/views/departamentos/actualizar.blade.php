@@ -1,4 +1,7 @@
 @extends('layouts.general')
+@section('title')
+Actualizar Departamento
+@endsection
 @section('contenido')
   {!! Form::open(['url' => 'departamento/'.$datos['departamento']->codigo_departamento, 'class' => 'form', 'method' => 'put']) !!}
   <div class="form-group">

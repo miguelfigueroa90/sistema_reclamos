@@ -1,4 +1,7 @@
 @extends('layouts.general')
+@section('title')
+Agregar Banco
+@endsection
 @section('contenido')
   {!! Form::open(['url' => 'banco', 'class' => 'form']) !!}
   <div class="form-group">

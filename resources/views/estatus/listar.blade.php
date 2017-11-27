@@ -1,4 +1,7 @@
 @extends('layouts.general')
+@section('title')
+Estatus
+@endsection
 @section('contenido')
 
             @if ($datos['registros']->isEmpty())

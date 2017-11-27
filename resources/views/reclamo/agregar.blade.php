@@ -1,4 +1,7 @@
 @extends('layouts.general')
+@section('title')
+Agregar Reclamo
+@endsection
 @section('contenido')
     {!! Form::open(['action' => ['ClientesController@buscarCliente'], 'class' => 'form', 'id' => 'form-buscar']) !!}
     <div class="col-md-4">

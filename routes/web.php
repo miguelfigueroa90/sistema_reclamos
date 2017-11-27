@@ -15,16 +15,24 @@
 Route::get('/', 'PaginasController@index');
 
 // Autenticación
+Route::auth('/login', 'PaginasController@index');
 Route::post('/login', 'LdapController@autenticar');
 
 // Administración de usuarios
 Route::get('/usuarios', 'PaginasController@listarUsuarios');
 Route::get('/nuevo_usuario', 'PaginasController@agregarUsuario');
+Route::post('/usuario', 'UsuariosController@procesarUsuario');
+
+// Administración de perfiles
+Route::get('/perfiles', 'PaginasController@listarPerfiles');
 
 // Reclamo
 Route::get('/reclamo', 'PaginasController@agregarReclamo');
 Route::get('/bandeja', 'PaginasController@bandeja');
 Route::get('/buscar_reclamo', 'PaginasController@buscarReclamos');
+
+
+
 Route::get('/reclamos_asignados', 'PaginasController@listarReclamosAsignados');
 Route::get('/gestionar_reclamo', 'PaginasController@gestionarReclamo');
 Route::post('/buscar_reclamo', 'ReclamosController@buscar');
@@ -87,3 +95,7 @@ Route::get('/actualizar_departamento/{codigo_departamento}', 'PaginasController@
 Route::post('/nuevo_departamento', 'DepartamentosController@agregar');
 Route::put('/actualizar_departamento/{codigo_departamento}', 'DepartamentosController@actualizar');
 Route::delete('/eliminar_departamento/{codigo_departamento}', 'DepartamentosController@eliminar');
+
+// Reclamos
+Route::get('/reporte_reclamos', 'PaginasController@reporteReclamos');
+Route::get('/reporte_auditoria', 'PaginasController@reporteAuditoria');

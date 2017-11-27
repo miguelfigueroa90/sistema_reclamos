@@ -1,4 +1,7 @@
 @extends('layouts.general')
+@section('title')
+Gestión del Reclamo
+@endsection
 @section('contenido')
 <div class="row">
 	<div class="col-md-6">

@@ -1,4 +1,7 @@
 @extends('layouts.general')
+@section('title')
+Agregar dispositivo
+@endsection
 @section('contenido')
 
                 @if (session('status'))

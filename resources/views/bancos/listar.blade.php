@@ -1,4 +1,7 @@
 @extends('layouts.general')
+@section('title')
+Bancos
+@endsection
 @section('contenido')
 @if(!empty($datos['registros']))
 <table class="table table-hover">

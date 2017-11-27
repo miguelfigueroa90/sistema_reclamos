@@ -1,44 +1,43 @@
 @extends('layouts.general')
+@section('title')
+Usuarios
+@endsection
 @section('contenido')
-    @if ($datos['registros']->isEmpty())
+    <br>
+    @if (empty($datos['registros']))
         <p align="center"> ¡No hay Usuarios Registrados!</p>
         <p align="center"><a href="/nuevo_usuario" class="btn btn-primary">Agregar un nuevo Usuario</a></p>
     @else
-    @if (session('status'))
-        <div class="alert alert-success">
-        {{ session('status') }}
-        </div>
-    @endif
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Usuario</th>
-                <th>Estado</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($datos['registros'] as $usuario)
+        @if (session('status'))
+            <div class="alert alert-success">
+            {{ session('status') }}
+            </div>
+        @endif
+        <p align="center"><a href="/nuevo_usuario" class="btn btn-primary">Agregar un nuevo usuario</a></p>
+        <table class="table table-hover">
+            <thead>
                 <tr>
-                    <td>{{$usuario->nombre}}</td>
-                    <td>{{$usuario->usuario}}</td>
-                    <td>{{$usuario->estado}}</td>
-                    <td class="datos-en-linea">
-                        <div class="margen-horizontal">
-                            {!! Form::open(['method' => 'GET', 'url' => 'actualizar_usuario/'.$usuario->codigo_usuario]) !!}
-                            {!! Form::button('Actualizar', array('type' => 'submit', 'class' => 'btn btn-primary')) !!}
-                            {!! Form::close() !!}
-                        </div>
-                        <div class="margen-horizontal">
-                            <a href="" data-target="#modal-delete-{{$usuario->cedula}}" data-toggle="modal" class="btn btn-danger">Eliminar</a>
-                        </div>
-                    </td>
+                    <th>Nombre</th>
+                    <th>Usuario</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
                 </tr>
-                @include ('usuario.modal')
-            @endforeach
-        </tbody>
-    </table>
-    <p align="center"><a href="/nuevo_usuario" class="btn btn-primary">Agregar un nuevo usuario</a></p>
-@endif
+            </thead>
+            <tbody>
+                @foreach($datos['registros'] as $usuario)
+                    <tr>
+                        <td>{{$usuario->nombre}}</td>
+                        <td>{{$usuario->usuario}}</td>
+                        <td>{{$usuario->estado}}</td>
+                        <td class="datos-en-linea">
+                            <div class="margen-horizontal">
+                                <a href="" data-target="#modal-delete-{{$usuario->cedula}}" data-toggle="modal" class="btn btn-danger">Eliminar</a>
+                            </div>
+                        </td>
+                    </tr>
+                    @include ('usuarios.modal')
+                @endforeach
+            </tbody>
+        </table>
+    @endif
 @endsection

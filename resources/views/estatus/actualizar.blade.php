@@ -1,4 +1,7 @@
 @extends('layouts.general')
+@section('title')
+Actualizar Estatus
+@endsection
 @section('contenido')
 
                 @if (session('status'))

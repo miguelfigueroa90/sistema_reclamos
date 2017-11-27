@@ -1,4 +1,7 @@
 @extends('layouts.general')
+@section('title')
+Tipos de Cliente
+@endsection
 @section('contenido')
 
             @if ($datos['registros']->isEmpty())

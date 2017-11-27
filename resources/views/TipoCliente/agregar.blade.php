@@ -1,4 +1,7 @@
 @extends('layouts.general')
+@section('title')
+Agregar tipo de Cliente
+@endsection
 @section('contenido')
 
                 @if (session('status'))

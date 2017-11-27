@@ -1,4 +1,7 @@
 @extends('layouts.general')
+@section('title')
+Actualizar Banco
+@endsection
 @section('contenido')
   {!! Form::open(['url' => 'banco/'.$datos['banco']->codigo_banco, 'class' => 'form', 'method' => 'put']) !!}
   <div class="form-group">

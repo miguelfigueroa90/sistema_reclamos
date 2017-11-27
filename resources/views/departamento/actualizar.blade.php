@@ -1,4 +1,7 @@
 @extends('layouts.general')
+@section('title')
+Actualizar Departamento
+@endsection
 @section('contenido')
                 @if (session('status'))
                 <div class="alert alert-success">
