@@ -12,17 +12,76 @@ use App\Nacionalidad;
 use App\Producto;
 use App\Reclamo;
 use App\TipoCliente;
+use App\Usuario;
 
 class PaginasController extends Controller
 {
     protected $datos;
 
     // Reclamos
-    public function listarReclamos(Request $request)
+    public function bandeja()
+    {
+      $this->datos = [
+        'encabezado' => [
+          'titulo' => 'Bandeja'
+        ],
+        'menu' => [
+          'activo' => 'gestion',
+          'opcion' => 'bandeja'
+        ],
+        'clases_adicionales_body' => ''
+      ];
+
+      return view('reclamo/bandeja', ['datos' => $this->datos]);
+    }
+
+    public function gestionarReclamo(Request $request)
+    {
+      $this->datos = [
+        'encabezado' => [
+          'titulo' => 'Gestionar Reclamo'
+        ],
+        'menu' => [
+          'activo' => 'gestion',
+          'opcion' => 'gestion'
+        ],
+        'clases_adicionales_body' => '',
+      ];
+
+      $numero_reclamo = $request->q;
+
+      $reclamo = Reclamo::where('numero_reclamo', '=', $numero_reclamo)->get();
+
+      $this->datos['resultado'] = $reclamo;
+
+      return view('reclamo/gestion_reclamo', ['datos' => $this->datos]);
+    }
+
+    public function listarReclamosAsignados(Request $request)
+    {
+        $this->datos = [
+          'encabezado' => [
+            'titulo' => 'Reclamos asignados'
+          ],
+          'menu' => [
+            'activo' => 'gestion',
+            'opcion' => 'reclamos_asignados'
+          ],
+          'clases_adicionales_body' => '',
+        ];
+
+        return view('reclamo/reclamos_asignados', ['datos' => $this->datos]);
+    }
+
+    public function buscarReclamos(Request $request)
     {
         $this->datos = [
           'encabezado' => [
             'titulo' => 'Buscar Reclamo'
+          ],
+          'menu' => [
+            'activo' => 'reclamos',
+            'opcion' => 'buscar_reclamo'
           ],
           'clases_adicionales_body' => '',
         ];
@@ -39,6 +98,10 @@ class PaginasController extends Controller
           'encabezado' => [
               'titulo' => 'Agregar Reclamo',
           ],
+          'menu' => [
+            'activo' => 'reclamos',
+            'opcion' => 'agregar_reclamo'
+          ],
           'tipos_cliente' => $tipos_cliente,
           'productos_banco' => $productos_banco,
           'clases_adicionales_body' => '',
@@ -47,12 +110,53 @@ class PaginasController extends Controller
         return view('reclamo/agregar', ['datos' => $this->datos]);
     }
 
+    // Usuarios
+    public function listarUsuarios()
+    {
+        $this->datos = [
+          'encabezado' => [
+              'titulo' => 'Usuarios',
+          ],
+          'menu' => [
+            'activo' => 'usuarios',
+            'opcion' => 'usuarios'
+          ],
+          'clases_adicionales_body' => 'table-responsive no-padding',
+        ];
+
+        $lista_usuarios = Usuario::where('bloqueado','=', 0)->paginate(10);
+
+        $this->datos['registros'] = $lista_usuarios;
+
+        return view('usuarios/listar', ['datos' => $this->datos]);
+    }
+
+    public function agregarUsuario()
+    {
+        $this->datos = [
+          'encabezado' => [
+              'titulo' => 'Agregar Usuario',
+          ],
+          'menu' => [
+            'activo' => 'usuarios',
+            'opcion' => 'usuarios'
+          ],
+          'clases_adicionales_body' => '',
+        ];
+
+        return view('usuarios/agregar', ['datos' => $this->datos]);
+    }
+
     // Bancos
     public function actualizarBanco(Request $request)
     {
         $this->datos = [
           'encabezado' => [
               'titulo' => 'Actualizar Banco',
+          ],
+          'menu' => [
+            'activo' => 'configuracion',
+            'opcion' => 'actualizar_banco'
           ],
           'clases_adicionales_body' => '',
         ];
@@ -70,6 +174,10 @@ class PaginasController extends Controller
           'encabezado' => [
               'titulo' => 'Bancos',
           ],
+          'menu' => [
+            'activo' => 'configuracion',
+            'opcion' => 'bancos'
+          ],
           'clases_adicionales_body' => 'table-responsive no-padding',
         ];
 
@@ -86,6 +194,10 @@ class PaginasController extends Controller
           'encabezado' => [
               'titulo' => 'Agregar Bancos',
           ],
+          'menu' => [
+            'activo' => 'configuracion',
+            'opcion' => 'agregar_banco'
+          ],
           'clases_adicionales_body' => '',
         ];
 
@@ -98,6 +210,10 @@ class PaginasController extends Controller
         $this->datos = [
           'encabezado' => [
               'titulo' => 'Actualizar Estatus',
+          ],
+          'menu' => [
+            'activo' => 'configuracion',
+            'opcion' => 'actualizar_estatus'
           ],
           'clases_adicionales_body' => '',
         ];
@@ -114,6 +230,10 @@ class PaginasController extends Controller
         $this->datos = [
           'encabezado' => [
               'titulo' => 'Estatus',
+          ],
+          'menu' => [
+            'activo' => 'configuracion',
+            'menu' => 'estatus'
           ],
           'clases_adicionales_body' => 'table-responsive no-padding'/*,
           'alerta' => [
@@ -137,6 +257,10 @@ class PaginasController extends Controller
           'encabezado' => [
               'titulo' => 'Agregar Estatus',
           ],
+          'menu' => [
+            'activo' => 'configuracion',
+            'opcion' => 'agregar_estatus'
+          ],
           'clases_adicionales_body' => '',
         ];
 
@@ -149,6 +273,10 @@ class PaginasController extends Controller
         $this->datos = [
           'encabezado' => [
               'titulo' => 'Actualizar Tipos de Clientes',
+          ],
+          'menu' => [
+            'activo' => 'configuracion',
+            'opcion' => 'actualizar_tipo_cliente'
           ],
           'clases_adicionales_body' => '',
         ];
@@ -166,6 +294,10 @@ class PaginasController extends Controller
           'encabezado' => [
               'titulo' => 'Tipos de Clientes',
           ],
+          'menu' => [
+            'activo' => 'configuracion',
+            'opcion' => 'tipo_clientes'
+          ],
           'clases_adicionales_body' => 'table-responsive no-padding',
         ];
 
@@ -182,6 +314,10 @@ class PaginasController extends Controller
           'encabezado' => [
               'titulo' => 'Agregar Tipos de Clientes',
           ],
+          'menu' => [
+            'activo' => 'configuracion',
+            'opcion' => 'agregar_tipo_cliente'
+          ],
           'clases_adicionales_body' => '',
         ];
 
@@ -194,6 +330,10 @@ class PaginasController extends Controller
         $this->datos = [
           'encabezado' => [
               'titulo' => 'Actualizar Departamento',
+          ],
+          'menu' => [
+            'activo' => 'usuarios',
+            'opcion' => 'actualizar_departamento'
           ],
           'clases_adicionales_body' => '',
         ];
@@ -211,6 +351,10 @@ class PaginasController extends Controller
           'encabezado' => [
               'titulo' => 'Departamentos',
           ],
+          'menu' => [
+            'activo' => 'usuarios',
+            'opcion' => 'departamentos'
+          ],
           'clases_adicionales_body' => 'table-responsive no-padding',
         ];
 
@@ -227,6 +371,10 @@ class PaginasController extends Controller
           'encabezado' => [
               'titulo' => 'Agregar Departamento',
           ],
+          'menu' => [
+            'activo' => 'usuarios',
+            'opcion' => 'agregar_departamentos'
+          ],
           'clases_adicionales_body' => '',
         ];
 
@@ -239,6 +387,10 @@ class PaginasController extends Controller
         $this->datos = [
           'encabezado' => [
               'titulo' => 'Actualizar Perfil',
+          ],
+          'menu' => [
+            'activo' => 'usuarios',
+            'opcion' => 'actualizar_perfil'
           ],
           'clases_adicionales_body' => '',
         ];
@@ -256,6 +408,10 @@ class PaginasController extends Controller
           'encabezado' => [
               'titulo' => 'Perfiles',
           ],
+          'menu' => [
+            'activo' => 'usuarios',
+            'opcion' => 'perfiles'
+          ],
           'clases_adicionales_body' => 'table-responsive no-padding',
         ];
 
@@ -272,6 +428,10 @@ class PaginasController extends Controller
           'encabezado' => [
               'titulo' => 'Agregar Perfil',
           ],
+          'menu' => [
+            'activo' => 'usuarios',
+            'opcion' => 'agregar_perfiles'
+          ],
           'clases_adicionales_body' => '',
         ];
 
@@ -285,6 +445,10 @@ class PaginasController extends Controller
           'encabezado' => [
               'titulo' => 'Inicio',
           ],
+          'menu' => [
+            'activo' => '',
+            'opcion' => ''
+          ],
           'clases_adicionales_body' => '',
         ];
 
@@ -297,6 +461,10 @@ class PaginasController extends Controller
         $this->datos = [
           'encabezado' => [
               'titulo' => 'Actualizar Producto',
+          ],
+          'menu' => [
+            'activo' => 'configuracion',
+            'opcion' => 'actualizar_producto'
           ],
           'clases_adicionales_body' => '',
         ];
@@ -314,6 +482,10 @@ class PaginasController extends Controller
           'encabezado' => [
               'titulo' => 'Productos',
           ],
+          'menu' => [
+            'activo' => 'configuracion',
+            'opcion' => 'productos'
+          ],
           'clases_adicionales_body' => 'table-responsive no-padding',
         ];
 
@@ -330,6 +502,10 @@ class PaginasController extends Controller
           'encabezado' => [
               'titulo' => 'Agregar Productos',
           ],
+          'menu' => [
+            'activo' => 'configuracion',
+            'opcion' => 'agregar_producto'
+          ],
           'clases_adicionales_body' => '',
         ];
 
@@ -342,6 +518,10 @@ class PaginasController extends Controller
         $this->datos = [
           'encabezado' => [
               'titulo' => 'Actualizar Dispositivo',
+          ],
+          'menu' => [
+            'activo' => 'configuracion',
+            'opcion' => 'actualizar_dispositivo'
           ],
           'clases_adicionales_body' => '',
         ];
@@ -359,6 +539,10 @@ class PaginasController extends Controller
           'encabezado' => [
               'titulo' => 'Dispositivos',
           ],
+          'menu' => [
+            'activo' => 'configuracion',
+            'opcion' => 'dispositivos'
+          ],
           'clases_adicionales_body' => 'table-responsive no-padding',
         ];
 
@@ -374,6 +558,10 @@ class PaginasController extends Controller
         $this->datos = [
           'encabezado' => [
               'titulo' => 'Agregar Dispositivo',
+          ],
+          'menu' => [
+            'activo' => 'configuracion',
+            'opcion' => 'agregar_dispositivo'
           ],
           'clases_adicionales_body' => '',
         ];

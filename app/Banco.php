@@ -8,5 +8,5 @@ class Banco extends Model
 {
     protected $table = 'banco';
     protected $primaryKey = 'codigo_banco';
-     public $timestamps = false;
+    public $timestamps = false;
 }

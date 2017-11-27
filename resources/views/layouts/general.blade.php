@@ -24,220 +24,154 @@
                     <a href="{!! url('/') !!}" class="sidebar-toggle" data-toggle="push-menu" role="button">
                         <span class="sr-only">Toggle navigation</span>
                     </a>
-                    @if(Auth::guest())
-                        <div class="navbar-custom-menu">
-                            <ul class="nav navbar-nav">
-                                <li class="dropdown notifications-menu">
-                                    <a class="dropdown-toggle" href="#" data-toggle="dropdown">
-                                        <i class="fa fa-bell-o"></i>
-                                        <span class="label label-warning">4</span>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                      <li class="header">Tiene 4 notificaciones</li>
-                                      <li>
-                                        <!-- inner menu: contains the actual data -->
-                                        <ul class="menu">
-                                          <li>
-                                            <a href="#">
-                                              <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                                            </a>
-                                          </li>
-                                          <li>
-                                            <a href="#">
-                                              <i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the
-                                              page and may cause design problems
-                                            </a>
-                                          </li>
-                                          <li>
-                                            <a href="#">
-                                              <i class="fa fa-users text-red"></i> 5 new members joined
-                                            </a>
-                                          </li>
-                                          <li>
-                                            <a href="#">
-                                              <i class="fa fa-shopping-cart text-green"></i> 25 sales made
-                                            </a>
-                                          </li>
-                                        </ul>
-                                      </li>
-                                      <li class="footer"><a href="#">Ver todo</a></li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown user user-menu">
-                                    <a class="dropdown-toggle" href="#" data-toggle="dropdown">
-                                        <img src="/img/user4-128x128.jpg" class="user-image" alt="User Image">
-                                        <span class="hidden-xs">Geraldine Palacios</span>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li class="user-header">
-                                            <img class="img-circle" src="/img/user4-128x128.jpg" class="user-image" alt="User Image">
-                                            <p>
-                                                Geraldine Palacios - Desarrollador web
-                                                <small>Miembre desde Octubre. 2017</small>
-                                            </p>
-                                        </li>
-                                        <li class="user-footer">
-                                            <div class="pull-left">
-                                                <a href="#" class="btn btn-default btn-flat">Perfil</a>
-                                            </div>
-                                            <div class="pull-right">
-                                                <a href="#" class="btn btn-default btn-flat">Salir</a>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                    @endif
                 </nav><!-- End .navbar .navbar-static-top -->
             </header>
             <aside class="main-sidebar">
                 <section class="sidebar">
-                    @if(!Auth::guest())
-                    <!-- Login -->
-                        <div class="user-panel">
-                            <div class="pull-left image">
-                                <img src="/img/avatar.png" class="img-circle" alt="User Image">
-                            </div>
-                            <div class="pull-left info">
-                                <p>Login</p>
-                            </div>
-                        </div>
-                        {!! Form::open(['url' => 'login', 'method' => 'post', 'class' => 'sidebar-form', 'style' => 'border: 0px']) !!}
-                            <div class="form-group has-feedback">
-                                {!! Form::email('usuario', null, ['class' => 'form-control', 'placeholder' => 'usuario']) !!}
-                            </div>
-                            <div class="form-group has-feedback">
-                                {!! Form::password('clave', ['class' => 'form-control', 'placeholder' => 'clave']) !!}
-                            </div>
-                            {!! Form::button('Entrar', ['class' => 'btn btn-success', 'name' => 'search', 'type' => 'submit']) !!}
-                        {!! Form::close() !!}
-                    @else
-                    <!-- Menu -->
-                    <div class="col-md-12">
-                        <ul class="sidebar-menu" data-widget="tree">
-                            <li class="header">MENU</li>
-                            <li class="treeview">
-                                <a href="{!! url('#') !!}">
-                                    <i class="fa fa-users"></i>
-                                    <span>Usuarios</span>
-                                    <span class="pull-right-container">
-                                        <i class="fa fa-angle-left pull-right"></i>
-                                    </span>
-                                </a>
+                    <ul class="sidebar-menu" data-widget="tree">
+                        <li class="header">MENU</li>
+                        <li class="treeview <?= ($datos['menu']['activo'] == 'usuarios') ? 'active' : '' ?>">
+                            <a href="{!! url('#') !!}">
+                                <i class="fa fa-users"></i>
+                                <span>Usuarios</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li>
+                                    <a href="{!! url('/usuarios') !!}">
+                                        <i class="fa fa-circle-o <?= ($datos['menu']['opcion'] == 'usuarios') ? 'text-green' : '' ?>"></i>
+                                        Usuarios
+                                    </a>
+                                </li>
+                            
+                                <li>
+                                    <a href="{!! url('/perfiles') !!}">
+                                        <i class="fa fa-circle-o <?= ($datos['menu']['opcion'] == 'perfiles') ? 'text-green' : '' ?>"></i>
+                                        Perfiles
+                                    </a>
+                                </li>
+                         
+                                <li>
+                                    <a href="{!! url('/listar_departamento') !!}">
+                                        <i class="fa fa-circle-o <?= ($datos['menu']['opcion'] == 'departamentos') ? 'text-green' : '' ?>"></i>
+                                        Departamentos
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="treeview <?= ($datos['menu']['activo'] == 'configuracion') ? 'active' : '' ?>">
+                            <a href="{!! url('#') !!}">
+                                <i class="fa fa-wrench"></i>
+                                <span>Configuración</span>
+                                <span class="pull-right-container">
+                                   <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li>
+                                    <a href="{!! url('/listar_estatus') !!}">
+                                        <i class="fa fa-circle-o <?= ($datos['menu']['opcion'] == 'estatus') ? 'text-green' : '' ?>"></i>
+                                        Estatus
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{!! url('/listar_TipoCliente') !!}">
+                                        <i class="fa fa-circle-o <?= ($datos['menu']['opcion'] == 'tipo_clientes') ? 'text-green' : '' ?>"></i>
+                                        Tipos de Clientes
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{!! url('/listar_productos') !!}">
+                                        <i class="fa fa-circle-o <?= ($datos['menu']['opcion'] == 'productos') ? 'text-green' : '' ?>"></i>
+                                        Productos
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{!! url('/listar_bancos') !!}">
+                                        <i class="fa fa-circle-o <?= ($datos['menu']['opcion'] == 'bancos') ? 'text-green' : '' ?>"></i>
+                                        Bancos
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{!! url('/listar_dispositivo') !!}">
+                                        <i class="fa fa-circle-o <?= ($datos['menu']['opcion'] == 'dispositivos') ? 'text-green' : '' ?>"></i>
+                                        Dispositivos
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="treeview <?= ($datos['menu']['activo'] == 'dispositivos') ? 'active' : '' ?>">
+                            <a href="{!! url('#') !!}">
+                                <i class="fa fa-table"></i>
+                                <span>Reportes</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
                                 <ul class="treeview-menu">
                                     <li>
-                                        <a href="{!! url('#') !!}">
-                                            <i class="fa fa-circle-o"></i>
-                                            Usuarios
+                                        <a href="{!! url('/reporte_reclamos') !!}">
+                                            <i class="fa fa-circle-o <?= ($datos['menu']['opcion'] == 'reporte_reclamos') ? 'text-green' : '' ?>"></i>
+                                            Reclamos
                                         </a>
                                     </li>
-                                
                                     <li>
-                                        <a href="{!! url('/perfiles') !!}">
-                                            <i class="fa fa-circle-o"></i>
-                                            Perfiles
-                                        </a>
-                                    </li>
-                             
-                                    <li>
-                                        <a href="{!! url('/listar_departamento') !!}">
-                                            <i class="fa fa-circle-o"></i>
-                                            Departamentos
+                                        <a href="{!! url('/reporte_auditoria') !!}">
+                                            <i class="fa fa-circle-o <?= ($datos['menu']['opcion'] == 'reporte_auditoria') ? 'text-green' : '' ?>"></i>
+                                            Auditoria
                                         </a>
                                     </li>
                                 </ul>
-                            </li>
-                            <li class="treeview">
-                                <a href="{!! url('#') !!}">
-                                    <i class="fa fa-wrench"></i>
-                                    <span>Configuración</span>
-                                    <span class="pull-right-container">
-                                       <i class="fa fa-angle-left pull-right"></i>
-                                    </span>
-                                </a>
+                            </a>
+                        </li>
+                        <li class="treeview <?= ($datos['menu']['activo'] == 'reclamos') ? 'active' : '' ?>">
+                            <a href="{!! url('#') !!}">
+                                <i class="fa fa-phone-square"></i>
+                                <span>Reclamos</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
                                 <ul class="treeview-menu">
                                     <li>
-                                        <a href="{!! url('/listar_estatus') !!}">
-                                            <i class="fa fa-circle-o"></i>
-                                            Estatus
+                                        <a href="{!! url('/reclamo') !!}">
+                                            <i class="fa fa-circle-o <?= ($datos['menu']['opcion'] == 'agregar_reclamo') ? 'text-green' : '' ?>"></i>
+                                            Nuevo
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{!! url('/listar_TipoCliente') !!}">
-                                            <i class="fa fa-circle-o"></i>
-                                            Tipos de Clientes
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{!! url('/listar_productos') !!}">
-                                            <i class="fa fa-circle-o"></i>
-                                            Productos
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{!! url('/listar_bancos') !!}">
-                                            <i class="fa fa-circle-o"></i>
-                                            Bancos
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{!! url('/listar_dispositivo') !!}">
-                                            <i class="fa fa-circle-o"></i>
-                                            Dispositivos
+                                        <a href="{!! url('/buscar_reclamo') !!}">
+                                            <i class="fa fa-circle-o <?= ($datos['menu']['opcion'] == 'buscar_reclamo') ? 'text-green' : '' ?>"></i>
+                                            Buscar
                                         </a>
                                     </li>
                                 </ul>
-                            </li>
-                            <li class="treeview">
-                                <a href="{!! url('#') !!}">
-                                    <i class="fa fa-table"></i>
-                                    <span>Reportes</span>
-                                    <span class="pull-right-container">
-                                        <i class="fa fa-angle-left pull-right"></i>
-                                    </span>
-                                    <ul class="treeview-menu">
-                                        <li>
-                                            <a href="{!! url('/reporte_reclamos') !!}">
-                                                <i class="fa fa-circle-o"></i>
-                                                Reclamos
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="{!! url('/reporte_auditoria') !!}">
-                                                <i class="fa fa-circle-o"></i>
-                                                Auditoria
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </a>
-                            </li>
-                            <li class="treeview">
-                                <a href="{!! url('#') !!}">
-                                    <i class="fa fa-phone-square"></i>
-                                    <span>Reclamos</span>
-                                    <span class="pull-right-container">
-                                        <i class="fa fa-angle-left pull-right"></i>
-                                    </span>
-                                    <ul class="treeview-menu">
-                                        <li>
-                                            <a href="{!! url('/reclamo') !!}">
-                                                <i class="fa fa-circle-o"></i>
-                                                Nuevo
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="{!! url('/buscar_reclamo') !!}">
-                                                <i class="fa fa-circle-o"></i>
-                                                Buscar
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </a>
-                            </li>
-                        </ul>
-                    </div><!-- End Menu -->
-                    @endif
+                            </a>
+                        </li>
+                        <li class="treeview <?= ($datos['menu']['activo'] == 'gestion') ? 'active' : '' ?>">
+                            <a href="{!! url('#') !!}">
+                                <i class="fa fa-check-square"></i>
+                                <span>Gestión</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                                <ul class="treeview-menu">
+                                    <li>
+                                        <a href="{!! url('/bandeja') !!}">
+                                            <i class="fa fa-circle-o <?= ($datos['menu']['opcion'] == 'bandeja') ? 'text-green' : '' ?>"></i>
+                                            Bandeja
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{!! url('/reclamos_asignados') !!}">
+                                            <i class="fa fa-circle-o <?= ($datos['menu']['opcion'] == 'reclamos_asignados') ? 'text-green' : '' ?>"></i>
+                                            Reclamos asignados
+                                        </a>
+                                    </li>
+                                </ul>
+                            </a>
+                        </li>
+                    </ul>
                 </section>
             </aside>
             <div class="content-wrapper">
@@ -308,11 +242,8 @@
                 </section>
             </div>
             <footer class="main-footer">
-                <div class="pull-right hidden-xs">
-                    &copy; Copyleft © 2017. All Rights Reserved.
-                </div>
                 <p>
-                    <a href="http://172.18.52.110/IB/Login.aspx" target="_blank">Banco Agrícola de Venezuela RIF:20005795-5</a>
+                    Copyleft <i class="fa fa-copyright fa-flip-horizontal"></i> 2017 Banco Agrícola de Venezuela RIF: G-20005795-5
                 </p>
             </footer>
         </div>

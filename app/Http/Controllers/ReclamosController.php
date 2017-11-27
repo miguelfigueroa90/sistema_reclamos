@@ -161,6 +161,6 @@ class ReclamosController extends Controller
 
     function buscar(Request $request)
     {
-
+        dd($request);
     }
 }

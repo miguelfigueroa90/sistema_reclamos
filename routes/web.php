@@ -17,10 +17,16 @@ Route::get('/', 'PaginasController@index');
 // Autenticación
 Route::post('/login', 'LdapController@autenticar');
 
+// Administración de usuarios
+Route::get('/usuarios', 'PaginasController@listarUsuarios');
+Route::get('/nuevo_usuario', 'PaginasController@agregarUsuario');
+
 // Reclamo
 Route::get('/reclamo', 'PaginasController@agregarReclamo');
 Route::get('/bandeja', 'PaginasController@bandeja');
-Route::get('/buscar_reclamo', 'PaginasController@listarReclamos');
+Route::get('/buscar_reclamo', 'PaginasController@buscarReclamos');
+Route::get('/reclamos_asignados', 'PaginasController@listarReclamosAsignados');
+Route::get('/gestionar_reclamo', 'PaginasController@gestionarReclamo');
 Route::post('/buscar_reclamo', 'ReclamosController@buscar');
 Route::post('/buscar_cliente', 'ClientesController@buscarCliente');
 Route::post('/reclamo', 'ReclamosController@agregar');
@@ -34,6 +40,7 @@ Route::post('/nuevo_banco', 'BancosController@agregar');
 Route::put('/actualizar_banco/{codigo_banco}', 'BancosController@actualizar');
 Route::delete('/eliminar_banco/{codigo_banco}', 'BancosController@eliminar');
 
+// Administración de bancos
 Route::get('/listar_bancos', 'PaginasController@listarBancos');
 Route::get('/nuevo_banco', 'PaginasController@agregarBanco');
 Route::get('/actualizar_banco/{codigo_banco}', 'PaginasController@actualizarBanco');
@@ -72,8 +79,6 @@ Route::get('/actualizar_dispositivo/{codigo_dispositivo}', 'PaginasController@ac
 Route::post('/nuevo_dispositivo', 'DispositivoController@agregar');
 Route::put('/actualizar_dispositivo/{codigo_dispositivo}', 'DispositivoController@actualizar');
 Route::delete('/eliminar_dispositivo/{codigo_dispositivo}', 'DispositivoController@eliminar');
-
-//////////////////////////////USUARIOS//////////////////////////
 
 // Administración de Departamentos
 Route::get('/listar_departamento', 'PaginasController@listarDepartamentos');

@@ -22,20 +22,6 @@ class LdapController extends Controller
     {
         $this->adldap = $adldap;
     }
-    
-    /**
-     * Displays the all LDAP users.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function index()
-    {
-        $users = $this->adldap->search()->users()->get();
-
-        dd($users);
-        
-        return view('users.index', compact('users'));
-    }
 
     /**
      * [autenticar description]
@@ -47,12 +33,12 @@ class LdapController extends Controller
     {
         if($request->method() == 'POST') {
             if (Adldap::auth()->attempt($request->get('usuario'), $request->get('clave'))) {
-                    dd('usuario autenticado');
+                    return redirect('/');
                 } else {
-                    dd('usuario no autenticado');
+                    return redirect('/')->with('error','Credenciales incorrectas, por favor verfique.');
                 }
         } else {
-            return view('pages.home');
+            return view('inicio');
         }
     }
 }
