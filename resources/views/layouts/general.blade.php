@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="/css/AdminLTE.min.css" media="screen">
         <link rel="stylesheet" href="/css/skins/skin-green-light.min.css" media="screen">
         <link rel="stylesheet" href="/css/app.css" media="screen">
+        <link rel="shortcut icon" href="{{{ asset('img/favicon.ico') }}}">
     </head>
     <body class="skin-green-light sidebar-mini">
         <div class="wrapper">
@@ -251,7 +252,7 @@
             </div>
             <footer class="main-footer">
                 <p>
-                    Copyleft <i class="fa fa-copyright fa-flip-horizontal"></i> 2017 Banco Agrícola de Venezuela RIF: G-20005795-5
+                    <i class="fa fa-copyright fa-flip-horizontal"></i> 2017 Banco Agrícola de Venezuela RIF: G-20005795-5
                 </p>
             </footer>
         </div>
