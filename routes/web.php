@@ -11,8 +11,9 @@
 |
 */
 
-// Inicio
+// Autenticación
 Route::get('/', 'PaginasController@index');
+Route::get('/salir', 'LdapController@salir');
 
 // Autenticación
 Route::auth('/login', 'PaginasController@index');
@@ -30,9 +31,6 @@ Route::get('/perfiles', 'PaginasController@listarPerfiles');
 Route::get('/reclamo', 'PaginasController@agregarReclamo');
 Route::get('/bandeja', 'PaginasController@bandeja');
 Route::get('/buscar_reclamo', 'PaginasController@buscarReclamos');
-
-
-
 Route::get('/reclamos_asignados', 'PaginasController@listarReclamosAsignados');
 Route::get('/gestionar_reclamo', 'PaginasController@gestionarReclamo');
 Route::post('/buscar_reclamo', 'ReclamosController@buscar');
