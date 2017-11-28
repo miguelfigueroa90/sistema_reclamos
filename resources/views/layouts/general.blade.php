@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="/css/AdminLTE.min.css" media="screen">
         <link rel="stylesheet" href="/css/skins/skin-green-light.min.css" media="screen">
         <link rel="stylesheet" href="/css/app.css" media="screen">
-        <link rel="shortcut icon" href="{{{ asset('img/favicon.ico') }}}">
+        <link rel="shortcut icon" href="{{{ asset('img/favicon.png') }}}">
     </head>
     <body class="skin-green-light sidebar-mini">
         <div class="wrapper">
