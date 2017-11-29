@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Reclamo extends Model
+class Reclamo extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
+
     protected $table = 'reclamo';
     protected $primaryKey = 'numero_reclamo';
     public $timestamps = false;
@@ -29,4 +32,15 @@ class Reclamo extends Model
     {
         return $this->belongsToMany('App\EstatusReclamo', 'estatus_reclamo', 'codigo_reclamo', 'codigo_estatus');
     }
+
+    /**
+     * Attributes to include in the Audit.
+     *
+     * @var array
+     */
+    protected $auditInclude = [
+        'numero_reclamo',
+        'descripcion',
+        'fecha_registro'
+    ];
 }

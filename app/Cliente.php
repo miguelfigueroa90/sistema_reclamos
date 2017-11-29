@@ -3,16 +3,19 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Cliente extends Model
+class Cliente extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
+
     protected $table = 'cliente';
     protected $primaryKey = 'cedula';
     public $timestamps = false;
 
     public function TipoCliente()
     {
-    	return $this->belongsToMany('App\ClienteTipoCliente', 'cliente_nacionalidad', 'cedula', 'codigo_nacionalidad');
+    	return $this->belongsToMany('App\ClienteTipoCliente', 'cliente_nacionalidad', 'cedula', 'codigo_tipo_cliente');
     }
 
     public function Correo()
@@ -29,4 +32,15 @@ class Cliente extends Model
     {
     	return $this->belongsToMany('App\CuentaBancariaCliente', 'cuenta_bancaria_cliente', 'cedula', 'codigo_cuenta_bancaria');
     }
+
+    /**
+     * Attributes to include in the Audit.
+     *
+     * @var array
+     */
+    protected $auditInclude = [
+        'cedula',
+        'nombre',
+        'apellido'
+    ];
 }

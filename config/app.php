@@ -187,6 +187,11 @@ return [
          */
         Collective\Html\HtmlServiceProvider::class,
 
+        /**
+         * Auditoria
+         */
+        OwenIt\Auditing\AuditingServiceProvider::class,
+
     ],
 
     /*
