@@ -184,55 +184,30 @@
                 </section>
             </aside>
             <div class="content-wrapper">
-                @component('componentes/encabezado')
-                    @if(isset($datos['numeracion']))
-                        @slot('numeracion')
-                            {!! $datos['encabezado']['numeracion'] !!}
-                        @endslot
-                    @endif
-
-                    {!! $datos['encabezado']['titulo'] !!}
-                @endcomponent
-
-                @if(isset($datos['alerta']))
-                    @component('componentes/alerta')
-                        @slot('nivel')
-                        {!! $datos['alerta']['nivel'] !!}
-                        @endslot
-
-                        @slot('titulo')
-                        {!! $datos['alerta']['titulo'] !!}
-                        @endslot
-
-                        @slot('simbolo')
-                        {!! $datos['alerta']['simbolo'] !!}
-                        @endslot
-
-                        {!! $datos['alerta']['mensaje'] !!}
-                    @endcomponent
-                @endif
-
-                @if(isset($datos['anuncio']))
-                    @component('componentes/anuncio')
-                        @slot('nivel')
-                        {!! $datos['anuncio']['nivel'] !!}
-                        @endslot
-
-                        @slot('titulo')
-                        {!! $datos['anuncio']['titulo'] !!}
-                        @endslot
-
-                        @slot('simbolo')
-                        {!! $datos['anuncio']['simbolo'] !!}
-                        @endslot
-
-                        {!! $datos['anuncio']['mensaje'] !!}
-                    @endcomponent
-                @endif
-
                 <section class="content">
                     <div class="row">
                         <div class="col-md-12">
+                            @if (session('success'))
+                                <div class="alert alert-success">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                    {{ session('success') }}
+                                </div>
+                            @endif
+
+                            @if (session('warning'))
+                                <div class="alert alert-warning">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                    {{ session('warning') }}
+                                </div>
+                            @endif
+
+                            @if (session('danger'))
+                                <div class="alert alert-danger">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                    {{ session('danger') }}
+                                </div>
+                            @endif
+
                             <div class="box box-success">
                                 <div class="box-body {!! $datos['clases_adicionales_body'] !!}">
                                     @yield('contenido')

@@ -1,11 +1,5 @@
 @extends('layouts.general')
 @section('contenido')
-
-                @if (session('status'))
-                <div class="alert alert-success">
-                    {{ session('status') }}
-                </div>
-                @endif
   {!! Form::open(['url' => 'actualizar_productos/'.$datos['producto']->codigo_producto, 'class' => 'form', 'method' => 'put']) !!}
 <div class="form-group">
       {!! Form::label('nombre') !!}

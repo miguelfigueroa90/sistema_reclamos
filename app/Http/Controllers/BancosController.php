@@ -10,13 +10,13 @@ class BancosController extends Controller
     public function actualizar(Request $request)
     {
         $codigoBanco = $request->codigo_banco;
-        $nuevoNombreBanco = strtoupper($request->nombre);
+        $nuevoNombreBanco = ucwords($request->nombre);
 
         $banco = Banco::where([['codigo_banco', '=', $codigoBanco]])->first();
         $banco->nombre = $nuevoNombreBanco;
         $banco->save();
 
-        return redirect('/listar_bancos')->with('status','¡El banco ha sido actualizado!');
+        return redirect('/listar_bancos')->with('success','¡El banco ha sido actualizado!');
     
     }
 
@@ -26,18 +26,18 @@ class BancosController extends Controller
         $banco = Banco::find($codigoBanco);
         $banco->condicion='0';
         $banco->update();
-        return redirect('/listar_bancos')->with('status','¡El banco ha sido eliminado!');
+        return redirect('/listar_bancos')->with('success','¡El banco ha sido eliminado!');
     }
 
     public function agregar(Request $request)
     {
         $codigoBanco = $request->codigo_banco;
-        $nuevoNombreBanco = strtoupper($request->nombre);
+        $nuevoNombreBanco = ucwords($request->nombre);
      
     if($sql=Banco::where([['codigo_banco', '=', $codigoBanco],['condicion', '=', '1']])->first())
        
     {
-      return redirect('/nuevo_banco/')->with('status','¡El banco ingresado ya se encuentra registrado, favor intente con otro código!');
+      return redirect('/nuevo_banco/')->with('danger','¡El banco ingresado ya se encuentra registrado, favor intente con otro código!');
     
     }elseif($sql=Banco::where([['codigo_banco', '=', $codigoBanco],['condicion', '=', '0']])->first()){
 
@@ -46,7 +46,7 @@ class BancosController extends Controller
         $banco->nombre = $nuevoNombreBanco;
         $banco->condicion = "1";
         $banco->save();
-        return redirect('/listar_bancos')->with('status','¡El banco ha sido agregado!'); 
+        return redirect('/listar_bancos')->with('success','¡El banco ha sido agregado!'); 
 
     }else{   
 
@@ -55,7 +55,7 @@ class BancosController extends Controller
         $banco->nombre = $nuevoNombreBanco;
         $banco->condicion='1';
         $banco->save();
-        return redirect('/listar_bancos')->with('status','¡El banco ha sido agregado!');
+        return redirect('/listar_bancos')->with('success','¡El banco ha sido agregado!');
         }
     }
 }

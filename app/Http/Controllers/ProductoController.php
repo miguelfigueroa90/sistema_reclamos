@@ -10,13 +10,13 @@ class ProductoController extends Controller
     public function actualizar(Request $request)
     {
        $NuevoNombreProducto = $request->nombre;
-       $nuevoTipoProducto = strtoupper($request->tipo);
+       $nuevoTipoProducto = ucwords($request->tipo);
        $codigoProducto = $request->codigo_producto;
      
 
        if($sql=Producto::where([['tipo', '=', $nuevoTipoProducto],['condicion', '=', '1']])->first())
     {
-        return redirect('/actualizar_productos/'.$codigoProducto)->with('status','¡El producto ingresado ya se encuentra registrado, favor intente con otro nombre!');
+        return redirect('/actualizar_productos/'.$codigoProducto)->with('danger','¡El producto ingresado ya se encuentra registrado, favor intente con otro nombre!');
     
     }elseif ($sql=Producto::where([['tipo', '=', $nuevoTipoProducto],['condicion', '=', '0']])->first()){
         
@@ -31,7 +31,7 @@ class ProductoController extends Controller
         $productoView->condicion = "0";
         $productoView->save();
 
-        return redirect('/listar_productos')->with('status','¡El producto ha sido actualizado!'); 
+        return redirect('/listar_productos')->with('success','¡El producto ha sido actualizado!'); 
 
     }else{   
         
@@ -40,7 +40,7 @@ class ProductoController extends Controller
         $producto->nombre = $NuevoNombreProducto;
         $producto->tipo = $nuevoTipoProducto;
         $producto->save();
-        return redirect('/listar_productos')->with('status','¡El Producto ha sido agregado!');
+        return redirect('/listar_productos')->with('success','¡El Producto ha sido agregado!');
     }
     }
 
@@ -50,18 +50,18 @@ class ProductoController extends Controller
         $producto = Producto::find($codigoProducto);
         $producto->condicion='0';
         $producto->update();
-        return redirect('/listar_productos')->with('status','¡El Producto ha sido eliminado!');
+        return redirect('/listar_productos')->with('danger','¡El Producto ha sido eliminado!');
     }
 
     public function agregar(Request $request)
     {
         $NombreProducto = $request->nombre;
-        $nuevoTipoProducto = strtoupper($request->tipo);
+        $nuevoTipoProducto = ucwords($request->tipo);
         $codigoProducto = $request->codigo_producto;
        
        if($sql=Producto::where([['tipo', '=', $nuevoTipoProducto],['condicion', '=', '1']])->first())
     {
-        return redirect('/nuevo_producto')->with('status','¡El producto ingresado ya se encuentra registrado, favor intente con otro nombre!');
+        return redirect('/nuevo_producto')->with('danger','¡El producto ingresado ya se encuentra registrado, favor intente con otro nombre!');
       
     }elseif($sql=Producto::where([['tipo', '=', $nuevoTipoProducto],['condicion', '=', '0']])->first()){
     
@@ -71,7 +71,7 @@ class ProductoController extends Controller
         $producto->nombre = $NombreProducto;
         $producto->save();
 
-       return redirect('/listar_productos')->with('status','¡El producto ha sido agregado!'); 
+       return redirect('/listar_productos')->with('success','¡El producto ha sido agregado!'); 
 
     }else{   
         $producto = new Producto;
@@ -79,7 +79,7 @@ class ProductoController extends Controller
         $producto->tipo = $nuevoTipoProducto;
         $producto->condicion = "1";
         $producto->save();
-        return redirect('/listar_productos')->with('status','¡El Producto ha sido agregado!');
+        return redirect('/listar_productos')->with('success','¡El Producto ha sido agregado!');
         }
     }
 }

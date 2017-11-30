@@ -3,13 +3,6 @@
 Agregar Estatus
 @endsection
 @section('contenido')
-
-                @if (session('status'))
-                <div class="alert alert-success">
-                    {{ session('status') }}
-                </div>
-                @endif
-
   {!! Form::open(['url' => 'nuevo_estatus', 'class' => 'form']) !!}
   <div class="form-group">
       {!! Form::label('tipo') !!}

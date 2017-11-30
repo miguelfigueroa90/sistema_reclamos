@@ -10,13 +10,13 @@ class DispositivoController extends Controller
     public function actualizar(Request $request)
     {
     
-       $nuevoTipoDispositivo = strtoupper($request->tipo);
+       $nuevoTipoDispositivo = ucwords($request->tipo);
        $codigoDispositivo = $request->codigo_dispositivo;
      
     if($sql=Dispositivo::where([['tipo', '=', $nuevoTipoDispositivo],['condicion', '=', '1']])->first())
        
     {
-        return redirect('/actualizar_dispositivo/'.$codigoDispositivo)->with('status','¡El Dispositivo ingresado ya se encuentra registrado, favor intente con otro nombre!');
+        return redirect('/actualizar_dispositivo/'.$codigoDispositivo)->with('danger','¡El Dispositivo ingresado ya se encuentra registrado, favor intente con otro nombre!');
     
     }elseif ($sql=Dispositivo::where([['tipo', '=', $nuevoTipoDispositivo],['condicion', '=', '0']])->first()) {
    
@@ -30,7 +30,7 @@ class DispositivoController extends Controller
         $dispositivoView->condicion = "0";
         $dispositivoView->save();
 
-        return redirect('/listar_dispositivo')->with('status','¡El Dispositivo ha sido actualizado!'); 
+        return redirect('/listar_dispositivo')->with('success','¡El Dispositivo ha sido actualizado!'); 
 
     }else{   
 
@@ -38,7 +38,7 @@ class DispositivoController extends Controller
         $dispositivo->tipo = $nuevoTipoDispositivo;
         $dispositivo->condicion = "1";
         $dispositivo->save();
-        return redirect('/listar_dispositivo')->with('status','¡El Dispositivo ha sido actualizado!');
+        return redirect('/listar_dispositivo')->with('success','¡El Dispositivo ha sido actualizado!');
     }
     
     }
@@ -49,18 +49,18 @@ class DispositivoController extends Controller
         $dispositivo = Dispositivo::find($codigoDispositivo);
         $dispositivo->condicion='0';
         $dispositivo->update();
-        return redirect('/listar_dispositivo')->with('status','¡El Dispositivo ha sido eliminado!');
+        return redirect('/listar_dispositivo')->with('success','¡El Dispositivo ha sido eliminado!');
     }
 
     public function agregar(Request $request)
     {
-        $nuevoTipoDispositivo = strtoupper($request->tipo);
+        $nuevoTipoDispositivo = ucwords($request->tipo);
         $codigoDispositivo = $request->codigo_dispositivo;
 
     if($sql=Dispositivo::where([['tipo', '=', $nuevoTipoDispositivo],['condicion', '=', '1']])->first())
        
     {
-        return redirect('/nuevo_dispositivo/')->with('status','¡El Dispositivo ingresado ya se encuentra registrado, favor intente con otro nombre!');
+        return redirect('/nuevo_dispositivo/')->with('success','¡El Dispositivo ingresado ya se encuentra registrado, favor intente con otro nombre!');
  
     }elseif ($sql=Dispositivo::where([['tipo', '=', $nuevoTipoDispositivo],['condicion', '=', '0']])->first()) {
        
@@ -68,7 +68,7 @@ class DispositivoController extends Controller
         $dispositivo = Dispositivo::find($codigoDispositivo);
         $dispositivo->condicion = "1";
         $dispositivo->save();
-        return redirect('/listar_dispositivo')->with('status','¡El Dispositivo ha sido agregado!'); 
+        return redirect('/listar_dispositivo')->with('success','¡El Dispositivo ha sido agregado!'); 
 
     }else{   
 
@@ -76,7 +76,7 @@ class DispositivoController extends Controller
         $dispositivo->tipo = $nuevoTipoDispositivo;
         $dispositivo->condicion = "1";
         $dispositivo->save();
-        return redirect('/listar_dispositivo')->with('status','¡El Dispositivo ha sido agregado!');
+        return redirect('/listar_dispositivo')->with('success','¡El Dispositivo ha sido agregado!');
         }
     }
 }

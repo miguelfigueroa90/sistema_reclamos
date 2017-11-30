@@ -14,7 +14,7 @@ class PerfilesController extends Controller
       $perfil = Perfil::find($codigoPerfil);
       $perfil->nombre = $nuevoNombrePerfil;
       $perfil->save();
-      return redirect()->back()->with('El perfil ha sido actualizado');
+      return redirect()->back()->with('success', 'El perfil ha sido actualizado');
     }
 
     public function eliminar(Request $request)
@@ -22,7 +22,7 @@ class PerfilesController extends Controller
       $codigoPerfil = $request->codigo_perfil;
       $perfil = Perfil::find($codigoPerfil);
       $perfil->delete();
-      return redirect()->back()->with('El perfil ha sido eliminado');
+      return redirect()->back()->with('danger', 'El perfil ha sido eliminado');
     }
 
     public function agregar(Request $request)
@@ -30,6 +30,6 @@ class PerfilesController extends Controller
       $perfil = new Perfil;
       $perfil->nombre = $request->nombre;
       $perfil->save();
-      return redirect()->back()->with('El perfil ha sido agregado');
+      return redirect()->back()->with('success', 'El perfil ha sido agregado');
     }
 }

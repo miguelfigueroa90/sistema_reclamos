@@ -3,12 +3,6 @@
 Actualizar Estatus
 @endsection
 @section('contenido')
-
-                @if (session('status'))
-                <div class="alert alert-success">
-                    {{ session('status') }}
-                </div>
-                @endif
   {!! Form::open(['url' => 'actualizar_estatus/'.$datos['estatus']->codigo_estatus, 'class' => 'form', 'method' => 'put']) !!}
   <div class="form-group">
       {!! Form::label('tipo') !!}

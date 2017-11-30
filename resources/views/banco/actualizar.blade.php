@@ -3,12 +3,6 @@
 Actualizar Banco
 @endsection
 @section('contenido')
-
-                @if (session('status'))
-                <div class="alert alert-success">
-                    {{ session('status') }}
-                </div>
-                @endif
   {!! Form::open(['url' => 'actualizar_banco/'.$datos['banco']->codigo_banco, 'class' => 'form', 'method' => 'put']) !!}
   <div class="form-group">
       {!! Form::label('Codigo de Banco') !!}

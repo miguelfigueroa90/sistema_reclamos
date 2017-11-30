@@ -10,13 +10,13 @@ class EstatusController extends Controller
     public function actualizar(Request $request)
     {
         $codigoEstatus = $request->codigo_estatus;
-        $nuevoTipoEstatus = strtoupper($request->tipo);
+        $nuevoTipoEstatus = ucwords($request->tipo);
 
       
     if($sql=Estatus::where([['tipo', '=', $nuevoTipoEstatus],['condicion', '=', '1']])->first())
        
     {
-        return redirect('/actualizar_estatus/'.$codigoEstatus)->with('status','¡El estatus ingresado ya se encuentra registrado, favor intente con otro nombre!');
+        return redirect('/actualizar_estatus/'.$codigoEstatus)->with('danger','¡El estatus ingresado ya se encuentra registrado, favor intente con otro nombre!');
     
     }elseif($sql=Estatus::where([['tipo', '=', $nuevoTipoEstatus],['condicion', '=', '0']])->first()){
     
@@ -30,13 +30,13 @@ class EstatusController extends Controller
         $estatusView->condicion = "0";
         $estatusView->save();
 
-       return redirect('/listar_estatus')->with('status','¡El estatus ha sido actualizado!');
+       return redirect('/listar_estatus')->with('success','¡El estatus ha sido actualizado!');
 
     }else{   
         $estatus = Estatus::find($codigoEstatus);
         $estatus->tipo = $nuevoTipoEstatus;
         $estatus->save();
-        return redirect('/listar_estatus')->with('status','¡El estatus ha sido actualizado!');
+        return redirect('/listar_estatus')->with('success','¡El estatus ha sido actualizado!');
     }
     
     }
@@ -47,17 +47,17 @@ class EstatusController extends Controller
         $estatus = Estatus::find($codigoEstatus);
         $estatus->condicion='0';
         $estatus->update();
-        return redirect('/listar_estatus')->with('status','¡El Estatus ha sido eliminado!');
+        return redirect('/listar_estatus')->with('success','¡El Estatus ha sido eliminado!');
     }
 
     public function agregar(Request $request)
     {
-        $nuevoTipoEstatus = strtoupper($request->tipo);
+        $nuevoTipoEstatus = ucwords($request->tipo);
        
     if($sql=Estatus::where([['tipo', '=', $nuevoTipoEstatus],['condicion', '=', '1']])->first())
        
     {
-        return redirect('/nuevo_estatus/')->with('status','¡El estatus ingresado ya se encuentra registrado, favor intente con otro nombre!');
+        return redirect('/nuevo_estatus/')->with('success','¡El estatus ingresado ya se encuentra registrado, favor intente con otro nombre!');
     
     }elseif($sql=Estatus::where([['tipo', '=', $nuevoTipoEstatus],['condicion', '=', '0']])->first()){
     
@@ -66,7 +66,7 @@ class EstatusController extends Controller
         $estatus->condicion = "1";
         $estatus->save();
 
-       return redirect('/listar_estatus')->with('status','¡El estatus ha sido agregado!'); 
+       return redirect('/listar_estatus')->with('success','¡El estatus ha sido agregado!'); 
 
     }else{   
 
@@ -74,7 +74,7 @@ class EstatusController extends Controller
         $estatus->tipo = $nuevoTipoEstatus;
         $estatus->condicion = "1";
         $estatus->save();
-        return redirect('/listar_estatus')->with('status','¡El Estatus ha sido agregado!');
+        return redirect('/listar_estatus')->with('success','¡El Estatus ha sido agregado!');
         }
     }
 }

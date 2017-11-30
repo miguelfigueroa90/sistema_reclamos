@@ -10,13 +10,13 @@ class TipoClienteController extends Controller
     public function actualizar(Request $request)
     {
         $codigoTipoCliente = $request->codigo_tipo_cliente;
-        $nuevoTipoCliente = strtoupper($request->nombre);
+        $nuevoTipoCliente = ucwords($request->nombre);
 
       
     if($sql=TipoCliente::where([['nombre', '=', $nuevoTipoCliente],['condicion', '=', '1']])->first())
        
     {
-        return redirect('/actualizar_TipoCliente/'.$codigoTipoCliente)->with('status','¡El Tipo de Cliente ingresado ya se encuentra registrado, favor intente con otro nombre!');
+        return redirect('/actualizar_TipoCliente/'.$codigoTipoCliente)->with('danger','¡El Tipo de Cliente ingresado ya se encuentra registrado, favor intente con otro nombre!');
     
     }elseif($sql=TipoCliente::where([['nombre', '=', $nuevoTipoCliente],['condicion', '=', '0']])->first()){
     
@@ -30,13 +30,13 @@ class TipoClienteController extends Controller
         $TipoClienteView->condicion = "0";
         $TipoClienteView->save();
 
-       return redirect('/listar_TipoCliente')->with('status','¡El Tipo de Cliente ha sido actualizado!');
+       return redirect('/listar_TipoCliente')->with('success','¡El Tipo de Cliente ha sido actualizado!');
 
     }else{   
         $TipoCliente = TipoCliente::find($codigoTipoCliente);
         $TipoCliente->nombre = $nuevoTipoCliente;
         $TipoCliente->save();
-        return redirect('/listar_TipoCliente')->with('status','¡El Tipo de Cliente ha sido actualizado!');
+        return redirect('/listar_TipoCliente')->with('success','¡El Tipo de Cliente ha sido actualizado!');
     }
     
     }
@@ -47,17 +47,17 @@ class TipoClienteController extends Controller
         $TipoCliente = TipoCliente::find($codigoTipoCliente);
         $TipoCliente->condicion = '0';
         $TipoCliente->update();
-        return redirect('/listar_TipoCliente')->with('status','¡El Tipo de Cliente ha sido eliminado!');
+        return redirect('/listar_TipoCliente')->with('danger','¡El Tipo de Cliente ha sido eliminado!');
     }
 
     public function agregar(Request $request)
     {
-        $nuevoTipoCliente = strtoupper($request->nombre);
+        $nuevoTipoCliente = ucwords($request->nombre);
        
     if($sql=TipoCliente::where([['nombre', '=', $nuevoTipoCliente],['condicion', '=', '1']])->first())
        
     {
-        return redirect('/nuevo_TipoCliente/')->with('status','¡El Tipo de Cliente ingresado ya se encuentra registrado, favor intente con otro nombre!');
+        return redirect('/nuevo_TipoCliente/')->with('success','¡El Tipo de Cliente ingresado ya se encuentra registrado, favor intente con otro nombre!');
     
     }elseif($sql=TipoCliente::where([['nombre', '=', $nuevoTipoCliente],['condicion', '=', '0']])->first()){
     
@@ -66,7 +66,7 @@ class TipoClienteController extends Controller
         $TipoCliente->condicion = "1";
         $TipoCliente->save();
 
-       return redirect('/listar_TipoCliente')->with('status','¡El Tipo de Cliente ha sido agregado!'); 
+       return redirect('/listar_TipoCliente')->with('success','¡El Tipo de Cliente ha sido agregado!'); 
 
     }else{   
 
@@ -74,7 +74,7 @@ class TipoClienteController extends Controller
         $TipoCliente->nombre = $nuevoTipoCliente;
         $TipoCliente->condicion = "1";
         $TipoCliente->save();
-        return redirect('/listar_TipoCliente')->with('status','¡El Tipo de Cliente ha sido agregado!');
+        return redirect('/listar_TipoCliente')->with('success','¡El Tipo de Cliente ha sido agregado!');
         }
     }
 }

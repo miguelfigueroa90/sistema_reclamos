@@ -10,12 +10,6 @@ Bancos
             @else
 
 <table class="table table-hover">
-
-                @if (session('status'))
-                <div class="alert alert-success">
-                    {{ session('status') }}
-                </div>
-                @endif
     <thead>
         <tr>
             <th>Código Banco</th>

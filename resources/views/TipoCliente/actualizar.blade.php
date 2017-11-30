@@ -3,12 +3,6 @@
 Actualizar tipo de Cliente
 @endsection
 @section('contenido')
-
-                @if (session('status'))
-                <div class="alert alert-success">
-                    {{ session('status') }}
-                </div>
-                @endif
   {!! Form::open(['url' => 'actualizar_TipoCliente/'.$datos['TipoCliente']->codigo_tipo_cliente, 'class' => 'form', 'method' => 'put']) !!}
   <div class="form-group">
       {!! Form::label('nombre') !!}
