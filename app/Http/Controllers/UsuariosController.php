@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\UsuarioEspejo;
+use App\User;
 use App\usuario;
 
 class UsuariosController extends Controller
@@ -12,7 +12,7 @@ class UsuariosController extends Controller
     {
     	if($request->buscar) {
     		$correo = $request->usuario . '@bav.gob.ve';
-	    	$usuario = UsuarioEspejo::where('correo', '=', $correo)->first();
+	    	$usuario = User::where('correo', '=', $correo)->first();
 
 	        if(!is_null($usuario)) {
 	        	return response()->json([

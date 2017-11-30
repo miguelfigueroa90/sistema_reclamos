@@ -52,7 +52,7 @@
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        {!! Form::text('clave', null, ['id' => 'campo_clave', 'class' => 'form-control', 'placeholder' => 'Clave']) !!}
+        {!! Form::password('clave', ['id' => 'campo_clave', 'class' => 'form-control', 'placeholder' => 'Clave']) !!}
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <div class="row">
