@@ -23,6 +23,8 @@ Route::post('/login', 'LdapController@autenticar');
 Route::get('/usuarios', 'PaginasController@listarUsuarios');
 Route::get('/nuevo_usuario', 'PaginasController@agregarUsuario');
 Route::post('/usuario', 'UsuariosController@procesarUsuario');
+Route::get('/actualizar_usuario/{cedula}', 'PaginasController@actualizarUsuario');
+Route::put('/actualizar_usuario/{cedula}', 'UsuariosController@actualizar');
 
 // Administración de perfiles
 Route::get('/perfiles', 'PaginasController@listarPerfiles');

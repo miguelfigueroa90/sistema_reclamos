@@ -138,6 +138,10 @@ class PaginasController extends Controller
 
     public function agregarUsuario()
     {
+        $perfiles = Perfil::all();
+
+        $departamentos = Departamento::all();
+
         $this->datos = [
           'encabezado' => [
               'titulo' => 'Agregar Usuario',
@@ -147,9 +151,35 @@ class PaginasController extends Controller
             'opcion' => 'usuarios'
           ],
           'clases_adicionales_body' => '',
+          'perfiles' => $perfiles,
+          'departamentos' => $departamentos
         ];
 
         return view('usuarios/agregar', ['datos' => $this->datos]);
+    }
+
+    public function actualizarUsuario(Request $request)
+    {
+        $usuario = Usuario::find($request->cedula);
+        $departamento_perfil_usuario = UsuarioDepartamentoPerfil::where('cedula', '=', $request->cedula)->first();
+        $perfiles = Perfil::all();
+        $departamentos = Departamento::all();
+
+        $this->datos = [
+          'encabezado' => [
+              'titulo' => 'Actualizar Usuario',
+          ],
+          'menu' => [
+            'activo' => 'configuracion',
+            'opcion' => 'actualizar_banco'
+          ],
+          'clases_adicionales_body' => '',
+          'usuario' => $usuario,
+          'perfiles' => $perfiles,
+          'departamentos' => $departamentos,
+        ];
+
+        return view('usuarios/actualizar', ['datos' => $this->datos]);
     }
 
     // Bancos

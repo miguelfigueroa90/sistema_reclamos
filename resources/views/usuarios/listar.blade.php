@@ -31,6 +31,14 @@ Usuarios
                         <td>{{$usuario->estado}}</td>
                         <td class="datos-en-linea">
                             <div class="margen-horizontal">
+                                <!-- Editar usuario -->
+                                {!! Form::open(['method' => 'GET', 'url' => 'actualizar_usuario/'.$usuario->cedula]) !!}
+
+                                {!! Form::button('Actualizar', array('type' => 'submit', 'class' => 'btn btn-primary')) !!}
+
+                                {!! Form::close() !!}
+                            </div>
+                            <div class="margen-horizontal">
                                 <a href="" data-target="#modal-delete-{{$usuario->cedula}}" data-toggle="modal" class="btn btn-danger">Eliminar</a>
                             </div>
                         </td>
