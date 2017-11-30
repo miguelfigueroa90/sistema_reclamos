@@ -1,6 +1,6 @@
 @extends('layouts.general')
 @section('contenido')
-  {!! Form::open(['url' => 'perfil', 'class' => 'form']) !!}
+  {!! Form::open(['url' => 'nuevo_perfil', 'class' => 'form']) !!}
   <div class="form-group">
       {!! Form::label('nombre') !!}
       {!! Form::text('nombre', null, array('required', 'class'=>'form-control', )) !!}

@@ -9,27 +9,60 @@ class PerfilesController extends Controller
 {
     public function actualizar(Request $request)
     {
-      $codigoPerfil = $request->codigo_perfil;
-      $nuevoNombrePerfil = $request->nombre;
-      $perfil = Perfil::find($codigoPerfil);
-      $perfil->nombre = $nuevoNombrePerfil;
-      $perfil->save();
-      return redirect()->back()->with('success', 'El perfil ha sido actualizado');
+        $nuevoPerfil = ucwords($request->nombre);
+        $codigoPerfil = $request->codigo_perfil;
+
+        if($sql=Perfil::where([['nombre', '=', $nuevoPerfil],['condicion', '=', '1']])->first()) {
+            return redirect('/actualizar_perfil/'.$codigoPerfil)->with('danger','¡El Perfil ingresado ya se encuentra registrado, favor intente con otro nombre!');
+        } elseif ($sql=Perfil::where([['nombre', '=', $nuevoPerfil],['condicion', '=', '0']])->first()) {
+            $codigoPerfilSQL = $sql->codigo_perfil;
+            $perfil = Perfil::find($codigoPerfilSQL);
+            $perfil->condicion = "1";
+            $perfil->save();
+
+            $codigoPerfilView = $request->codigo_perfil;
+            $perfilView = Perfil::find($codigoPerfilView);
+            $perfilView->condicion = "0";
+            $perfilView->save();
+
+            return redirect('perfiles')->with('success','¡El Perfil ha sido actualizado!'); 
+        } else {   
+            $perfil = Perfil::find($codigoPerfil);
+            $perfil->nombre = $nuevoPerfil;
+            $perfil->condicion = "1";
+            $perfil->save();
+            return redirect('perfiles')->with('success','¡El Perfil ha sido actualizado!');
+        }
     }
 
     public function eliminar(Request $request)
     {
-      $codigoPerfil = $request->codigo_perfil;
-      $perfil = Perfil::find($codigoPerfil);
-      $perfil->delete();
-      return redirect()->back()->with('danger', 'El perfil ha sido eliminado');
+        $codigoPerfil = $request->codigo_perfil;
+        $perfil = Perfil::find($codigoPerfil);
+        $perfil->condicion='0';
+        $perfil->update();
+        return redirect('perfiles')->with('warning','¡El Perfil ha sido eliminado!');
     }
 
     public function agregar(Request $request)
     {
-      $perfil = new Perfil;
-      $perfil->nombre = $request->nombre;
-      $perfil->save();
-      return redirect()->back()->with('success', 'El perfil ha sido agregado');
+        $nuevoPerfil = ucwords($request->nombre);
+        $codigoPerfil = $request->codigo_perfil;
+
+        if($sql=Perfil::where([['nombre', '=', $nuevoPerfil],['condicion', '=', '1']])->first()) {
+            return redirect('/nuevo_perfil/')->with('danger','¡El Perfil ingresado ya se encuentra registrado, favor intente con otro nombre!');
+        } elseif ($sql=Perfil::where([['nombre', '=', $nuevoPerfil],['condicion', '=', '0']])->first()) {
+            $codigoPerfil = $sql->codigo_perfil;    
+            $perfil = Perfil::find($codigoPerfil);
+            $perfil->condicion = "1";
+            $perfil->save();
+            return redirect('perfiles')->with('success','¡El Perfil ha sido agregado!'); 
+        } else {
+            $perfil = new Perfil;
+            $perfil->nombre = $nuevoPerfil;
+            $perfil->condicion = "1";
+            $perfil->save();
+            return redirect('perfiles')->with('success','¡El Perfil ha sido agregado!');
+        }
     }
 }

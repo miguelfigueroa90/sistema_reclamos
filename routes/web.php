@@ -26,6 +26,11 @@ Route::post('/usuario', 'UsuariosController@procesarUsuario');
 
 // Administración de perfiles
 Route::get('/perfiles', 'PaginasController@listarPerfiles');
+Route::get('/nuevo_perfil', 'PaginasController@agregarPerfil');
+Route::get('/actualizar_perfil/{codigo_perfil}', 'PaginasController@actualizarPerfil');
+Route::post('/nuevo_perfil', 'PerfilesController@agregar');
+Route::put('/actualizar_perfil/{codigo_perfil}', 'PerfilesController@actualizar');
+Route::delete('/eliminar_perfil/{codigo_perfil}', 'PerfilesController@eliminar');
 
 // Reclamo
 Route::get('/reclamo', 'PaginasController@agregarReclamo');

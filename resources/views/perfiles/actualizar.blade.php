@@ -1,6 +1,6 @@
 @extends('layouts.general')
 @section('contenido')
-  {!! Form::open(['url' => 'perfil/'.$datos['perfil']->codigo_perfil, 'class' => 'form', 'method' => 'put']) !!}
+  {!! Form::open(['url' => 'actualizar_perfil/'.$datos['perfil']->codigo_perfil, 'class' => 'form', 'method' => 'put']) !!}
   <div class="form-group">
       {!! Form::label('nombre') !!}
       {!! Form::text('nombre', $datos['perfil']->nombre, array('required', 'class'=>'form-control', )) !!}
