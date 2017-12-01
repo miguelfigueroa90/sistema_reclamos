@@ -15,7 +15,7 @@ class Cliente extends Model implements Auditable
 
     public function TipoCliente()
     {
-    	return $this->belongsToMany('App\ClienteTipoCliente', 'cliente_nacionalidad', 'cedula', 'codigo_tipo_cliente');
+    	return $this->belongsToMany('App\ClienteTipoCliente', 'cliente_tipo_cliente', 'cedula', 'codigo_tipo_cliente');
     }
 
     public function Correo()

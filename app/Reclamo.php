@@ -30,7 +30,7 @@ class Reclamo extends Model implements Auditable
 
     public function estatus()
     {
-        return $this->belongsToMany('App\EstatusReclamo', 'estatus_reclamo', 'codigo_reclamo', 'codigo_estatus');
+        return $this->belongsToMany('App\EstatusReclamo', 'estatus_reclamo', 'numero_reclamo', 'codigo_estatus');
     }
 
     /**

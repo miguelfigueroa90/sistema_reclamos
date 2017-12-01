@@ -10,10 +10,13 @@ use App\CuentaBancaria;
 use App\CuentaBancariaCliente;
 use App\Estatus;
 use App\EstatusReclamo;
+use App\Mensaje;
+use App\MensajeReclamo;
 use App\Producto;
 use App\ProductoReclamo;
 use App\Reclamo;
 use App\ReclamoCliente;
+use App\SMS;
 use App\Tarjeta;
 use App\TarjetaProducto;
 use App\Telefono;
@@ -92,6 +95,8 @@ class ReclamosController extends Controller
         if($reclamo_guardado) {
             $reclamo->Cliente()->attach($cliente->cedula);
 
+            $reclamo->Estatus()->attach(1, ['fecha' => $reclamo->fecha_registro]);
+
             $reclamo->Producto()->attach($request->producto_banco);
 
             if($request->tarjeta_cliente == 'otro') {
@@ -110,8 +115,32 @@ class ReclamosController extends Controller
             $tarjeta->save();
 
             $tarjeta->producto()->attach($request->producto_banco);
+
+            $descripcion_mensaje = "BAV informa registro del caso No. ";
+            $descripcion_mensaje .= "$reclamo->numero_reclamo el dia ";
+            $descripcion_mensaje .= $reclamo->fecha_registro->format('d/m/Y') . " asociado a la tarjeta No. **";
+            $descripcion_mensaje .= substr($tarjeta->numero_tarjeta, -4, 4) . ". Para mas informacion llame al: 0500-4567889";
+
+            $mensaje = new Mensaje;
+            $mensaje->tipo = 'SMS';
+            $mensaje->descripcion = $descripcion_mensaje;
+            $mensaje->save();
+
+            $mensaje_reclamo = new MensajeReclamo;
+            $mensaje_reclamo->numero_reclamo = $reclamo->numero_reclamo;
+            $mensaje_reclamo->codigo_mensaje = $mensaje->codigo_mensaje;
+            $mensaje_reclamo->save();
+
+            $sms = new SMS;
+            $sms->mensaje = $mensaje->descripcion;
+            $sms->telefono = $telefono->telefono;
+            $sms->fecha = $reclamo->fecha_registro;
+            $sms->save();
         }  else {
-            $mensaje_reclamo = 'Ha ocurrido un error intentando guardar el reclamo.';
+            $respuesta = [
+                'codigo_respuesta' => '500',
+                'mensaje_respuesta' => 'Ha ocurrido un error intentando guardar el reclamo.'
+            ];
         }
 
         if($cliente_guardado && $reclamo_guardado) {
@@ -178,9 +207,7 @@ class ReclamosController extends Controller
         $correo_cliente = CorreoCliente::where('cedula', '=', $cliente->cedula)->first();
         $correo_electronico = CorreoElectronico::find($correo_cliente->codigo_correo_electronico)->first();
         $cuenta_bancaria_cliente = CuentaBancariaCliente::where('cedula', '=', $cliente->cedula)->first();
-        // dd($cuenta_bancaria_cliente);
         $cuenta_bancaria = CuentaBancaria::find($cuenta_bancaria_cliente->codigo_cuenta_bancaria)->first();
-        // dd($cuenta_bancaria);
         $producto_reclamo = ProductoReclamo::where('numero_reclamo', '=', $reclamo->numero_reclamo)->first();
         $producto = Producto::find($producto_reclamo->codigo_producto)->first();
         // $tarjeta_producto = TarjetaProducto::where('codigo_producto', '=', $producto->codigo_producto)->first();
