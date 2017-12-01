@@ -26,4 +26,14 @@ class Usuario extends Model implements Auditable
         'apellido',
         'bloqueado'
     ];
+
+    public function Departamento()
+    {
+        return $this->belongsToMany('App\UsuarioDepartamento', 'usuario_departamento', 'cedula', 'codigo_departamento');
+    }
+
+    public function Perfil()
+    {
+        return $this->belongsToMany('App\UsuarioPerfil', 'usuario_perfil', 'cedula', 'codigo_perfil');
+    }
 }

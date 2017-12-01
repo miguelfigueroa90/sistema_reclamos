@@ -5,11 +5,11 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 
-class UsuarioDepartamentoPerfil extends Model implements Auditable
+class UsuarioDepartamento extends Model implements Auditable
 {
 	use \OwenIt\Auditing\Auditable;
-
-    protected $table = 'usuario_departamento_perfil';
+    
+    protected $table = 'usuario_departamento';
     protected $primaryKey = 'codigo';
     public $timestamps = false;
 
@@ -22,6 +22,5 @@ class UsuarioDepartamentoPerfil extends Model implements Auditable
         'codigo',
         'cedula',
         'codigo_departamento',
-        'codigo_perfil'
     ];
 }

@@ -18,6 +18,7 @@ Usuarios
             <thead>
                 <tr>
                     <th>Nombre</th>
+                    <th>Apellido</th>
                     <th>Usuario</th>
                     <th>Estado</th>
                     <th>Acciones</th>
@@ -27,8 +28,15 @@ Usuarios
                 @foreach($datos['registros'] as $usuario)
                     <tr>
                         <td>{{$usuario->nombre}}</td>
+                        <td>{{$usuario->apellido}}</td>
                         <td>{{$usuario->usuario}}</td>
-                        <td>{{$usuario->estado}}</td>
+                        <td>
+                            @if($usuario->bloqueado === false)
+                            Activo
+                            @else
+                            Inactivo
+                            @endif
+                        </td>
                         <td class="datos-en-linea">
                             <div class="margen-horizontal">
                                 <!-- Editar usuario -->
@@ -39,7 +47,11 @@ Usuarios
                                 {!! Form::close() !!}
                             </div>
                             <div class="margen-horizontal">
-                                <a href="" data-target="#modal-delete-{{$usuario->cedula}}" data-toggle="modal" class="btn btn-danger">Eliminar</a>
+                                @if($usuario->bloqueado === false)
+                                    <a href="{{ url('/bloquear_usuario/'.$usuario->cedula) }}" class="btn btn-warning">Bloquear</a>
+                                @else
+                                    <a href="{{ url('/desbloquear_usuario/'.$usuario->cedula) }}" class="btn btn-info">Desbloquear</a>
+                                @endif
                             </div>
                         </td>
                     </tr>

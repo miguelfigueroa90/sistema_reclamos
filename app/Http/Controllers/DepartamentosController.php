@@ -25,13 +25,13 @@ class DepartamentosController extends Controller
             $departamentoView->condicion = "0";
             $departamentoView->save();
 
-            return redirect('/perfiles')->with('success','¡El Departamento ha sido actualizado!'); 
+            return redirect('/listar_departamento')->with('success','¡El Departamento ha sido actualizado!'); 
         } else {   
             $departamento = Departamento::find($codigoDepartamento);
             $departamento->nombre = $nuevoTipoDepartamento;
             $departamento->condicion = "1";
             $departamento->save();
-            return redirect('/perfiles')->with('success','¡El Departamento ha sido actualizado!');
+            return redirect('/listar_departamento')->with('success','¡El Departamento ha sido actualizado!');
         }
     }
 
@@ -41,7 +41,7 @@ class DepartamentosController extends Controller
         $departamento = Departamento::find($codigoDepartamento);
         $departamento->condicion='0';
         $departamento->update();
-        return redirect('/perfiles')->with('warning','¡El Departamento ha sido eliminado!');
+        return redirect('/listar_departamento')->with('warning','¡El Departamento ha sido eliminado!');
     }
 
     public function agregar(Request $request)
@@ -56,13 +56,13 @@ class DepartamentosController extends Controller
             $departamento = Departamento::find($codigoDepartamento);
             $departamento->condicion = "1";
             $departamento->save();
-            return redirect('/perfiles')->with('success','¡El Departamento ha sido agregado!'); 
+            return redirect('/listar_departamento')->with('success','¡El Departamento ha sido agregado!'); 
         } else {
             $departamento = new Departamento;
             $departamento->nombre = $nuevoTipoDepartamento;
             $departamento->condicion = "1";
             $departamento->save();
-            return redirect('/perfiles')->with('success','¡El Departamento ha sido agregado!');
+            return redirect('/listar_departamento')->with('success','¡El Departamento ha sido agregado!');
         }
     }
 }

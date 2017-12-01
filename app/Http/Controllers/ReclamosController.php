@@ -4,12 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Cliente;
+use App\CorreoCliente;
 use App\CorreoElectronico;
 use App\CuentaBancaria;
+use App\CuentaBancariaCliente;
+use App\Estatus;
+use App\EstatusReclamo;
 use App\Producto;
+use App\ProductoReclamo;
 use App\Reclamo;
+use App\ReclamoCliente;
 use App\Tarjeta;
+use App\TarjetaProducto;
 use App\Telefono;
+use App\TelefonoCliente;
 use App\Tmtrans;
 use App\Transaccion;
 use Carbon\Carbon;
@@ -161,6 +169,39 @@ class ReclamosController extends Controller
 
     function buscar(Request $request)
     {
-        dd($request);
+        $numero_reclamo = $request->numero_reclamo;
+        $reclamo = Reclamo::find($numero_reclamo);
+        $reclamo_cliente = ReclamoCliente::where('numero_reclamo', '=', $numero_reclamo)->first();
+        $cliente = Cliente::find($reclamo_cliente->cedula)->first();
+        $telefono_cliente = TelefonoCliente::where('cedula', '=', $cliente->cedula)->first();
+        $telefono = Telefono::find($telefono_cliente->codigo_telefono)->first();
+        $correo_cliente = CorreoCliente::where('cedula', '=', $cliente->cedula)->first();
+        $correo_electronico = CorreoElectronico::find($correo_cliente->codigo_correo_electronico)->first();
+        $cuenta_bancaria_cliente = CuentaBancariaCliente::where('cedula', '=', $cliente->cedula)->first();
+        // dd($cuenta_bancaria_cliente);
+        $cuenta_bancaria = CuentaBancaria::find($cuenta_bancaria_cliente->codigo_cuenta_bancaria)->first();
+        // dd($cuenta_bancaria);
+        $producto_reclamo = ProductoReclamo::where('numero_reclamo', '=', $reclamo->numero_reclamo)->first();
+        $producto = Producto::find($producto_reclamo->codigo_producto)->first();
+        // $tarjeta_producto = TarjetaProducto::where('codigo_producto', '=', $producto->codigo_producto)->first();
+        // dd($tarjeta_producto);
+        $estatus_reclamo = EstatusReclamo::where('numero_reclamo', '=', $reclamo->numero_reclamo)->first();
+        $estatus = Estatus::find($estatus_reclamo->codigo_estatus)->first();
+
+        $datos = [
+            'reclamo' => [
+                'datos' => $reclamo,
+                'producto' => $producto,
+                'estatus' => $estatus,
+            ],
+            'cliente' => [
+                'datos' => $cliente,
+                'telefono' => $telefono,
+                'correo_electronico' => $correo_electronico,
+                'cuenta_bancaria' => $cuenta_bancaria,
+            ],
+        ];
+
+        return response()->json($datos);
     }
 }

@@ -13,6 +13,8 @@ use App\Producto;
 use App\Reclamo;
 use App\TipoCliente;
 use App\Usuario;
+use App\UsuarioDepartamento;
+use App\UsuarioPerfil;
 
 class PaginasController extends Controller
 {
@@ -129,7 +131,7 @@ class PaginasController extends Controller
           'clases_adicionales_body' => 'table-responsive no-padding',
         ];
 
-        $lista_usuarios = Usuario::where('bloqueado','=', 0)->paginate(10);
+        $lista_usuarios = Usuario::paginate(10);
 
         $this->datos['registros'] = $lista_usuarios;
 
@@ -161,7 +163,8 @@ class PaginasController extends Controller
     public function actualizarUsuario(Request $request)
     {
         $usuario = Usuario::find($request->cedula);
-        $departamento_perfil_usuario = UsuarioDepartamentoPerfil::where('cedula', '=', $request->cedula)->first();
+        $usuario_departamento = UsuarioDepartamento::where('cedula', '=', $request->cedula)->first();
+        $usuario_perfil = UsuarioPerfil::where('cedula', '=', $request->cedula)->first();
         $perfiles = Perfil::all();
         $departamentos = Departamento::all();
 
@@ -170,11 +173,15 @@ class PaginasController extends Controller
               'titulo' => 'Actualizar Usuario',
           ],
           'menu' => [
-            'activo' => 'configuracion',
-            'opcion' => 'actualizar_banco'
+            'activo' => 'usuarios',
+            'opcion' => 'usuarios'
           ],
           'clases_adicionales_body' => '',
           'usuario' => $usuario,
+          'asociaciones' => [
+            'departamento' => $usuario_departamento,
+            'perfil' => $usuario_perfil
+          ],
           'perfiles' => $perfiles,
           'departamentos' => $departamentos,
         ];
@@ -191,7 +198,7 @@ class PaginasController extends Controller
           ],
           'menu' => [
             'activo' => 'configuracion',
-            'opcion' => 'actualizar_banco'
+            'opcion' => 'bancos'
           ],
           'clases_adicionales_body' => '',
         ];
@@ -248,7 +255,7 @@ class PaginasController extends Controller
           ],
           'menu' => [
             'activo' => 'configuracion',
-            'opcion' => 'actualizar_estatus'
+            'opcion' => 'estatus'
           ],
           'clases_adicionales_body' => '',
         ];
@@ -294,7 +301,7 @@ class PaginasController extends Controller
           ],
           'menu' => [
             'activo' => 'configuracion',
-            'opcion' => 'agregar_estatus'
+            'opcion' => 'estatus'
           ],
           'clases_adicionales_body' => '',
         ];
@@ -311,7 +318,7 @@ class PaginasController extends Controller
           ],
           'menu' => [
             'activo' => 'configuracion',
-            'opcion' => 'actualizar_tipo_cliente'
+            'opcion' => 'tipo_clientes'
           ],
           'clases_adicionales_body' => '',
         ];
@@ -351,7 +358,7 @@ class PaginasController extends Controller
           ],
           'menu' => [
             'activo' => 'configuracion',
-            'opcion' => 'agregar_tipo_cliente'
+            'opcion' => 'tipo_clientes'
           ],
           'clases_adicionales_body' => '',
         ];
@@ -368,7 +375,7 @@ class PaginasController extends Controller
           ],
           'menu' => [
             'activo' => 'usuarios',
-            'opcion' => 'actualizar_departamento'
+            'opcion' => 'departamentos'
           ],
           'clases_adicionales_body' => '',
         ];
@@ -408,7 +415,7 @@ class PaginasController extends Controller
           ],
           'menu' => [
             'activo' => 'usuarios',
-            'opcion' => 'agregar_departamentos'
+            'opcion' => 'departamentos'
           ],
           'clases_adicionales_body' => '',
         ];
@@ -425,7 +432,7 @@ class PaginasController extends Controller
           ],
           'menu' => [
             'activo' => 'usuarios',
-            'opcion' => 'actualizar_perfil'
+            'opcion' => 'perfiles'
           ],
           'clases_adicionales_body' => '',
         ];
@@ -450,7 +457,7 @@ class PaginasController extends Controller
           'clases_adicionales_body' => 'table-responsive no-padding',
         ];
 
-        $perfiles = Perfil::paginate(10);
+        $perfiles = Perfil::where('condicion', '=', '1')->paginate(10);
 
         $this->datos['registros'] = $perfiles;
 
@@ -465,7 +472,7 @@ class PaginasController extends Controller
           ],
           'menu' => [
             'activo' => 'usuarios',
-            'opcion' => 'agregar_perfiles'
+            'opcion' => 'perfiles'
           ],
           'clases_adicionales_body' => '',
         ];
@@ -499,7 +506,7 @@ class PaginasController extends Controller
           ],
           'menu' => [
             'activo' => 'configuracion',
-            'opcion' => 'actualizar_producto'
+            'opcion' => 'productos'
           ],
           'clases_adicionales_body' => '',
         ];
@@ -539,7 +546,7 @@ class PaginasController extends Controller
           ],
           'menu' => [
             'activo' => 'configuracion',
-            'opcion' => 'agregar_producto'
+            'opcion' => 'productos'
           ],
           'clases_adicionales_body' => '',
         ];
@@ -556,7 +563,7 @@ class PaginasController extends Controller
           ],
           'menu' => [
             'activo' => 'configuracion',
-            'opcion' => 'actualizar_dispositivo'
+            'opcion' => 'dispositivos'
           ],
           'clases_adicionales_body' => '',
         ];
@@ -596,7 +603,7 @@ class PaginasController extends Controller
           ],
           'menu' => [
             'activo' => 'configuracion',
-            'opcion' => 'agregar_dispositivo'
+            'opcion' => 'dispositivos'
           ],
           'clases_adicionales_body' => '',
         ];
@@ -617,7 +624,7 @@ class PaginasController extends Controller
           'clases_adicionales_body' => '',
         ];
 
-        return view('dispositivo/agregar', ['datos' => $this->datos]);
+        return view('reportes/reclamos', ['datos' => $this->datos]);
     }
 
     public function reporteAuditoria()
@@ -633,6 +640,6 @@ class PaginasController extends Controller
           'clases_adicionales_body' => '',
         ];
 
-        return view('dispositivo/agregar', ['datos' => $this->datos]);
+        return view('reportes/auditoria', ['datos' => $this->datos]);
     }
 }

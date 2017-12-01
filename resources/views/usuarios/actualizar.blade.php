@@ -3,7 +3,7 @@
 Actualizar Usuario
 @endsection
 @section('contenido')
-  {!! Form::open(['url' => 'actualizar_usuario', 'class' => 'form', 'id' => 'form-buscar']) !!}
+  {!! Form::open(['url' => 'actualizar_usuario/'.$datos['usuario']->cedula, 'method' => 'put', 'class' => 'form', 'id' => 'form-actualizar']) !!}
   <div class="form-group">
       {!! Form::label('Usuario') !!}
       {!! Form::text('usuario', $datos['usuario']->usuario, array('readonly' => 'readonly', 'class'=>'form-control')) !!}
@@ -22,33 +22,32 @@ Actualizar Usuario
   </div>
   <div class="form-group form-ajax">
       {!! Form::label('Perfil') !!}
-      <select name="perfil" id="perfil" class="form-control">
+      <select name="codigo_perfil" id="perfil" class="form-control">
           <option value="">Seleccione...</option>
           @foreach($datos['perfiles'] as $perfil)
-              <option value="{!! $perfil->codigo_perfil !!}">{!! $perfil->nombre !!}</option>
+            <option value="{!! $perfil->codigo_perfil !!}" @if(!empty($datos['asociaciones']['perfil']) && $perfil->codigo_perfil == $datos['asociaciones']['perfil']->codigo_perfil) selected="selected" @endif>{!! $perfil->nombre !!}</option>
           @endforeach
       </select>
   </div>
   <div class="form-group form-ajax">
       {!! Form::label('Departamento') !!}
-      <select name="Departamento" id="Departamento" class="form-control">
+      <select name="codigo_departamento" id="Departamento" class="form-control">
           <option value="">Seleccione...</option>
           @foreach($datos['departamentos'] as $departamento)
-              <option value="{!! $departamento->codigo_departamento !!}">{!! $departamento->nombre !!}</option>
+            <option value="{!! $departamento->codigo_departamento !!}" @if(!empty($datos['asociaciones']['departamento']) && $departamento->codigo_departamento == $datos['asociaciones']['departamento']->codigo_departamento) selected="selected" @endif>{!! $departamento->nombre !!}</option>
           @endforeach
       </select>
   </div>
   <div class="form-group form-ajax">
       {!! Form::label('Estado') !!}
-      <select name="Estado" id="Estado" class="form-control">
+      <select name="estado" id="estado" class="form-control">
           <option value="">Seleccione...</option>
-          <option value="1">activo</option>
-          <option value="0">Inactivo</option>
+          <option value="0" @if($datos['usuario']->bloqueado == false) selected="selected" @endif>activo</option>
+          <option value="1" @if($datos['usuario']->bloqueado == true) selected="selected" @endif>Inactivo</option>
       </select>
   </div>
   <div class="form-group">
-      {!! Form::button('Actualizar<i class="fa fa-fw fa-save"></i>', array('id' => 'btn-actualizar', 'class' => 'btn btn-success hidden form-ajax', 'type' => 'button')) !!}
-      {!! Form::button('Limpiar<i class="fa fa-fw fa-trash"></i>', array('id' => 'btn-limpiar', 'class' => 'btn btn-warning hidden form-ajax', 'type' => 'reset')) !!}
+      {!! Form::button('Actualizar<i class="fa fa-fw fa-save"></i>', array('id' => 'btn-actualizar', 'class' => 'btn btn-success', 'type' => 'submit')) !!}
   </div>
   {!! Form::close() !!}
 @endsection

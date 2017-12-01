@@ -13,25 +13,25 @@ Buscar Reclamo
         </div>
     {!! Form::close() !!}
 
-    <dl class="dl-horizontal">
+    <dl class="dl-horizontal hidden" id="list-reclamo">
         <dt>Número de reclamo</dt>
-        <dd>12345</dd>
+        <dd id="dd_numero_reclamo"></dd>
         <dt>Cedula del cliente</dt>
-        <dd>v12392341</dd>
+        <dd id="dd_cedula_cliente"></dd>
         <dt>Nombre del cliente</dt>
-        <dd>Karlha Rengifo</dd>
+        <dd id="dd_nombre_cliente"></dd>
         <dt>Teléfono</dt>
-        <dd>04148782093</dd>
+        <dd id="dd_telefono_cliente"></dd>
         <dt>Correo</dt>
-        <dd>krengifo@gmail.com</dd>
+        <dd id="dd_correo_cliente"></dd>
         <dt>Cuenta bancaria</dt>
-        <dd>01011342342342348789</dd>
+        <dd id="dd_cuenta_cliente"></dd>
         <dt>Producto</dt>
-        <dd>Tarjeta de débito</dd>
+        <dd id="dd_producto_cliente"></dd>
         <dt>Número de tarjeta</dt>
-        <dd>9812378912738</dd>
+        <dd id="dd_tarjeta_cliente"></dd>
         <dt>Estado actual</dt>
-        <dd>En proceso</dd>
+        <dd id="dd_estado_reclamo"></dd>
     </dl>
 @endsection
 
@@ -40,6 +40,8 @@ Buscar Reclamo
     $(document).ready(function(){
         $('#form-buscar').submit(function(e){
             e.preventDefault();
+
+            $('#list-reclamo').addClass('hidden');
 
             var numero_reclamo = $('#numero_reclamo').val();
 
@@ -54,7 +56,20 @@ Buscar Reclamo
             $('.overlay').show();
 
             $.post(ruta, datos, function(resultado){
+                console.log(resultado);
 
+                $('#dd_numero_reclamo').html(resultado.reclamo.datos.numero_reclamo);
+                $('#dd_cedula_cliente').html(resultado.cliente.datos.cedula);
+                $('#dd_nombre_cliente').html(resultado.cliente.datos.nombre);
+                $('#dd_telefono_cliente').html(resultado.cliente.telefono.telefono);
+                $('#dd_correo_cliente').html(resultado.cliente.correo_electronico.correo);
+                $('#dd_cuenta_cliente').html(resultado.cliente.cuenta_bancaria.cuenta_bancaria);
+                $('#dd_producto_cliente').html(resultado.reclamo.producto.nombre);
+                $('#dd_tarjeta_cliente').html('');
+                $('#dd_estado_reclamo').html(resultado.reclamo.estatus.tipo);
+
+                $('#list-reclamo').removeClass('hidden');
+                $('.overlay').hide();
             }).fail(function(){
                 alert('Ha fallado la búsqueda del cliente.');
                 $('.overlay').hide();
