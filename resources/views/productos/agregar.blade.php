@@ -1,4 +1,7 @@
 @extends('layouts.general')
+@section('title')
+Agregar Producto
+@endsection
 @section('contenido')
   {!! Form::open(['url' => 'nuevo_producto', 'class' => 'form']) !!}
   <div class="form-group">
