@@ -9,7 +9,7 @@ Buscar Reclamo
             {!! Form::text('numero_reclamo', null, ['class' => 'form-control campo_numerico campo-ajax', 'id' => 'numero_reclamo']) !!}
         </div>
         <div class="form-group">
-            {!! Form::button('Buscar <i class="fa fa-search"></i>', array('class'=>'btn btn-info', 'id' => 'btn-buscar', 'type' => 'submit')) !!}
+            {!! Form::button('Buscar <i class="fa fa-search"></i>', array('class'=>'btn btn-info', 'id' => 'btn-buscar', 'type' => 'button')) !!}
         </div>
     {!! Form::close() !!}
 
@@ -38,7 +38,7 @@ Buscar Reclamo
 @section('scripts')
 <script>
     $(document).ready(function(){
-        $('#form-buscar').submit(function(e){
+        function buscar_reclamo(e) {
             e.preventDefault();
 
             $('#list-reclamo').addClass('hidden');
@@ -65,7 +65,7 @@ Buscar Reclamo
                 $('#dd_correo_cliente').html(resultado.cliente.correo_electronico.correo);
                 $('#dd_cuenta_cliente').html(resultado.cliente.cuenta_bancaria.cuenta_bancaria);
                 $('#dd_producto_cliente').html(resultado.reclamo.producto.nombre);
-                $('#dd_tarjeta_cliente').html('');
+                $('#dd_tarjeta_cliente').html(resultado.reclamo.tarjeta.numero_tarjeta);
                 $('#dd_estado_reclamo').html(resultado.reclamo.estatus.tipo);
 
                 $('#list-reclamo').removeClass('hidden');
@@ -74,6 +74,14 @@ Buscar Reclamo
                 alert('Ha fallado la búsqueda del cliente.');
                 $('.overlay').hide();
             });
+        }
+
+        $('#form-buscar').submit(function(e){
+            buscar_reclamo(e);
+        });
+
+        $('#btn-buscar').click(function(e){
+            buscar_reclamo(e);
         });
     });
 </script>    

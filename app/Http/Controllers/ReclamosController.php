@@ -16,6 +16,7 @@ use App\Producto;
 use App\ProductoReclamo;
 use App\Reclamo;
 use App\ReclamoCliente;
+use App\ReclamoUsuario;
 use App\SMS;
 use App\Tarjeta;
 use App\TarjetaProducto;
@@ -23,6 +24,7 @@ use App\Telefono;
 use App\TelefonoCliente;
 use App\Tmtrans;
 use App\Transaccion;
+use App\TransaccionReclamo;
 use Carbon\Carbon;
 
 class ReclamosController extends Controller
@@ -210,8 +212,8 @@ class ReclamosController extends Controller
         $cuenta_bancaria = CuentaBancaria::find($cuenta_bancaria_cliente->codigo_cuenta_bancaria)->first();
         $producto_reclamo = ProductoReclamo::where('numero_reclamo', '=', $reclamo->numero_reclamo)->first();
         $producto = Producto::find($producto_reclamo->codigo_producto)->first();
-        // $tarjeta_producto = TarjetaProducto::where('codigo_producto', '=', $producto->codigo_producto)->first();
-        // dd($tarjeta_producto);
+        $tarjeta_producto = TarjetaProducto::where('codigo_producto', '=', $producto->codigo_producto)->first();
+        $tarjeta = Tarjeta::find($tarjeta_producto->codigo_tarjeta)->first();
         $estatus_reclamo = EstatusReclamo::where('numero_reclamo', '=', $reclamo->numero_reclamo)->first();
         $estatus = Estatus::find($estatus_reclamo->codigo_estatus)->first();
 
@@ -220,6 +222,7 @@ class ReclamosController extends Controller
                 'datos' => $reclamo,
                 'producto' => $producto,
                 'estatus' => $estatus,
+                'tarjeta' => $tarjeta,
             ],
             'cliente' => [
                 'datos' => $cliente,
@@ -230,5 +233,89 @@ class ReclamosController extends Controller
         ];
 
         return response()->json($datos);
+    }
+
+    function asignarReclamo(Request $request)
+    {
+        $usuario = \Auth::user();
+        $cedula_usuario = $usuario->cedula;
+        $reclamo_usuario = ReclamoUsuario::where('cedula', '=', $cedula_usuario)->first();
+
+        if(is_null($reclamo_usuario)) {
+            $reclamo_usuario = new ReclamoUsuario;
+            $reclamo_usuario->cedula = $cedula_usuario;
+            $reclamo_usuario->numero_reclamo = $request->numero_reclamo;
+            $reclamo_usuario_guardado = $reclamo_usuario->save();
+
+            if($reclamo_usuario_guardado) {
+                $estatus_reclamo = new EstatusReclamo;
+                $estatus_reclamo->numero_reclamo = $request->numero_reclamo;
+                $estatus_reclamo->codigo_estatus = 2;
+                $estatus_reclamo->fecha = Carbon::now();
+                $estatus_reclamo_guardado = $estatus_reclamo->save();
+
+                if($estatus_reclamo_guardado) {
+                    return redirect('/bandeja')->with('success', '¡El reclamo ha sido asignado exitosamente!');
+                }
+            }
+        }
+
+        return redirect('/bandeja')->with('warning', '¡El reclamo no ha podido ser asignado!');
+    }
+
+    function gestionarEstatusReclamo(Request $request)
+    {
+        $numero_reclamo = $request->numero_reclamo;
+        $codigo_estatus = $request->estatus;
+
+        $estatus_reclamo = new EstatusReclamo;
+        $estatus_reclamo->numero_reclamo = $numero_reclamo;
+        $estatus_reclamo->codigo_estatus = $codigo_estatus;
+        $estatus_reclamo->fecha = Carbon::now();
+        $estatus_reclamo_guardado = $estatus_reclamo->save();
+
+        $respuesta = [];
+
+        if($estatus_reclamo_guardado) {
+            $respuesta['codigo'] = 200;
+            $respuesta['mensaje'] = 'El estatus del reclamo ha sido actualizado';
+        } else {
+            $respuesta['codigo'] = 500;
+            $respuesta['mensaje'] = 'El estatus del reclamo no pudo ser actualizado';
+        }
+
+        return response()->json($respuesta);
+    }
+
+    function gestionarTransaccionReclamo(Request $request)
+    {
+        $numero_reclamo = $request->numero_reclamo;
+
+        $transaccion = new Transaccion;
+        $transaccion->secuencia = $request->secuencia;
+        $transaccion->nodo = $request->nodo;
+        $transaccion->fecha_transaccion = $request->fecha_transaccion;
+        $transaccion->codigo_iso = $request->codigo_iso;
+        $transaccion->hora = $request->hora;
+        $transaccion->codigo_respuesta = $request->codigo_respuesta;
+        $transaccion->monto_transaccion = $request->monto_transaccion;
+        $transaccion->save();
+
+        $transaccion_reclamo = new TransaccionReclamo;
+        $transaccion_reclamo->numero_reclamo = $numero_reclamo;
+        $transaccion_reclamo->secuencia = $request->secuencia;
+        $transaccion_reclamo_guardada = $transaccion_reclamo->save();
+
+        $respuesta = [];
+
+        if($transaccion_reclamo_guardada) {
+            $respuesta['codigo'] = 200;
+            $respuesta['mensaje'] = 'La transaccion ha sido asociada al reclamo';
+        } else {
+            $respuesta['codigo'] = 500;
+            $respuesta['mensaje'] = 'La transaccion no ha podido ser asociada al reclamo';
+        }
+
+        return response()->json($respuesta);
     }
 }

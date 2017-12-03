@@ -14,39 +14,27 @@ Bandeja
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>1234</td>
-            <td>25/06/2017</td>
-            <td>Registrado</td>
-            <td>
-                <button id="1" class="btn btn-info btn-asignar-reclamo">Asignar <i class="fa fa-plus"></i></button>
-            </td>
-        </tr>
-        <tr>
-            <td>1234</td>
-            <td>25/07/2017</td>
-            <td>Registrado</td>
-            <td>
-                <button id="2" class="btn btn-info btn-asignar-reclamo">Asignar <i class="fa fa-plus"></i></button>
-            </td>
-        </tr>
-        <tr>
-            <td>1234</td>
-            <td>25/08/2017</td>
-            <td>Registrado</td>
-            <td>
-                <button id="3" class="btn btn-info btn-asignar-reclamo">Asignar <i class="fa fa-plus"></i></button>
-            </td>
-        </tr>
-        <tr>
-            <td>1234</td>
-            <td>25/09/2017</td>
-            <td>Registrado</td>
-            <td>
-                <button id="4" class="btn btn-info btn-asignar-reclamo">Asignar <i class="fa fa-plus"></i></button>
-            </td>
-        </tr>
+        @foreach($datos['registros'] as $reclamo)
+            <tr>
+                <td>{!! $reclamo->numero_reclamo !!}</td>
+                <td>{!! $reclamo->fecha_registro !!}</td>
+                <td>{!! $reclamo->estatus !!}</td>
+                <td>
+                    <a href="{{ url('asignar_reclamo/'.$reclamo->numero_reclamo) }}" id="{!! $reclamo->numero_reclamo !!}" class="btn btn-info btn-asignar-reclamo @if($reclamo->estatus != 'Pendiente') deshabilitado @endif" @if($reclamo->estatus != 'Pendiente') disabled="disabled" @endif>Asignar <i class="fa fa-plus"></i></a>
+                </td>
+            </tr>
+        @endforeach
     </tbody>
 </table>
 
+@endsection
+
+@section('scripts')
+<script>
+    $(document).ready(function(){
+        $('.deshabilitado').click(function(){
+            return false;
+        });
+    });
+</script>
 @endsection

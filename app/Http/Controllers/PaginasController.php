@@ -4,14 +4,30 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Banco;
+use App\Cliente;
+use App\CorreoCliente;
+use App\CorreoElectronico;
+use App\CuentaBancaria;
+use App\CuentaBancariaCliente;
 use App\Perfil;
 use App\Estatus;
+use App\EstatusReclamo;
 use App\Departamento;
 use App\Dispositivo;
 use App\Nacionalidad;
 use App\Producto;
+use App\ProductoReclamo;
 use App\Reclamo;
+use App\ReclamoCliente;
+use App\ReclamoUsuario;
+use App\Tarjeta;
+use App\TarjetaProducto;
+use App\Telefono;
+use App\TelefonoCliente;
 use App\TipoCliente;
+use App\Transaccion;
+use App\TransaccionReclamo;
+use App\Tmtrans;
 use App\Usuario;
 use App\UsuarioDepartamento;
 use App\UsuarioPerfil;
@@ -28,6 +44,20 @@ class PaginasController extends Controller
     // Reclamos
     public function bandeja()
     {
+      $reclamos = Reclamo::paginate(10);
+
+      foreach ($reclamos as &$reclamo) {
+        $numero_reclamo = $reclamo->numero_reclamo;
+        $estatus_reclamo = EstatusReclamo::where('numero_reclamo', '=', $numero_reclamo)
+          ->orderBy('codigo', 'desc')
+          ->orderBy('fecha', 'desc')
+          ->orderBy('codigo_estatus', 'desc')
+          ->first();
+
+        $estatus = Estatus::where('codigo_estatus', '=', $estatus_reclamo->codigo_estatus)->first();
+        $reclamo->estatus = $estatus->tipo;
+      }
+
       $this->datos = [
         'encabezado' => [
           'titulo' => 'Bandeja'
@@ -36,6 +66,7 @@ class PaginasController extends Controller
           'activo' => 'gestion',
           'opcion' => 'bandeja'
         ],
+        'registros' => $reclamos,
         'clases_adicionales_body' => ''
       ];
 
@@ -50,22 +81,87 @@ class PaginasController extends Controller
         ],
         'menu' => [
           'activo' => 'gestion',
-          'opcion' => 'gestion'
+          'opcion' => 'reclamos_asignados'
         ],
         'clases_adicionales_body' => '',
       ];
 
-      $numero_reclamo = $request->q;
+      $numero_reclamo = $request->numero_reclamo;
 
-      $reclamo = Reclamo::where('numero_reclamo', '=', $numero_reclamo)->get();
+      $reclamo = Reclamo::where('numero_reclamo', '=', $numero_reclamo)->first();
+      $reclamo_cliente = ReclamoCliente::where('numero_reclamo', '=', $numero_reclamo)->first();
+      $cliente = Cliente::find($reclamo_cliente->cedula)->first();
+      $telefono_cliente = TelefonoCliente::where('cedula', '=', $cliente->cedula)->first();
+      $telefono = Telefono::find($telefono_cliente->codigo_telefono)->first();
+      $correo_cliente = CorreoCliente::where('cedula', '=', $cliente->cedula)->first();
+      $correo_electronico = CorreoElectronico::find($correo_cliente->codigo_correo_electronico)->first();
+      $cuenta_bancaria_cliente = CuentaBancariaCliente::where('cedula', '=', $cliente->cedula)->first();
+      $cuenta_bancaria = CuentaBancaria::find($cuenta_bancaria_cliente->codigo_cuenta_bancaria)->first();
+      $producto_reclamo = ProductoReclamo::where('numero_reclamo', '=', $reclamo->numero_reclamo)->first();
+      $producto = Producto::find($producto_reclamo->codigo_producto)->first();
+      $tarjeta_producto = TarjetaProducto::where('codigo_producto', '=', $producto->codigo_producto)->first();
+      $tarjeta = Tarjeta::find($tarjeta_producto->codigo_tarjeta)->first();
+      $estatus_reclamo = EstatusReclamo::where('numero_reclamo', '=', $reclamo->numero_reclamo)
+        ->orderBy('codigo', 'desc')
+        ->orderBy('fecha', 'desc')
+        ->orderBy('codigo_estatus', 'desc')
+        ->first();
+      $estatus = Estatus::where('codigo_estatus', '=', $estatus_reclamo->codigo_estatus)->first();
 
-      $this->datos['resultado'] = $reclamo;
+      $transacciones = Tmtrans::select(
+          'tran_nr as secuencia',
+          'source_node as nodo',
+          'in_req as fecha_transaccion',
+          'msg_type as codigo_iso',
+          'time_local as hora',
+          'rsp_code_req_rsp as codigo_respuesta',
+          'amount_tran_requested as monto_transaccion')
+      ->where('numero_tarjeta', '=', $tarjeta->numero_tarjeta)
+      ->get();
+
+      $transaccion_reclamo = TransaccionReclamo::where('numero_reclamo', '=', $reclamo->numero_reclamo)->first();
+
+      if(!is_null($transaccion_reclamo)) {
+        $transaccion = Transaccion::where('secuencia', '=', $transaccion_reclamo->secuencia)->first();
+      } else {
+        $transaccion = [];
+      }
+
+      $reclamo->cliente = $cliente;
+      $reclamo->cliente->telefono = $telefono;
+      $reclamo->cliente->correo_electronico = $correo_electronico;
+      $reclamo->cliente->cuenta_bancaria = $cuenta_bancaria;
+      $reclamo->producto = $producto;
+      $reclamo->producto->tarjeta = $tarjeta;
+      $reclamo->estatus = $estatus;
+      $reclamo->transacciones = $transacciones;
+      $reclamo->transaccion = $transaccion;
+
+      $this->datos['reclamo'] = $reclamo;
 
       return view('reclamo/gestion_reclamo', ['datos' => $this->datos]);
     }
 
     public function listarReclamosAsignados(Request $request)
     {
+      $usuario = \Auth::user();
+      $cedula = $usuario->cedula;
+      $reclamos_usuario = ReclamoUsuario::where('cedula', '=', $cedula)->paginate(10);
+
+      foreach ($reclamos_usuario as &$reclamo_usuario) {
+        $reclamo = Reclamo::where('numero_reclamo', '=', $reclamo_usuario->numero_reclamo)->first();
+        $reclamo_usuario->reclamo = $reclamo;
+
+        $estatus_reclamo = EstatusReclamo::where('numero_reclamo', '=', $reclamo_usuario->numero_reclamo)
+          ->orderBy('codigo', 'desc')
+          ->orderBy('fecha', 'desc')
+          ->orderBy('codigo_estatus', 'desc')
+          ->first();
+
+        $estatus = Estatus::where('codigo_estatus', '=', $estatus_reclamo->codigo_estatus)->first();
+        $reclamo_usuario->estatus = $estatus;
+      }
+
         $this->datos = [
           'encabezado' => [
             'titulo' => 'Reclamos asignados'
@@ -74,6 +170,7 @@ class PaginasController extends Controller
             'activo' => 'gestion',
             'opcion' => 'reclamos_asignados'
           ],
+          'registros' => $reclamos_usuario,
           'clases_adicionales_body' => '',
         ];
 

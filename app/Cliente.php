@@ -13,6 +13,11 @@ class Cliente extends Model implements Auditable
     protected $primaryKey = 'cedula';
     public $timestamps = false;
 
+    public function reclamo()
+    {
+        return $this->belongsToMany('App\ReclamoCliente', 'reclamo_cliente', 'cedula', 'numero_reclamo');
+    }
+
     public function TipoCliente()
     {
     	return $this->belongsToMany('App\ClienteTipoCliente', 'cliente_tipo_cliente', 'cedula', 'codigo_tipo_cliente');

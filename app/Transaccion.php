@@ -10,7 +10,7 @@ class Transaccion extends Model implements Auditable
 	use \OwenIt\Auditing\Auditable;
 
     protected $table = 'transaccion';
-	protected $primaryKey = 'codigo_transaccion';
+	protected $primaryKey = 'secuencia';
 	public $timestamps = false;
 
 	public function dispositivo()

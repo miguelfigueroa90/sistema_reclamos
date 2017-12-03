@@ -37,7 +37,13 @@ class PerfilesController extends Controller
 
     public function eliminar(Request $request)
     {
+        $perfiles_bloqueados = [1,2,3,4,5,6];
         $codigoPerfil = $request->codigo_perfil;
+
+        if(in_array($codigoPerfil, $perfiles_bloqueados)) {
+            return redirect('perfiles')->with('danger','¡Este perfil no puede ser eliminado porque se encuentra bloqueado!');
+        }
+
         $perfil = Perfil::find($codigoPerfil);
         $perfil->condicion='0';
         $perfil->update();

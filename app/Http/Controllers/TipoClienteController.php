@@ -9,41 +9,22 @@ class TipoClienteController extends Controller
 {
     public function actualizar(Request $request)
     {
-        $codigoTipoCliente = $request->codigo_tipo_cliente;
-        $nuevoTipoCliente = ucwords($request->nombre);
-
-      
-    if($sql=TipoCliente::where([['nombre', '=', $nuevoTipoCliente],['condicion', '=', '1']])->first())
-       
-    {
-        return redirect('/actualizar_TipoCliente/'.$codigoTipoCliente)->with('danger','¡El Tipo de Cliente ingresado ya se encuentra registrado, favor intente con otro nombre!');
-    
-    }elseif($sql=TipoCliente::where([['nombre', '=', $nuevoTipoCliente],['condicion', '=', '0']])->first()){
-    
-        $codigoTipoClienteSQL = $sql->codigo_tipo_cliente;
-        $TipoCliente = TipoCliente::find($codigoTipoClienteSQL);
-        $TipoCliente->condicion = "1";
+        $TipoCliente = TipoCliente::find($request->codigo_tipo_cliente);
+        $TipoCliente->nombre = $request->nombre;
         $TipoCliente->save();
 
-        $codigoTipoClienteView = $request->codigo_tipo_cliente;
-        $TipoClienteView = TipoCliente::find($codigoTipoClienteView);
-        $TipoClienteView->condicion = "0";
-        $TipoClienteView->save();
-
-       return redirect('/listar_TipoCliente')->with('success','¡El Tipo de Cliente ha sido actualizado!');
-
-    }else{   
-        $TipoCliente = TipoCliente::find($codigoTipoCliente);
-        $TipoCliente->nombre = $nuevoTipoCliente;
-        $TipoCliente->save();
         return redirect('/listar_TipoCliente')->with('success','¡El Tipo de Cliente ha sido actualizado!');
-    }
-    
     }
 
     public function eliminar(Request $request)
     {
+        $tipos_clientes_bloqueados = [1];
         $codigoTipoCliente = $request->codigo_tipo_cliente;
+
+        if(in_array($codigoTipoCliente, $tipos_clientes_bloqueados)) {
+            return redirect('/listar_TipoCliente')->with('danger','¡Este tipo de cliente no puede ser eliminado porque se encuentra bloqueado!');
+        }
+
         $TipoCliente = TipoCliente::find($codigoTipoCliente);
         $TipoCliente->condicion = '0';
         $TipoCliente->update();

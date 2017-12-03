@@ -12,34 +12,16 @@ Reclamos asignados
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>1234</td>
-            <td>25/06/2017</td>
-            <td>
-                <a href="gestionar_reclamo?q=1" class="btn btn-info btn-modificar-reclamo">Modificar <i class="fa fa-edit"></i></a>
-            </td>
-        </tr>
-        <tr>
-            <td>1234</td>
-            <td>25/07/2017</td>
-            <td>
-                <a href="gestionar_reclamo?q=2" class="btn btn-info btn-modificar-reclamo">Modificar <i class="fa fa-edit"></i></a>
-            </td>
-        </tr>
-        <tr>
-            <td>1234</td>
-            <td>25/08/2017</td>
-            <td>
-                <a href="gestionar_reclamo?q=3" class="btn btn-info btn-modificar-reclamo">Modificar <i class="fa fa-edit"></i></a>
-            </td>
-        </tr>
-        <tr>
-            <td>1234</td>
-            <td>25/09/2017</td>
-            <td>
-                <a href="gestionar_reclamo?q=4" class="btn btn-info btn-modificar-reclamo">Modificar <i class="fa fa-edit"></i></a>
-            </td>
-        </tr>
+        @foreach($datos['registros'] as $reclamo)
+            <tr>
+                <td>{!! $reclamo->numero_reclamo !!}</td>
+                <td>{!! $reclamo->reclamo->fecha_registro !!}</td>
+                <td>{!! $reclamo->estatus->tipo !!}</td>
+                <td>
+                    <a href="{{ url('gestionar_reclamo/'.$reclamo->numero_reclamo) }}" id="{!! $reclamo->numero_reclamo !!}" class="btn btn-info btn-modificar-reclamo">Modificar <i class="fa fa-plus"></i></a>
+                </td>
+            </tr>
+        @endforeach
     </tbody>
 </table>
 @endsection
