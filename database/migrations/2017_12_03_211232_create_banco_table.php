@@ -14,9 +14,10 @@ class CreateBancoTable extends Migration
     public function up()
     {
         Schema::create('banco', function (Blueprint $table) {
-            $table->increments('codigo_banco');
+            $table->string('codigo_banco');
             $table->string('nombre');
             $table->boolean('condicion');
+            $table->primary('codigo_banco');
         });
     }
 
