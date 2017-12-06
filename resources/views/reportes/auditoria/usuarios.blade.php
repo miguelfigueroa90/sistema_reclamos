@@ -28,7 +28,7 @@
                     </td>
                     <td class="datos-en-linea">
                         <div class="margen-horizontal">
-                            <a href="{{ url('/generar_reporte_auditoria_usuarios/'.$usuario->cedula) }}" class="btn btn-info">Auditar</a>
+                            <a href="{{ url('/generar_reporte_auditoria_usuarios/'.$usuario->cedula) }}" class="btn btn-info">Generar</a>
                         </div>
                     </td>
                 </tr>

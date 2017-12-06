@@ -9,12 +9,12 @@ use App\Usuario;
 
 class ReportesController extends Controller
 {
-    function crearReporte($datos, $nombre_vista)
+    function crearReporte($datos, $nombre_vista, $orientacion = 'portrait')
     {
         $date = date('Y-m-d');
         $view =  \View::make('pdf/' . $nombre_vista, compact('datos', 'date'))->render();
         $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadHTML($view);
+        $pdf->loadHTML($view)->setPaper('a4', $orientacion);
         return $pdf;
     }
 
@@ -94,15 +94,18 @@ class ReportesController extends Controller
 
     function generarReporteAuditoriaUsuarios(Request $request)
     {
-        // dd($request);
         $cedula = $request->cedula;
         $usuario = Usuario::where('cedula', $cedula)->first();
         $auditorias = $usuario->audits()
             ->get();
-        // foreach ($auditorias as &$auditoria) {
-        //     $auditoria->valores = $auditoria->getModified();
-        // }
-        dd($auditorias);
 
+        foreach ($auditorias as &$auditoria) {
+            $auditoria->old_values = json_encode($auditoria->old_values);
+            $auditoria->new_values = json_encode($auditoria->new_values);
+        }
+
+        $pdf = $this->crearReporte($auditorias, 'auditoria/usuarios', 'landscape');
+
+        return $pdf->stream('reporte_auditoria_usuarios.pdf');
     }
 }
