@@ -43,6 +43,10 @@ Route::group(['middleware' => 'GestionDeUsuarios'], function(){
 	Route::post('/nuevo_departamento', 'DepartamentosController@agregar');
 	Route::put('/actualizar_departamento/{codigo_departamento}', 'DepartamentosController@actualizar');
 	Route::delete('/eliminar_departamento/{codigo_departamento}', 'DepartamentosController@eliminar');
+
+	// Reportes
+	Route::get('/reporte_usuarios', 'PaginasController@reporteUsuarios');
+	Route::post('/generar_reporte_usuarios', 'ReportesController@generarReporteUsuarios');
 });
 
 Route::group(['middleware' => 'ConfiguracionDeVariables'], function(){
@@ -101,17 +105,20 @@ Route::group(['middleware' => 'GestionDeReclamo'], function(){
 	Route::get('/bandeja', 'PaginasController@bandeja');
 	Route::get('/reclamos_asignados', 'PaginasController@listarReclamosAsignados');
 	Route::get('/gestionar_reclamo/{numero_reclamo}', 'PaginasController@gestionarReclamo');
+	Route::post('/gestionar_banco_transaccion', 'ReclamosController@gestionarBancoTransaccion');
+	Route::post('/gestionar_dispositivo_transaccion', 'ReclamosController@gestionarDispositivoTransaccion ');
 	Route::post('/obtener_transacciones', 'ReclamosController@obtenerTransacciones');
 	Route::get('/asignar_reclamo/{numero_reclamo}', 'ReclamosController@asignarReclamo');
 	Route::post('/gestionar_estatus_reclamo', 'ReclamosController@gestionarEstatusReclamo');
 	Route::post('/gestionar_transaccion_reclamo', 'ReclamosController@gestionarTransaccionReclamo');
+
+	// Reportes
+	Route::get('/reporte_reclamos', 'PaginasController@reporteReclamos');
+	Route::post('/generar_reporte_reclamos', 'ReportesController@generarReporteReclamos');
 });
 
-// Reportes
-Route::get('/reporte_usuarios', 'PaginasController@reporteUsuarios');
-Route::get('/reporte_reclamos', 'PaginasController@reporteReclamos');
-Route::post('/generar_reporte_usuarios', 'ReportesController@generarReporteUsuarios');
-Route::post('/generar_reporte_reclamos', 'ReportesController@generarReporteReclamos');
-
-Route::get('/reporte_auditoria_usuarios', 'PaginasController@reporteAuditoriaUsuarios');
-Route::get('/generar_reporte_auditoria_usuarios/{cedula}', 'ReportesController@generarReporteAuditoriaUsuarios');
+Route::group(['middleware' => 'SeguridadDeDatos'], function(){
+	// Reportes
+	Route::get('/reporte_auditoria_usuarios', 'PaginasController@reporteAuditoriaUsuarios');
+	Route::get('/generar_reporte_auditoria_usuarios/{cedula}', 'ReportesController@generarReporteAuditoriaUsuarios');
+});

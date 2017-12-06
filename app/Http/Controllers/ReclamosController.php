@@ -323,4 +323,14 @@ class ReclamosController extends Controller
 
         return response()->json($respuesta);
     }
+
+    function gestionarBancoTransaccion(Request $request)
+    {
+        dd($request);
+    }
+
+    function gestionarDispositivoTransaccion(Request $request)
+    {
+        dd($request);
+    }
 }

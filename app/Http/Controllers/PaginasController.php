@@ -137,7 +137,15 @@ class PaginasController extends Controller
       $reclamo->transacciones = $transacciones;
       $reclamo->transaccion = $transaccion;
 
+      $bancos = Banco::where('condicion', true)->pluck('nombre', 'codigo_banco');
+      $bancos = $bancos->prepend('Seleccione...');
+
+      $dispositivos = Dispositivo::where('condicion', true)->pluck('tipo', 'codigo_dispositivo');
+      $dispositivos = $dispositivos->prepend('Seleccione...');
+
       $this->datos['reclamo'] = $reclamo;
+      $this->datos['bancos'] = $bancos;
+      $this->datos['dispositivos'] = $dispositivos;
 
       return view('reclamo/gestion_reclamo', ['datos' => $this->datos]);
     }

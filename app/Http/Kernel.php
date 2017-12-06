@@ -60,5 +60,6 @@ class Kernel extends HttpKernel
         'GestionDeReclamo' => \App\Http\Middleware\GestionDeReclamo::class,
         'GestionDeUsuarios' => \App\Http\Middleware\GestionDeUsuarios::class,
         'RegistroDeReclamo' => \App\Http\Middleware\RegistroDeReclamo::class,
+        'SeguridadDeDatos' => \App\Http\Middleware\SeguridadDeDatos::class,
     ];
 }
