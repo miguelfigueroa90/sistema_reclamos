@@ -15,7 +15,7 @@ class CreatePerfilTable extends Migration
     {
         Schema::create('perfil', function (Blueprint $table) {
             $table->increments('codigo_perfil');
-            $table->integer('nombre');
+            $table->string('nombre');
             $table->boolean('condicion');
         });
     }

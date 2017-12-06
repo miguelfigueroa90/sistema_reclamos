@@ -120,6 +120,12 @@
                                 </span>
                                 <ul class="treeview-menu">
                                     <li>
+                                        <a href="{!! url('/reporte_usuarios') !!}">
+                                            <i class="fa fa-circle-o <?= ($datos['menu']['opcion'] == 'reporte_usuarios') ? 'text-green' : '' ?>"></i>
+                                            Usuarios
+                                        </a>
+                                    </li>
+                                    <li>
                                         <a href="{!! url('/reporte_reclamos') !!}">
                                             <i class="fa fa-circle-o <?= ($datos['menu']['opcion'] == 'reporte_reclamos') ? 'text-green' : '' ?>"></i>
                                             Reclamos

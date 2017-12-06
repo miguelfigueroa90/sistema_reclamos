@@ -16,7 +16,7 @@ $factory->define(App\Usuario::class, function (Faker\Generator $faker) {
     return [
         'cedula' => $faker->randomNumber(8),
         'usuario' => $faker->userName,
-        'nombre' => $faker->name,
+        'nombre' => $faker->firstName(),
         'apellido' => $faker->lastName,
         'bloqueado' => $faker->boolean(50)
     ];

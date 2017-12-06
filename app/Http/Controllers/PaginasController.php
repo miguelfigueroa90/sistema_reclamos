@@ -230,6 +230,13 @@ class PaginasController extends Controller
 
         $lista_usuarios = Usuario::paginate(10);
 
+        foreach ($lista_usuarios as &$usuario) {
+          $cedula = $usuario->cedula;
+          $usuario_perfil = UsuarioPerfil::where('cedula', '=', $cedula)->first();
+          $codigo_perfil = $usuario_perfil->codigo_perfil;
+          $usuario->perfil = Perfil::where('codigo_perfil', '=', $codigo_perfil)->first();
+        }
+
         $this->datos['registros'] = $lista_usuarios;
 
         return view('usuarios/listar', ['datos' => $this->datos]);
@@ -706,6 +713,30 @@ class PaginasController extends Controller
         ];
 
         return view('dispositivo/agregar', ['datos' => $this->datos]);
+    }
+
+    public function reporteUsuarios()
+    {
+        $perfiles = Perfil::pluck('nombre', 'codigo_perfil');
+        $perfiles = $perfiles->prepend('Seleccione...');
+
+        $departamentos = Departamento::pluck('nombre', 'codigo_departamento');
+        $departamentos = $departamentos->prepend('Seleccione...');
+
+        $this->datos = [
+          'encabezado' => [
+              'titulo' => 'Reporte de usuarios',
+          ],
+          'menu' => [
+            'activo' => 'reportes',
+            'opcion' => 'reporte_usuarios'
+          ],
+          'perfiles' => $perfiles,
+          'departamentos' => $departamentos,
+          'clases_adicionales_body' => '',
+        ];
+
+        return view('reportes/usuarios', ['datos' => $this->datos]);
     }
 
     public function reporteReclamos()

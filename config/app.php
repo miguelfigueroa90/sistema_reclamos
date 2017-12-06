@@ -178,21 +178,13 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         /**
-         * ADLDAP
+         * Paquetes Necesarios para el negocio
          */
         Adldap\Laravel\AdldapServiceProvider::class,
-
-        /**
-         * Collective
-         */
         Collective\Html\HtmlServiceProvider::class,
-
-        /**
-         * Auditoria
-         */
         OwenIt\Auditing\AuditingServiceProvider::class,
-
         Barryvdh\Debugbar\ServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
 
     ],
 
@@ -246,6 +238,7 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
 
     ],
 

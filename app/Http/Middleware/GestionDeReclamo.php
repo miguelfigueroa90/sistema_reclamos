@@ -16,7 +16,7 @@ class GestionDeReclamo
      */
     public function handle($request, Closure $next)
     {
-        // return $next($request);
+        return $next($request);
         $perfiles_autorizados = [5];
 
         $usuario = \Auth::user();

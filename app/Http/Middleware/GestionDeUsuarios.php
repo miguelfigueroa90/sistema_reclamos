@@ -16,7 +16,7 @@ class GestionDeUsuarios
      */
     public function handle($request, Closure $next)
     {
-        // return $next($request);
+        return $next($request);
         $perfiles_autorizados = [1];
 
         $usuario = \Auth::user();

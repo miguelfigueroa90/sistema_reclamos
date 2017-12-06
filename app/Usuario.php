@@ -32,7 +32,7 @@ class Usuario extends Model implements Auditable
         return $this->belongsToMany('App\UsuarioDepartamento', 'usuario_departamento', 'cedula', 'codigo_departamento');
     }
 
-    public function Perfil()
+    public function perfil()
     {
         return $this->belongsToMany('App\UsuarioPerfil', 'usuario_perfil', 'cedula', 'codigo_perfil');
     }

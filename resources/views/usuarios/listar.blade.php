@@ -21,6 +21,7 @@ Usuarios
                     <th>Apellido</th>
                     <th>Usuario</th>
                     <th>Estado</th>
+                    <th>Perfil</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -37,6 +38,7 @@ Usuarios
                             Inactivo
                             @endif
                         </td>
+                        <td>{{$usuario->perfil->nombre}}</td>
                         <td class="datos-en-linea">
                             <div class="margen-horizontal">
                                 <!-- Editar usuario -->

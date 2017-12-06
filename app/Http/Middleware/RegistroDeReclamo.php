@@ -16,7 +16,7 @@ class RegistroDeReclamo
      */
     public function handle($request, Closure $next)
     {
-        // return $next($request);
+        return $next($request);
         $perfiles_autorizados = [3,4];
 
         $usuario = \Auth::user();

@@ -11,32 +11,32 @@ class PerfilTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('departamento')->insert([
+        DB::table('perfil')->insert([
             'nombre' => 'Administrador De Usuarios',
             'condicion' => true,
         ]);
 
-        DB::table('departamento')->insert([
+        DB::table('perfil')->insert([
             'nombre' => 'Administrador De Seguridad',
             'condicion' => true,
         ]);
 
-        DB::table('departamento')->insert([
+        DB::table('perfil')->insert([
             'nombre' => 'Call Center',
             'condicion' => true,
         ]);
 
-        DB::table('departamento')->insert([
+        DB::table('perfil')->insert([
             'nombre' => 'Supervisor Call Center',
             'condicion' => true,
         ]);
 
-        DB::table('departamento')->insert([
+        DB::table('perfil')->insert([
             'nombre' => 'Gestor De Reclamo',
             'condicion' => true,
         ]);
 
-        DB::table('departamento')->insert([
+        DB::table('perfil')->insert([
             'nombre' => 'Supervisor De Gestor De Reclamo',
             'condicion' => true,
         ]);

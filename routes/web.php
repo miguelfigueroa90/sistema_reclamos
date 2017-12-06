@@ -108,5 +108,7 @@ Route::group(['middleware' => 'GestionDeReclamo'], function(){
 });
 
 // Reportes
+Route::get('/reporte_usuarios', 'PaginasController@reporteUsuarios');
 Route::get('/reporte_reclamos', 'PaginasController@reporteReclamos');
 Route::get('/reporte_auditoria', 'PaginasController@reporteAuditoria');
+Route::post('/generar_reporte_usuarios', 'ReportesController@GenerarReporteUsuarios');
