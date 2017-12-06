@@ -9,38 +9,14 @@ class DispositivoController extends Controller
 {
     public function actualizar(Request $request)
     {
-    
-       $nuevoTipoDispositivo = ucwords($request->tipo);
-       $codigoDispositivo = $request->codigo_dispositivo;
-     
-    if($sql=Dispositivo::where([['tipo', '=', $nuevoTipoDispositivo],['condicion', '=', '1']])->first())
-       
-    {
-        return redirect('/actualizar_dispositivo/'.$codigoDispositivo)->with('danger','¡El Dispositivo ingresado ya se encuentra registrado, favor intente con otro nombre!');
-    
-    }elseif ($sql=Dispositivo::where([['tipo', '=', $nuevoTipoDispositivo],['condicion', '=', '0']])->first()) {
-   
-        $codigoDispositivoSQL = $sql->codigo_dispositivo;
-        $dispositivo = Dispositivo::find($codigoDispositivoSQL);
-        $dispositivo->condicion = "1";
-        $dispositivo->save();
-
-        $codigoDispositivoView = $request->codigo_dispositivo;
-        $dispositivoView = Dispositivo::find($codigoDispositivoView);
-        $dispositivoView->condicion = "0";
-        $dispositivoView->save();
-
-        return redirect('/listar_dispositivo')->with('success','¡El Dispositivo ha sido actualizado!'); 
-
-    }else{   
+        $nuevoTipoDispositivo = ucwords($request->tipo);
+        $codigoDispositivo = $request->codigo_dispositivo;
 
         $dispositivo = Dispositivo::find($codigoDispositivo);
         $dispositivo->tipo = $nuevoTipoDispositivo;
         $dispositivo->condicion = "1";
         $dispositivo->save();
         return redirect('/listar_dispositivo')->with('success','¡El Dispositivo ha sido actualizado!');
-    }
-    
     }
 
     public function eliminar(Request $request)

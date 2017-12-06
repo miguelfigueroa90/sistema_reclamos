@@ -12,27 +12,11 @@ class DepartamentosController extends Controller
         $nuevoTipoDepartamento = ucwords($request->nombre);
         $codigoDepartamento = $request->codigo_departamento;
 
-        if($sql=Departamento::where([['nombre', '=', $nuevoTipoDepartamento],['condicion', '=', '1']])->first()) {
-            return redirect('/actualizar_departamento/'.$codigoDepartamento)->with('danger','¡El Departamento ingresado ya se encuentra registrado, favor intente con otro nombre!');
-        } elseif ($sql=Departamento::where([['nombre', '=', $nuevoTipoDepartamento],['condicion', '=', '0']])->first()) {
-            $codigoDepartamentoSQL = $sql->codigo_departamento;
-            $departamento = Departamento::find($codigoDepartamentoSQL);
-            $departamento->condicion = "1";
-            $departamento->save();
-
-            $codigoDepartamentoView = $request->codigo_departamento;
-            $departamentoView = Departamento::find($codigoDepartamentoView);
-            $departamentoView->condicion = "0";
-            $departamentoView->save();
-
-            return redirect('/listar_departamento')->with('success','¡El Departamento ha sido actualizado!'); 
-        } else {   
-            $departamento = Departamento::find($codigoDepartamento);
-            $departamento->nombre = $nuevoTipoDepartamento;
-            $departamento->condicion = "1";
-            $departamento->save();
-            return redirect('/listar_departamento')->with('success','¡El Departamento ha sido actualizado!');
-        }
+        $departamento = Departamento::find($codigoDepartamento);
+        $departamento->nombre = $nuevoTipoDepartamento;
+        $departamento->condicion = "1";
+        $departamento->save();
+        return redirect('/listar_departamento')->with('success','¡El Departamento ha sido actualizado!');
     }
 
     public function eliminar(Request $request)

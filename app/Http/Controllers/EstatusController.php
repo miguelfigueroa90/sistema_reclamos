@@ -10,7 +10,7 @@ class EstatusController extends Controller
     public function actualizar(Request $request)
     {
         $estatus = Estatus::find($request->codigo_estatus);
-        $estatus->nombre = $request->nombre;
+        $estatus->tipo = $request->tipo;
         $estatus->save();
 
         return redirect('/listar_estatus')->with('success','¡El estatus ha sido actualizado!');
