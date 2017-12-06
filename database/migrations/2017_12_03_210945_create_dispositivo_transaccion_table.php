@@ -14,7 +14,7 @@ class CreateDispositivoTransaccionTable extends Migration
     public function up()
     {
         Schema::create('dispositivo_transaccion', function (Blueprint $table) {
-            $table->increments('codigo_');
+            $table->increments('codigo');
             $table->integer('secuencia');
             $table->integer('codigo_dispositivo');
         });

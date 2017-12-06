@@ -8,6 +8,7 @@ use App\CorreoCliente;
 use App\CorreoElectronico;
 use App\CuentaBancaria;
 use App\CuentaBancariaCliente;
+use App\DispositivoTransaccion;
 use App\Estatus;
 use App\EstatusReclamo;
 use App\Mensaje;
@@ -24,6 +25,7 @@ use App\Telefono;
 use App\TelefonoCliente;
 use App\Tmtrans;
 use App\Transaccion;
+use App\TransaccionBanco;
 use App\TransaccionReclamo;
 use Carbon\Carbon;
 
@@ -326,11 +328,71 @@ class ReclamosController extends Controller
 
     function gestionarBancoTransaccion(Request $request)
     {
-        dd($request);
+        $numero_reclamo = $request->numero_reclamo;
+        $codigo_banco = $request->banco;
+
+        $transaccion_reclamo = TransaccionReclamo::where('numero_reclamo', $numero_reclamo)->first();
+        if(is_null($transaccion_reclamo)) {
+            $respuesta = [
+                'codigo' => '404',
+                'mensaje' => 'Debe Asociar una Transacción antes de asociar un Banco'
+            ];
+        } else {
+            $secuencia = $transaccion_reclamo->secuencia;
+
+            $transaccion_banco = new TransaccionBanco;
+            $transaccion_banco->secuencia = $secuencia;
+            $transaccion_banco->codigo_banco = $codigo_banco;
+            $transaccion_banco_guardada = $transaccion_banco->save();
+
+            if($transaccion_banco_guardada) {
+                $respuesta = [
+                    'codigo' => '200',
+                    'mensaje' => 'El Banco ha sido asociado a la Transacción'
+                ];
+            } else {
+                $respuesta = [
+                    'codigo' => '500',
+                    'mensaje' => 'El Banco no ha podido ser asociado a la Transacción'
+                ];
+            }
+        }
+
+        return response()->json($respuesta);
     }
 
     function gestionarDispositivoTransaccion(Request $request)
     {
-        dd($request);
+        $numero_reclamo = $request->numero_reclamo;
+        $codigo_dispositivo = $request->dispositivo;
+
+        $transaccion_reclamo = TransaccionReclamo::where('numero_reclamo', $numero_reclamo)->first();
+        if(is_null($transaccion_reclamo)) {
+            $respuesta = [
+                'codigo' => '404',
+                'mensaje' => 'Debe Asociar una Transacción antes de asociar un Dispositivo'
+            ];
+        } else {
+            $secuencia = $transaccion_reclamo->secuencia;
+
+            $dispositivo_transaccion = new DispositivoTransaccion;
+            $dispositivo_transaccion->secuencia = $secuencia;
+            $dispositivo_transaccion->codigo_dispositivo = $codigo_dispositivo;
+            $dispositivo_transaccion_guardada = $dispositivo_transaccion->save();
+
+            if($dispositivo_transaccion_guardada) {
+                $respuesta = [
+                    'codigo' => '200',
+                    'mensaje' => 'El Dispositivo ha sido asociado a la Transacción'
+                ];
+            } else {
+                $respuesta = [
+                    'codigo' => '500',
+                    'mensaje' => 'El Dispositivo no ha podido ser asociado a la Transacción'
+                ];
+            }
+        }
+
+        return response()->json($respuesta);
     }
 }

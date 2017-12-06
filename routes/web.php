@@ -106,7 +106,7 @@ Route::group(['middleware' => 'GestionDeReclamo'], function(){
 	Route::get('/reclamos_asignados', 'PaginasController@listarReclamosAsignados');
 	Route::get('/gestionar_reclamo/{numero_reclamo}', 'PaginasController@gestionarReclamo');
 	Route::post('/gestionar_banco_transaccion', 'ReclamosController@gestionarBancoTransaccion');
-	Route::post('/gestionar_dispositivo_transaccion', 'ReclamosController@gestionarDispositivoTransaccion ');
+	Route::post('/gestionar_dispositivo_transaccion', 'ReclamosController@gestionarDispositivoTransaccion');
 	Route::post('/obtener_transacciones', 'ReclamosController@obtenerTransacciones');
 	Route::get('/asignar_reclamo/{numero_reclamo}', 'ReclamosController@asignarReclamo');
 	Route::post('/gestionar_estatus_reclamo', 'ReclamosController@gestionarEstatusReclamo');

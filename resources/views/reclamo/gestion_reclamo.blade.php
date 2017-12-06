@@ -161,41 +161,50 @@ Gestión del Reclamo
 			$('#codigo_respuesta').val('');
 			$('#monto_transaccion').val('');
 
-		$('#btn-estatus').click(function(){
-			var $estatus = $('#estatus');
+		var $estatus = $('#estatus');
+		var $transacciones = $('#transacciones');
+		var $bancos = $('#bancos');
+		var $dispositivos = $('#dispositivos');
 
+		$('#btn-estatus').click(function(){
 			if($estatus.hasClass('hidden')) {
 				$estatus.removeClass('hidden');
+				$transacciones.addClass('hidden');
+				$bancos.addClass('hidden');
+				$dispositivos.addClass('hidden');
 			} else {
 				$estatus.addClass('hidden');
 			}
 		});
 
 		$('#btn-transacciones').click(function(){
-			var $transacciones = $('#transacciones');
-
 			if($transacciones.hasClass('hidden')) {
 				$transacciones.removeClass('hidden');
+				$estatus.addClass('hidden');
+				$bancos.addClass('hidden');
+				$dispositivos.addClass('hidden');
 			} else {
 				$transacciones.addClass('hidden');
 			}
 		});
 
 		$('#btn-bancos').click(function(){
-			var $bancos = $('#bancos');
-
 			if($bancos.hasClass('hidden')) {
 				$bancos.removeClass('hidden');
+				$estatus.addClass('hidden');
+				$transacciones.addClass('hidden');
+				$dispositivos.addClass('hidden');
 			} else {
 				$bancos.addClass('hidden');
 			}
 		});
 
 		$('#btn-dispositivos').click(function(){
-			var $dispositivos = $('#dispositivos');
-
 			if($dispositivos.hasClass('hidden')) {
 				$dispositivos.removeClass('hidden');
+				$estatus.addClass('hidden');
+				$transacciones.addClass('hidden');
+				$bancos.addClass('hidden');
 			} else {
 				$dispositivos.addClass('hidden');
 			}
@@ -273,7 +282,7 @@ Gestión del Reclamo
 				$('.overlay').show();
 
 				$.post(ruta, datos, function(respuesta){
-					console.log(respuesta);
+					alert(respuesta.mensaje);
 
 					$('.overlay').hide();
 				}).fail(function(){
@@ -296,7 +305,7 @@ Gestión del Reclamo
 				$('.overlay').show();
 
 				$.post(ruta, datos, function(respuesta){
-					console.log(respuesta);
+					alert(respuesta.mensaje);
 
 					$('.overlay').hide();
 				}).fail(function(){
