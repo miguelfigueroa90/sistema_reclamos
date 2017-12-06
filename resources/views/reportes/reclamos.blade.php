@@ -27,7 +27,7 @@
             </div>
     	</div>
     	<div class="col-md-12">
-    		{!! Form::button('Generar', ['class'=>'btn btn-info', 'id' => 'btn-generar', 'type' => 'submit']) !!}
+    		{!! Form::button('Generar<i class="fa fa-fw fa-file-pdf-o"></i>', ['class'=>'btn btn-info', 'id' => 'btn-generar', 'type' => 'submit']) !!}
     	</div>
     {!! Form::close() !!}
 @endsection

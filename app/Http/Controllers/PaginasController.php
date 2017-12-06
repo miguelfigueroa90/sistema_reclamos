@@ -350,7 +350,7 @@ class PaginasController extends Controller
           ],
           'menu' => [
             'activo' => 'configuracion',
-            'opcion' => 'agregar_banco'
+            'opcion' => 'bancos'
           ],
           'clases_adicionales_body' => '',
         ];

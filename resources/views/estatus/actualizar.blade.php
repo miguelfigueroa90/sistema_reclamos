@@ -10,7 +10,7 @@ Actualizar Estatus
   </div>
   <br>
   <div class="form-group">
-      {!! Form::submit('Actualizar', array('class'=>'art-button', 'class' => 'btn btn-primary')) !!}
+      {!! Form::button('Actualizar<i class="fa fa-fw fa-save"></i>', array('class'=>'art-button', 'class' => 'btn btn-primary', 'type' => 'submit')) !!}
   </div>
   {!! Form::close() !!}
 @endsection

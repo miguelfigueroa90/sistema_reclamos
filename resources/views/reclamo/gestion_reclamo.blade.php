@@ -76,7 +76,7 @@ Gestión del Reclamo
 							<option value="8">Anulado</option>
 						</select>
 						<br>
-						<button class="btn btn-success" id="btn-guardar-estatus">Guardar</button>
+						<button class="btn btn-success" id="btn-guardar-estatus">Guardar<i class="fa fa-fw fa-save"></i></button>
 						{!! Form::close() !!}
 					</div>
 				</div>
@@ -121,7 +121,7 @@ Gestión del Reclamo
 		                	@endforeach
 		                </tbody>
 		            </table>
-		            <button class="btn btn-success" id="btn-guardar-transaccion">Guardar</button>
+		            <button class="btn btn-success" id="btn-guardar-transaccion">Guardar<i class="fa fa-fw fa-save"></i></button>
 		            {!! Form::close() !!}
 				</div>
 				<div id="bancos" class="hidden">
@@ -131,7 +131,7 @@ Gestión del Reclamo
 					<div class="form-group">
 						{!! Form::select('banco', $datos['bancos'], null, ['class' => 'form-control', 'id' => 'select-banco']) !!}
 					</div>
-					<button class="btn btn-success" id="btn-guardar-banco">Guardar</button>
+					<button class="btn btn-success" id="btn-guardar-banco">Guardar<i class="fa fa-fw fa-save"></i></button>
 					{!! Form::close() !!}
 				</div>
 				<div id="dispositivos" class="hidden">
@@ -141,7 +141,7 @@ Gestión del Reclamo
 					<div class="form-group">
 						{!! Form::select('dispositivo', $datos['dispositivos'], null, ['class' => 'form-control', 'id' => 'select-dispositivo']) !!}
 					</div>
-					<button class="btn btn-success" id="btn-guardar-dispositivo">Guardar</button>
+					<button class="btn btn-success" id="btn-guardar-dispositivo">Guardar<i class="fa fa-fw fa-save"></i></button>
 					{!! Form::close() !!}
 				</div>
 			</div>

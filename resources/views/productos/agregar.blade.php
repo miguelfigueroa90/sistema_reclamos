@@ -13,7 +13,7 @@ Agregar Producto
   </div>
   <br>
   <div class="form-group">
-      {!! Form::submit('Agregar', array('class'=>'art-button', 'class' => 'btn btn-primary')) !!}
+      {!! Form::button('Agregar<i class="fa fa-fw fa-save"></i>', array('class'=>'art-button', 'class' => 'btn btn-primary', 'type' => 'submit')) !!}
   </div>
   {!! Form::close() !!}
 @endsection

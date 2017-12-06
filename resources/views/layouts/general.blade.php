@@ -30,7 +30,7 @@
                     <ul class="nav navbar-nav">
                       <!-- User Account: style can be found in dropdown.less -->
                       <li class="dropdown messages-menu">
-                        <a href="/salir">Salir</a>
+                        <a href="/salir">Salir<i class="fa fa-fw fa-sign-out"></i></a>
                       </li>
                     </ul>
                   </div>

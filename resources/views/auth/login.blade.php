@@ -61,7 +61,7 @@
         </div>
         <!-- /.col -->
         <div class="col-xs-4">
-          {!! Form::button('Entrar', array('class' => 'btn btn-primary btn-block btn-flat', 'type' => 'submit')) !!}
+          {!! Form::button('Entrar<i class="fa fa-fw fa-sign-in"></i>', array('class' => 'btn btn-primary btn-block btn-flat', 'type' => 'submit')) !!}
         </div>
         <!-- /.col -->
       </div>
