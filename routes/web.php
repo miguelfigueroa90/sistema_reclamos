@@ -110,5 +110,8 @@ Route::group(['middleware' => 'GestionDeReclamo'], function(){
 // Reportes
 Route::get('/reporte_usuarios', 'PaginasController@reporteUsuarios');
 Route::get('/reporte_reclamos', 'PaginasController@reporteReclamos');
-Route::get('/reporte_auditoria', 'PaginasController@reporteAuditoria');
-Route::post('/generar_reporte_usuarios', 'ReportesController@GenerarReporteUsuarios');
+Route::post('/generar_reporte_usuarios', 'ReportesController@generarReporteUsuarios');
+Route::post('/generar_reporte_reclamos', 'ReportesController@generarReporteReclamos');
+
+Route::get('/reporte_auditoria_usuarios', 'PaginasController@reporteAuditoriaUsuarios');
+Route::get('/generar_reporte_auditoria_usuarios/{cedula}', 'ReportesController@generarReporteAuditoriaUsuarios');

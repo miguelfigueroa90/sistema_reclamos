@@ -95,6 +95,11 @@ class ReclamosController extends Controller
         $reclamo_guardado = $reclamo->save();
 
         if($reclamo_guardado) {
+            $numero_reclamo = str_pad($reclamo->numero_reclamo, 3, '0', STR_PAD_LEFT);
+            $fecha_reclamo = $reclamo->fecha_registro;
+            $reclamo->codigo_reclamo = $fecha_reclamo->format('Ymd') . $numero_reclamo;
+            $reclamo->save();
+
             $reclamo->Cliente()->attach($cliente->cedula);
 
             $reclamo->Estatus()->attach(1, ['fecha' => $reclamo->fecha_registro]);

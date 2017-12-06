@@ -13,7 +13,7 @@ class CreateCuentaBancariaClienteTable extends Migration
      */
     public function up()
     {
-        Schema::create('cuente_bancaria_cliente', function (Blueprint $table) {
+        Schema::create('cuenta_bancaria_cliente', function (Blueprint $table) {
             $table->increments('codigo');
             $table->string('cedula');
             $table->integer('codigo_cuenta_bancaria');
@@ -27,6 +27,6 @@ class CreateCuentaBancariaClienteTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cuente_bancaria_cliente');
+        Schema::dropIfExists('cuenta_bancaria_cliente');
     }
 }

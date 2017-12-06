@@ -741,6 +741,9 @@ class PaginasController extends Controller
 
     public function reporteReclamos()
     {
+        $estatus = Estatus::pluck('tipo', 'codigo_estatus');
+        $estatus = $estatus->prepend('Seleccione...');
+
         $this->datos = [
           'encabezado' => [
               'titulo' => 'Reporte de reclamos',
@@ -749,25 +752,29 @@ class PaginasController extends Controller
             'activo' => 'reportes',
             'opcion' => 'reporte_reclamos'
           ],
+          'estatus' => $estatus,
           'clases_adicionales_body' => '',
         ];
 
         return view('reportes/reclamos', ['datos' => $this->datos]);
     }
 
-    public function reporteAuditoria()
+    public function reporteAuditoriaUsuarios()
     {
+        $usuarios = Usuario::paginate(10);
+
         $this->datos = [
           'encabezado' => [
               'titulo' => 'Reporte de auditoria',
           ],
           'menu' => [
             'activo' => 'reportes',
-            'opcion' => 'reporte_auditoria'
+            'opcion' => 'reporte_auditoria_usuarios'
           ],
+          'registros' => $usuarios,
           'clases_adicionales_body' => '',
         ];
 
-        return view('reportes/auditoria', ['datos' => $this->datos]);
+        return view('reportes/auditoria/usuarios', ['datos' => $this->datos]);
     }
 }

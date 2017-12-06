@@ -7,6 +7,7 @@
         <!--[if lt IE 9]><script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
         <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css" media="screen">
         <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen">
+        <link rel="stylesheet" href="/css/bootstrap-datepicker.min.css" media="screen">
         <link rel="stylesheet" href="/css/AdminLTE.min.css" media="screen">
         <link rel="stylesheet" href="/css/skins/skin-green-light.min.css" media="screen">
         <link rel="stylesheet" href="/css/app.css" media="screen">
@@ -131,11 +132,22 @@
                                             Reclamos
                                         </a>
                                     </li>
-                                    <li>
-                                        <a href="{!! url('/reporte_auditoria') !!}">
-                                            <i class="fa fa-circle-o <?= ($datos['menu']['opcion'] == 'reporte_auditoria') ? 'text-green' : '' ?>"></i>
-                                            Auditoria
+                                    <li class="treeview <?= ($datos['menu']['opcion'] == 'reporte_auditoria_usuarios') ? 'active' : '' ?>">
+                                        <a href="{!! url('/#') !!}">
+                                            <i class="fa fa-circle-o"></i>
+                                            <span>Auditoria</span>
+                                            <span class="pull-right-container">
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
                                         </a>
+                                        <ul class="treeview-menu">
+                                            <li>
+                                                <a href="{!! url('/reporte_auditoria_usuarios') !!}">
+                                                    <i class="fa fa-circle-o <?= ($datos['menu']['opcion'] == 'reporte_auditoria_usuarios') ? 'text-green' : '' ?>"></i>
+                                                    Usuarios
+                                                </a>
+                                            </li>
+                                        </ul>
                                     </li>
                                 </ul>
                             </a>
@@ -239,6 +251,7 @@
         </div>
         <script src="/js/jquery.min.js"></script>
         <script src="/js/bootstrap.min.js"></script>
+        <script src="/js/bootstrap-datepicker.min.js"></script>
         <script src="/js/adminlte.min.js"></script>
         <script src="/js/app.js"></script>
         @yield('scripts')
