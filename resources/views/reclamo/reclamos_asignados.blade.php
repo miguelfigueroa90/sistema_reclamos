@@ -6,7 +6,7 @@ Reclamos asignados
 <table class="table table-hover">
     <thead>
         <tr>
-            <th>Número</th>
+            <th>Código</th>
             <th>Fecha de registro</th>
             <th>Acción</th>
         </tr>
@@ -14,7 +14,7 @@ Reclamos asignados
     <tbody>
         @foreach($datos['registros'] as $reclamo)
             <tr>
-                <td>{!! $reclamo->numero_reclamo !!}</td>
+                <td>{!! $reclamo->reclamo->codigo_reclamo !!}</td>
                 <td>{!! $reclamo->reclamo->fecha_registro !!}</td>
                 <td>{!! $reclamo->estatus->tipo !!}</td>
                 <td>

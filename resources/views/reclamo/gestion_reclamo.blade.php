@@ -8,7 +8,7 @@ Gestión del Reclamo
 		<h1>Datos del Reclamo</h1>
 		<dl class="dl-horizontal">
 		    <dt>Número de reclamo</dt>
-		    <dd>{!! $datos['reclamo']->numero_reclamo !!}</dd>
+		    <dd>{!! $datos['reclamo']->codigo_reclamo !!}</dd>
 		    <dt>Cedula del cliente</dt>
 		    <dd>{!! $datos['reclamo']->cliente->cedula !!}</dd>
 		    <dt>Nombre del cliente</dt>

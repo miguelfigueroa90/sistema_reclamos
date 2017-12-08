@@ -5,8 +5,8 @@ Buscar Reclamo
 @section('contenido')
     {!! Form::open(['action' => ['ReclamosController@buscar'], 'class' => 'form', 'id' => 'form-buscar']) !!}
         <div class="form-group">
-            {!! Form::label('Numero de reclamo') !!}
-            {!! Form::text('numero_reclamo', null, ['class' => 'form-control campo_numerico campo-ajax', 'id' => 'numero_reclamo']) !!}
+            {!! Form::label('Código del reclamo') !!}
+            {!! Form::text('codigo_reclamo', null, ['class' => 'form-control campo_numerico campo-ajax', 'id' => 'codigo_reclamo']) !!}
         </div>
         <div class="form-group">
             {!! Form::button('Buscar <i class="fa fa-search"></i>', array('class'=>'btn btn-info', 'id' => 'btn-buscar', 'type' => 'button')) !!}
@@ -14,8 +14,6 @@ Buscar Reclamo
     {!! Form::close() !!}
 
     <dl class="dl-horizontal hidden" id="list-reclamo">
-        <dt>Número de reclamo</dt>
-        <dd id="dd_numero_reclamo"></dd>
         <dt>Cedula del cliente</dt>
         <dd id="dd_cedula_cliente"></dd>
         <dt>Nombre del cliente</dt>
@@ -32,6 +30,8 @@ Buscar Reclamo
         <dd id="dd_tarjeta_cliente"></dd>
         <dt>Estado actual</dt>
         <dd id="dd_estado_reclamo"></dd>
+        <dt>Descripción</dt>
+        <dd id="dd_reclamo_descripcion"></dd>
     </dl>
 @endsection
 
@@ -43,9 +43,9 @@ Buscar Reclamo
 
             $('#list-reclamo').addClass('hidden');
 
-            var numero_reclamo = $('#numero_reclamo').val();
+            var codigo_reclamo = $('#codigo_reclamo').val();
 
-            if(numero_reclamo === '') {
+            if(codigo_reclamo === '') {
                 alert('Debe ingresar el numero de reclamo que desea consultar.');
             }
 
@@ -58,15 +58,15 @@ Buscar Reclamo
             $.post(ruta, datos, function(resultado){
                 console.log(resultado);
 
-                $('#dd_numero_reclamo').html(resultado.reclamo.datos.numero_reclamo);
                 $('#dd_cedula_cliente').html(resultado.cliente.datos.cedula);
-                $('#dd_nombre_cliente').html(resultado.cliente.datos.nombre);
+                $('#dd_nombre_cliente').html(resultado.cliente.datos.nombre + " " + resultado.cliente.datos.apellido);
                 $('#dd_telefono_cliente').html(resultado.cliente.telefono.telefono);
                 $('#dd_correo_cliente').html(resultado.cliente.correo_electronico.correo);
                 $('#dd_cuenta_cliente').html(resultado.cliente.cuenta_bancaria.cuenta_bancaria);
                 $('#dd_producto_cliente').html(resultado.reclamo.producto.nombre);
                 $('#dd_tarjeta_cliente').html(resultado.reclamo.tarjeta.numero_tarjeta);
                 $('#dd_estado_reclamo').html(resultado.reclamo.estatus.tipo);
+                $('#dd_reclamo_descripcion').html(resultado.reclamo.datos.descripcion);
 
                 $('#list-reclamo').removeClass('hidden');
                 $('.overlay').hide();

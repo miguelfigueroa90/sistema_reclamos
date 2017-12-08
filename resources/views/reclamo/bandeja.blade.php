@@ -7,7 +7,7 @@ Bandeja
 <table class="table table-hover">
     <thead>
         <tr>
-            <th>Número</th>
+            <th>Código</th>
             <th>Fecha de registro</th>
             <th>Estado</th>
             <th>Acción</th>
@@ -16,7 +16,7 @@ Bandeja
     <tbody>
         @foreach($datos['registros'] as $reclamo)
             <tr>
-                <td>{!! $reclamo->numero_reclamo !!}</td>
+                <td>{!! $reclamo->codigo_reclamo !!}</td>
                 <td>{!! $reclamo->fecha_registro !!}</td>
                 <td>{!! $reclamo->estatus !!}</td>
                 <td>

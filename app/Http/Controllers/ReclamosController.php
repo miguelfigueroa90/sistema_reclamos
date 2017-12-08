@@ -99,7 +99,7 @@ class ReclamosController extends Controller
         if($reclamo_guardado) {
             $numero_reclamo = str_pad($reclamo->numero_reclamo, 3, '0', STR_PAD_LEFT);
             $fecha_reclamo = $reclamo->fecha_registro;
-            $reclamo->codigo_reclamo = $fecha_reclamo->format('Ymd') . $numero_reclamo;
+            $reclamo->codigo_reclamo = $fecha_reclamo->format('ymd') . $numero_reclamo;
             $reclamo->save();
 
             $reclamo->Cliente()->attach($cliente->cedula);
@@ -207,9 +207,9 @@ class ReclamosController extends Controller
 
     function buscar(Request $request)
     {
-        $numero_reclamo = $request->numero_reclamo;
-        $reclamo = Reclamo::find($numero_reclamo);
-        $reclamo_cliente = ReclamoCliente::where('numero_reclamo', '=', $numero_reclamo)->first();
+        $codigo_reclamo = $request->codigo_reclamo;
+        $reclamo = Reclamo::where('codigo_reclamo', $codigo_reclamo)->first();
+        $reclamo_cliente = ReclamoCliente::where('numero_reclamo', '=', $reclamo->numero_reclamo)->first();
         $cliente = Cliente::find($reclamo_cliente->cedula)->first();
         $telefono_cliente = TelefonoCliente::where('cedula', '=', $cliente->cedula)->first();
         $telefono = Telefono::find($telefono_cliente->codigo_telefono)->first();
@@ -246,7 +246,9 @@ class ReclamosController extends Controller
     {
         $usuario = \Auth::user();
         $cedula_usuario = $usuario->cedula;
-        $reclamo_usuario = ReclamoUsuario::where('cedula', '=', $cedula_usuario)->first();
+        $reclamo_usuario = ReclamoUsuario::where('cedula', '=', $cedula_usuario)
+            ->where('numero_reclamo', $request->numero_reclamo)
+            ->first();
 
         if(is_null($reclamo_usuario)) {
             $reclamo_usuario = new ReclamoUsuario;
@@ -267,7 +269,7 @@ class ReclamosController extends Controller
             }
         }
 
-        return redirect('/bandeja')->with('warning', '¡El reclamo no ha podido ser asignado!');
+        return redirect('/bandeja')->with('danger', '¡El reclamo no ha podido ser asignado!');
     }
 
     function gestionarEstatusReclamo(Request $request)
